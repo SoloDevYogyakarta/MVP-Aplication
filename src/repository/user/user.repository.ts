@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { dynamicFilter } from '../../utils/dynamic-filter/dynamic-filter';
+import { DyanmicQuery } from '../../validators/query/product.query';
 import {
   userEntity,
   UserInstance,
@@ -6,7 +8,10 @@ import {
 
 @Injectable()
 export class UserRepository {
-  async findAll(): Promise<UserInstance[]> {
+  async findAll(query: DyanmicQuery): Promise<UserInstance[]> {
+    let where = {},
+      datas = [];
+    dynamicFilter(where, datas, query);
     const result = await userEntity.findAll();
     return result;
   }

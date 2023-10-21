@@ -20,7 +20,13 @@ describe('UserRepository', () => {
   });
 
   it('findAll', async () => {
-    const findAll = await repository.findAll();
+    const findAll = await repository.findAll({});
+    expect(findAll.length).not.toEqual(0);
+  });
+
+  it('findAll', async () => {
+    const { username, email } = getField('user-entity');
+    const findAll = await repository.findAll({ username, email });
     expect(findAll.length).not.toEqual(0);
   });
 });

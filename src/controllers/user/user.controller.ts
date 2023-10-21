@@ -6,6 +6,7 @@ import {
   Get,
   HttpStatus,
   Post,
+  Query,
   Req,
   Res,
   UseGuards,
@@ -20,6 +21,7 @@ import { UserService } from '../../services/user/user.service';
 import { AuthGuard } from '../../middleware/guards.middleware';
 import { createpath } from '../../utils/system/system';
 import { omit } from 'lodash';
+import { DyanmicQuery } from '../../validators/query/product.query';
 
 @Controller('user')
 export class UserController {
@@ -76,8 +78,12 @@ export class UserController {
 
   @UseGuards(AuthGuard)
   @Get()
-  async list(@Req() req: Request, @Res() res: Response) {
-    const result = await this.repository.findAll();
+  async list(
+    @Query() query: DyanmicQuery,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    const result = await this.repository.findAll(query);
     return res.status(HttpStatus.OK).json(result);
   }
 
