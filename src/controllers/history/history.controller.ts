@@ -4,12 +4,14 @@ import {
   Get,
   HttpStatus,
   Post,
+  Query,
   Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
 import { HistoryRepository } from '../../repository/history/history.repository';
 import { AuthGuard } from '../../middleware/guards.middleware';
+import { DyanmicQuery } from '../../validators/query/product.query';
 
 @Controller('history')
 export class HistoryController {
@@ -22,8 +24,12 @@ export class HistoryController {
 
   @UseGuards(AuthGuard)
   @Get()
-  async list(@Req() req: Request, @Res() res: Response) {
-    const result = await this.repository.findAll();
+  async list(
+    @Query() query: DyanmicQuery,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    const result = await this.repository.findAll(query);
     return res.status(HttpStatus.OK).json(result);
   }
 

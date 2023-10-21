@@ -1,1 +1,1 @@
-{"id":1923,"username":"Kellen30","email":"Jeffery0@hotmail.com","password":"$2b$10$Jsn036U1t8.fai0ZhglWxuSW1pjMEnDfBdZ8YifSjRF9kMUzuz79O","updatedAt":"2023-10-21T15:32:09.289Z","createdAt":"2023-10-21T15:32:09.289Z","public_id":"ED_i8MUjDp1ojep3iIi-V","phone_number":null}
+{"id":2003,"username":"Bobby98","email":"Michelle27@gmail.com","password":"$2b$10$Oj1gxrfOnsfF6ohAnyd4XuDzadcQ4LlrsMJHvzeVq5Z5HiXGQ27hS","updatedAt":"2023-10-21T15:40:11.194Z","createdAt":"2023-10-21T15:40:11.194Z","public_id":"TvSgRuNE_FE8mZupfnjXQ","phone_number":null}

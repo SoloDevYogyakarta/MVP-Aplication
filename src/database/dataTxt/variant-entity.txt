@@ -1,1 +1,1 @@
-{"id":1353,"name":"rantai","type":"sss","desc":"bawa sendiri","product_id":"_QkyiSxPdnP_1raxuT6d5","public_id":"HTgbNzdfz87AMrjfy_FAJ"}
+{"id":1497,"name":"rantai","type":"sss","desc":"bawa sendiri","product_id":"Ou33IMe7Iz-G7gzrgz6jh","public_id":"TVfHNcw8w0HdFZzqLTjEk"}

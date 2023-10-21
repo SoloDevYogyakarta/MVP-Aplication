@@ -20,7 +20,13 @@ describe('HistoryRepository', () => {
     });
 
     it('findAll', async () => {
-      const result = await repository.findAll();
+      const result = await repository.findAll({});
+      expect(result.length).not.toEqual(0);
+    });
+
+    it('findAll with fieldName', async () => {
+      const { type } = getField('history-entity');
+      const result = await repository.findAll({ type });
       expect(result.length).not.toEqual(0);
     });
   } catch (err) {

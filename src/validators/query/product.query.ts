@@ -1,3 +1,3 @@
 export class DyanmicQuery {
-  [key: string]: string;
+  [key: string]: string | unknown;
 }

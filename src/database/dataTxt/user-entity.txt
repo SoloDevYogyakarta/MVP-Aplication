@@ -1,1 +1,1 @@
-{"id":1921,"public_id":"uv3HTXc25HKhU3_iPDPKI","username":"updated-Jordan.Mraz","email":"Merlin_Ebert5@hotmail.com","phone_number":null,"password":"$2b$10$.e8dgXyz/vnfJXHutg15juDdP8tMVlxE6Y/IFnAvESEKVvSoT28EK","createdAt":"2023-10-21T15:32:09.155Z","updatedAt":"2023-10-21T15:32:09.269Z"}
+{"id":1999,"public_id":"_65IsJv_woQxadCGYUynG","username":"updated-Keeley97","email":"Arianna.Will8@yahoo.com","phone_number":null,"password":"$2b$10$K4dMWLnljvMvcvD1EtmFDeW1dUTO3UScUnNKvm6.cP6jFfxXXPXLq","createdAt":"2023-10-21T15:40:09.828Z","updatedAt":"2023-10-21T15:40:09.970Z"}

@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { dynamicFilter } from '../../utils/dynamic-filter/dynamic-filter';
+import { DyanmicQuery } from '../../validators/query/product.query';
 import {
   historyEntity,
   HistoryInstance,
@@ -10,7 +12,12 @@ export class HistoryRepository {
     return await historyEntity.findOne({ where: { public_id } });
   }
 
-  async findAll(): Promise<HistoryInstance[]> {
-    return await historyEntity.findAll();
+  async findAll(query: DyanmicQuery): Promise<HistoryInstance[]> {
+    let where = {},
+      datas = [];
+    dynamicFilter(where, datas, query);
+    return await historyEntity.findAll({
+      where: where,
+    });
   }
 }

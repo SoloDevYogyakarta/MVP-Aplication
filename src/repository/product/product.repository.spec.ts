@@ -23,6 +23,12 @@ describe('ProductRepository', () => {
       const result = await repository.findAll({});
       expect(result.length).not.toEqual(0);
     });
+
+    it('findAll with query', async () => {
+      const { mechanis_name } = getField('basic-entity');
+      const result = await repository.findAll({ mechanis_name });
+      expect(result.length).not.toEqual(0);
+    });
   } catch (err) {
     // empty
   }
