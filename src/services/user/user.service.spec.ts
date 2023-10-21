@@ -60,7 +60,7 @@ describe('UserService', () => {
   });
 
   it('created', async () => {
-    const result = await service.created({
+    const result = await service.create({
       username: faker.internet.userName(),
       password: 'password',
       confirmation: 'password',
@@ -72,7 +72,7 @@ describe('UserService', () => {
   });
 
   it('created with email', async () => {
-    const result = await service.created({
+    const result = await service.create({
       username: faker.internet.userName(),
       email: faker.internet.email(),
       password: 'password',
@@ -86,7 +86,7 @@ describe('UserService', () => {
 
   it('Username already exists', async () => {
     try {
-      await service.created({
+      await service.create({
         username: 'Randi.Jast',
         password: 'password',
         confirmation: 'password',
@@ -101,7 +101,7 @@ describe('UserService', () => {
 
   it("Password don'\t match", async () => {
     try {
-      await service.created({
+      await service.create({
         username: 'Randi.Jadqwdqwdst',
         password: 'passdqwdword',
         confirmation: 'password',
@@ -114,9 +114,9 @@ describe('UserService', () => {
     }
   });
 
-  it('updated', async () => {
+  it('update', async () => {
     const { public_id } = getField('user-service-entity') as UserInstance;
-    const result = await service.updated(public_id, {
+    const result = await service.update(public_id, {
       username: faker.internet.userName(),
       password: 'password',
     });
@@ -128,7 +128,7 @@ describe('UserService', () => {
 
   it('updated account not found', async () => {
     try {
-      await service.updated('dqdqw', {
+      await service.update('dqdqw', {
         username: 'dqwdq',
         password: 'password',
       });
@@ -140,7 +140,7 @@ describe('UserService', () => {
   it('updated account not found', async () => {
     try {
       const { public_id } = getField('user-service-entity') as UserInstance;
-      await service.updated(public_id, {
+      await service.update(public_id, {
         username: 'dqwdq',
         password: 'passwdqdqord',
       });

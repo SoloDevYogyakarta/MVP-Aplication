@@ -1,1 +1,1 @@
-{"id":1593,"username":"Dino17","email":"Tad_Smitham@gmail.com","password":"$2b$10$E7HvqphPFf2bnNtaDd8GTOYjcE5BQK4LRZJWwZb8YzFJLYXQ9Z9ZC","updatedAt":"2023-10-21T14:14:05.907Z","createdAt":"2023-10-21T14:14:05.907Z","public_id":"iDs_bI92gbO3lNYGqifhU","phone_number":null}
+{"id":1620,"username":"Katelin.Welch75","email":"Mariam_Huels@hotmail.com","password":"$2b$10$DDX1eO4xcKquW20lz1HZF.6Ckvu64TCEBMWu2ZSWuuZTSrcCSEdT.","updatedAt":"2023-10-21T14:24:09.041Z","createdAt":"2023-10-21T14:24:09.041Z","public_id":"eJjZ78rBcjgsAY5mah8cL","phone_number":null}

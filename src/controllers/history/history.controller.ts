@@ -16,7 +16,7 @@ export class HistoryController {
   constructor(private readonly repository: HistoryRepository) {}
 
   @Post(':id')
-  updated(@Req() req: Request, @Res() res: Response) {
+  update(@Req() req: Request, @Res() res: Response) {
     return res.status(HttpStatus.OK).json('updated');
   }
 

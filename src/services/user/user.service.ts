@@ -53,7 +53,7 @@ export class UserService {
     return { accessToken: token, status: HttpStatus.OK };
   }
 
-  async created(field: RegisterField) {
+  async create(field: RegisterField) {
     let where = [{ username: '' }, { email: '' }];
     if (field.username) {
       where = [...where, { username: field.username }];
@@ -98,7 +98,7 @@ export class UserService {
     };
   }
 
-  async updated(public_id: string, field: UserUpdatedField) {
+  async update(public_id: string, field: UserUpdatedField) {
     const findOne = await userEntity.findOne({ where: { public_id } });
     if (!findOne) {
       throw new HttpException('false', HttpStatus.INTERNAL_SERVER_ERROR);

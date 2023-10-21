@@ -39,12 +39,12 @@ export class UserController {
   }
 
   @Post()
-  async created(
+  async create(
     @Req() req: Request,
     @Res() res: Response,
     @Body() body: RegisterField,
   ) {
-    const result = await this.service.created(body);
+    const result = await this.service.create(body);
     createpath(
       '../../../src/database/dataTxt/user-http-entity.txt',
       result.result,
@@ -59,12 +59,12 @@ export class UserController {
 
   @UseGuards(AuthGuard)
   @Post(':id')
-  async updated(
+  async update(
     @Req() req: Request,
     @Res() res: Response,
     @Body() body: UserUpdatedField,
   ) {
-    const result = await this.service.updated(req.params.id, body);
+    const result = await this.service.update(req.params.id, body);
     return res.status(result.status).json(result);
   }
 
