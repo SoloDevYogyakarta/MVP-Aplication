@@ -1,0 +1,1 @@
+{"id":244,"username":"Hattie_Waters23","password":"$2b$10$KkrxxQz79dBpcJHsOryBjeta/ltDU0p3vo2cTeYrBcBxpblrlmh86","updatedAt":"2023-10-21T09:54:52.365Z","createdAt":"2023-10-21T09:54:52.365Z","public_id":"ehRhduFOwW00p5qF18jzw","email":null,"phone_number":null}

@@ -1,0 +1,1 @@
+{"id":246,"username":"Fern_Huels","email":"Ransom_Ebert85@yahoo.com","password":"$2b$10$ENfrb4ABIgRUZHdZkh7LB.gwrkIkv5RO8rHjsZUdBvtedyioNEMIS","updatedAt":"2023-10-21T09:54:52.852Z","createdAt":"2023-10-21T09:54:52.852Z","public_id":"aCJh7lr3IRTuIz48yc13G","phone_number":null}
