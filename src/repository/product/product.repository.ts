@@ -5,6 +5,9 @@ import {
   productBasicInclude,
 } from '../../database/associates/basic-associate/basic-associate';
 import { ProductBasicInstance } from '../../database/entities/products/product-basic-entity/product-basic-entity';
+import { Op } from 'sequelize';
+import { DyanmicQuery } from 'src/validators/query/product.query';
+import { some } from 'lodash';
 
 @Injectable()
 export class ProductRepository {
@@ -17,8 +20,17 @@ export class ProductRepository {
     return result;
   }
 
-  async findAll(): Promise<ProductBasicInstance[]> {
+  async findAll(query: DyanmicQuery): Promise<ProductBasicInstance[]> {
+    let where = {},
+      datas = [];
+    Object.keys(query).filter((key) => {
+      datas = [...datas, { [key]: { [Op.iLike]: query[key] } }];
+    });
+    if (some(query)) {
+      where = { [Op.or]: datas };
+    }
     return await productBasicAssociate.findAll({
+      where: where,
       attributes: productBasicAttribute,
       include: productBasicInclude,
     });

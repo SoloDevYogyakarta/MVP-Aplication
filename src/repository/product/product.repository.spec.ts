@@ -20,7 +20,7 @@ describe('ProductRepository', () => {
     });
 
     it('findAll', async () => {
-      const result = await repository.findAll();
+      const result = await repository.findAll({});
       expect(result.length).not.toEqual(0);
     });
   } catch (err) {
