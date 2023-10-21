@@ -1,1 +1,1 @@
-{"id":1217,"username":"Shane36","email":"Isabel_Altenwerth35@gmail.com","password":"$2b$10$JwOzrzvxS2m51Iu79qm0auqy36Nr7t8mLwsk1mPVpc2qpO02/MlQO","updatedAt":"2023-10-21T13:11:30.873Z","createdAt":"2023-10-21T13:11:30.873Z","public_id":"bPGA1ITlUJV7p6Uva3xX2","phone_number":null}
+{"id":1267,"username":"Andy.Okuneva","email":"Etha.Gutkowski20@hotmail.com","password":"$2b$10$ORQvLRORywl/LF.KopZy..Csbe5VlSdePf.S7rhgdSZNuKLsRSX76","updatedAt":"2023-10-21T13:23:15.767Z","createdAt":"2023-10-21T13:23:15.767Z","public_id":"_R-xgfO7t7tm5huGUcpej","phone_number":null}
