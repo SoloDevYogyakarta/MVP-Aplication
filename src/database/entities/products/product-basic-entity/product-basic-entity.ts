@@ -6,6 +6,7 @@ import { sequelize } from '../../entity';
 export class ProductBasicEntity extends BaseEntity {
   mechanis_name: string;
   desc: string;
+  user_id: string;
 }
 
 export type ProductBasicCreationAttribute = Optional<ProductBasicEntity, 'id'>;
@@ -18,6 +19,7 @@ export const productBasicEntity = sequelize.define<ProductBasicInstance>(
     public_id: DataTypes.STRING,
     mechanis_name: DataTypes.STRING,
     desc: DataTypes.STRING,
+    user_id: DataTypes.STRING,
   } as ModelAttributes<ProductBasicInstance>,
   {
     tableName: 'BASIC',

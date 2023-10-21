@@ -4,4 +4,7 @@ export type GetFieldType =
   | 'fake'
   | 'user-entity'
   | 'user-service-entity'
-  | 'user-http-entity';
+  | 'user-http-entity'
+  | 'basic-entity'
+  | 'variant-entity'
+  | 'history-entity';

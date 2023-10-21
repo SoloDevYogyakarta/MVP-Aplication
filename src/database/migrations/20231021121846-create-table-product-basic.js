@@ -29,6 +29,10 @@ module.exports = {
           type: Sequelize.DataTypes.TEXT,
           allowNull: true,
         },
+        user_id: {
+          type: Sequelize.DataTypes.STRING(22),
+          allowNull: false,
+        },
       },
     );
   },

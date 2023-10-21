@@ -7,7 +7,6 @@ export class HistoryEntity extends BaseEntity {
   type: string;
   date: Date;
   product_id: string;
-  user_id: string;
 }
 
 export type HistoryCreationAttribute = Optional<HistoryEntity, 'id'>;
@@ -21,7 +20,6 @@ export const historyEntity = sequelize.define<HistoryInstance>(
     type: DataTypes.STRING,
     date: DataTypes.DATE,
     product_id: DataTypes.STRING,
-    user_id: DataTypes.STRING,
   } as ModelAttributes<HistoryInstance>,
   {
     tableName: 'HISTORY',
