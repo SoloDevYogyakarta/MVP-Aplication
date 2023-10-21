@@ -17,7 +17,8 @@
     "watch": "npx jest --coverage -u --watchAll",
     "init": "npx sequelize-cli init",
     "migrate": "npx sequelize-cli db:migrate",
-    "migrate:undo:all": "npx sequelize-cli db:migrate:undo:all"
+    "migrate:undo:all": "npx sequelize-cli db:migrate:undo:all",
+    "seed": "npx sequelize-cli db:seed:all"
   },
   "dependencies": {
     "@faker-js/faker": "^8.2.0",

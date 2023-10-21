@@ -1,1 +1,1 @@
-{"id":1618,"username":"Herminio46","email":"Lambert95@gmail.com","password":"$2b$10$8K3ieGwYuD4NtLfOeBJhoOM9ywpDwJ5o7x4tJkvEJAaxaw2wggpvS","updatedAt":"2023-10-21T14:24:07.018Z","createdAt":"2023-10-21T14:24:07.018Z","public_id":"Pi4rNYlVMLejnqQTPSenw","phone_number":null}
+{"id":1683,"username":"Everett91","email":"Lilla.Herzog-Berge@hotmail.com","password":"$2b$10$NY3OQ1dfzLLMPwXnsxcKpeoLEw6TQaSEY5V0cirbWDA4Uyu/RT/7S","updatedAt":"2023-10-21T14:36:23.429Z","createdAt":"2023-10-21T14:36:23.429Z","public_id":"aGzAr2cDFr1yNo3EDVBHn","phone_number":null}
