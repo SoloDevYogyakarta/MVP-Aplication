@@ -35,4 +35,6 @@ const options: HasOneOptions | HasManyOptions = {
 productBasicEntity.hasOne(historyEntity, { ...options, as: 'history' });
 productBasicEntity.hasMany(variantEntity, { ...options, as: 'variant' });
 
-export { productBasicAttribute, productBasicInclude, productBasicEntity };
+const productBasicAssociate = productBasicEntity;
+
+export { productBasicAttribute, productBasicInclude, productBasicAssociate };

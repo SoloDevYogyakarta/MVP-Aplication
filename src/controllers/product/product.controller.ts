@@ -1,23 +1,24 @@
-import { Request, Response } from 'express';
 import {
   Controller,
+  Delete,
   Get,
   HttpStatus,
-  Post,
   Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { HistoryRepository } from '../../repository/history/history.repository';
+import { Request, Response } from 'express';
 import { AuthGuard } from '../../middleware/guards.middleware';
+import { ProductRepository } from '../../repository/product/product.repository';
 
-@Controller('history')
-export class HistoryController {
-  constructor(private readonly repository: HistoryRepository) {}
+@Controller('product')
+export class ProductController {
+  constructor(private readonly repository: ProductRepository) {}
 
-  @Post(':id')
-  updated(@Req() req: Request, @Res() res: Response) {
-    return res.status(HttpStatus.OK).json('updated');
+  @UseGuards(AuthGuard)
+  @Delete(':id')
+  async destroy(@Req() req: Request, @Res() res: Response) {
+    return res.status(HttpStatus.OK).json('destroy');
   }
 
   @UseGuards(AuthGuard)

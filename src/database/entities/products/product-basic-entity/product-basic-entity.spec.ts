@@ -38,7 +38,7 @@ describe('productBasicEntity', () => {
     const { public_id } = getField('user-http-entity') as UserInstance;
     const basic = await entity.create({
       mechanis_name: faker.person.fullName(),
-      desc: faker.lorem.paragraphs({ min: 100, max: 200 }),
+      desc: faker.lorem.paragraphs({ min: 10, max: 15 }),
       user_id: public_id,
     });
     basic.save();

@@ -3,7 +3,7 @@ import { ProductBasicInstance } from '../../../database/entities/products/produc
 import { getField } from '../../../utils/get-field/get-field';
 import {
   productBasicAttribute,
-  productBasicEntity,
+  productBasicAssociate,
   productBasicInclude,
 } from './basic-associate';
 
@@ -11,7 +11,7 @@ describe('productBasicAssociate', () => {
   let entity: ModelCtor<ProductBasicInstance>;
 
   beforeEach(async () => {
-    entity = await productBasicEntity;
+    entity = await productBasicAssociate;
   });
 
   it('should to be defined', () => expect(entity).toBeDefined());
@@ -26,8 +26,15 @@ describe('productBasicAssociate', () => {
         attributes: productBasicAttribute,
         include: productBasicInclude,
       });
-      console.log(JSON.stringify(findOne));
       expect(findOne.public_id).toEqual(public_id);
+    });
+
+    it('findAll', async () => {
+      const findAll = await entity.findAll({
+        attributes: productBasicAttribute,
+        include: productBasicInclude,
+      });
+      expect(findAll.length).not.toEqual(0);
     });
   } catch (err) {
     // empty

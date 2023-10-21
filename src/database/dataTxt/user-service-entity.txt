@@ -1,1 +1,1 @@
-{"id":1267,"username":"Andy.Okuneva","email":"Etha.Gutkowski20@hotmail.com","password":"$2b$10$ORQvLRORywl/LF.KopZy..Csbe5VlSdePf.S7rhgdSZNuKLsRSX76","updatedAt":"2023-10-21T13:23:15.767Z","createdAt":"2023-10-21T13:23:15.767Z","public_id":"_R-xgfO7t7tm5huGUcpej","phone_number":null}
+{"id":1593,"username":"Dino17","email":"Tad_Smitham@gmail.com","password":"$2b$10$E7HvqphPFf2bnNtaDd8GTOYjcE5BQK4LRZJWwZb8YzFJLYXQ9Z9ZC","updatedAt":"2023-10-21T14:14:05.907Z","createdAt":"2023-10-21T14:14:05.907Z","public_id":"iDs_bI92gbO3lNYGqifhU","phone_number":null}

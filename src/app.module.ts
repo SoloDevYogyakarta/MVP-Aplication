@@ -11,6 +11,9 @@ import { UserService } from './services/user/user.service';
 import { LocalStrategy } from './middleware/local.strategy';
 import { JwtStrategy } from './middleware/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
+import { HistoryRepository } from './repository/history/history.repository';
+import { ProductController } from './controllers/product/product.controller';
+import { ProductRepository } from './repository/product/product.repository';
 
 @Module({
   imports: [
@@ -26,8 +29,16 @@ import { PassportModule } from '@nestjs/passport';
     HistoryController,
     BookingController,
     SparepartController,
+    ProductController,
   ],
-  providers: [UserRepository, UserService, LocalStrategy, JwtStrategy],
+  providers: [
+    UserRepository,
+    UserService,
+    LocalStrategy,
+    JwtStrategy,
+    HistoryRepository,
+    ProductRepository,
+  ],
   exports: [UserService],
 })
 export class AppModule {}
