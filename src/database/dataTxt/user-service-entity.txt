@@ -1,1 +1,1 @@
-{"id":942,"username":"Justus.Jenkins46","email":"Darryl_Jast@hotmail.com","password":"$2b$10$Cy2y/Jq9Iz8eNFy957v3muWP0Q.gphDwp7s9sIEiraAZBWwlsVrNa","updatedAt":"2023-10-21T11:57:23.707Z","createdAt":"2023-10-21T11:57:23.707Z","public_id":"KiSYKEhnL1dn4-DboCQmF","phone_number":null}
+{"id":962,"username":"Kellie_Cormier86","email":"Dedric.Collins@hotmail.com","password":"$2b$10$g/Y14U.cb.c/2o37I9KCpujQM1EC0f7/GcvgLnpdwjC5lskODGU9W","updatedAt":"2023-10-21T12:13:02.170Z","createdAt":"2023-10-21T12:13:02.170Z","public_id":"oAanqhAzPxEZZKl6XfwDf","phone_number":null}
