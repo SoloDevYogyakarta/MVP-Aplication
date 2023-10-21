@@ -5,6 +5,7 @@ import { UserInstance } from '../../database/entities/authenticates/user-entity/
 import { getField } from '../../utils/get-field/get-field';
 import env from '../../utils/env/env';
 import { UserService } from './user.service';
+import { omit } from 'lodash';
 
 describe('UserService', () => {
   let service: UserService;
@@ -64,7 +65,7 @@ describe('UserService', () => {
       password: 'password',
       confirmation: 'password',
     });
-    expect(result).toEqual({
+    expect(omit(result, ['result'])).toEqual({
       status: HttpStatus.CREATED,
       message: 'Account has been created',
     });
@@ -77,7 +78,7 @@ describe('UserService', () => {
       password: 'password',
       confirmation: 'password',
     });
-    expect(result).toEqual({
+    expect(omit(result, ['result'])).toEqual({
       status: HttpStatus.CREATED,
       message: 'Account has been created',
     });

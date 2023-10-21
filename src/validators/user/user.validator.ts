@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
 export class LoginField {
   @IsString()
@@ -21,6 +21,10 @@ export class RegisterField {
 
   @IsString()
   confirmation: string;
+
+  @IsBoolean()
+  @IsOptional()
+  http?: boolean;
 }
 
 export class ResetField {

@@ -40,6 +40,7 @@ describe('userEntity', () => {
     it('findOne', async () => {
       const { public_id } = getField('user-entity') as UserInstance;
       const findOne = await entity.findOne({ where: { public_id } });
+      createpath('../../database/dataTxt/user-entity.txt', findOne);
       expect(findOne.public_id).toEqual(public_id);
     });
 

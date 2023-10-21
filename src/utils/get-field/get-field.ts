@@ -3,7 +3,8 @@ import { readpath } from '../system/system';
 
 export function getField(filename?: GetFieldType) {
   try {
-    if (filename === 'fake') {
+    const inc = ['token', 'fake'];
+    if (inc.includes(filename)) {
       return readpath(`../../database/dataTxt/${filename}.txt`);
     }
     return JSON.parse(readpath(`../../database/dataTxt/${filename}.txt`));

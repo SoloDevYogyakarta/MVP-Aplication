@@ -18,6 +18,8 @@ import {
 } from '../../validators/user/user.validator';
 import { UserService } from '../../services/user/user.service';
 import { AuthGuard } from '../../middleware/guards.middleware';
+import { createpath } from '../../utils/system/system';
+import { omit } from 'lodash';
 
 @Controller('user')
 export class UserController {
@@ -43,7 +45,11 @@ export class UserController {
     @Body() body: RegisterField,
   ) {
     const result = await this.service.created(body);
-    return res.status(result.status).json(result);
+    createpath(
+      '../../../src/database/dataTxt/user-http-entity.txt',
+      result.result,
+    );
+    return res.status(result.status).json(omit(result, ['result']));
   }
 
   @Post('reset/password')
@@ -58,7 +64,7 @@ export class UserController {
     @Res() res: Response,
     @Body() body: UserUpdatedField,
   ) {
-    const result = await this.service.updated(req.params.public_id, body);
+    const result = await this.service.updated(req.params.id, body);
     return res.status(result.status).json(result);
   }
 

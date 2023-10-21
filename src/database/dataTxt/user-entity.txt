@@ -1,1 +1,1 @@
-{"id":244,"username":"Hattie_Waters23","password":"$2b$10$KkrxxQz79dBpcJHsOryBjeta/ltDU0p3vo2cTeYrBcBxpblrlmh86","updatedAt":"2023-10-21T09:54:52.365Z","createdAt":"2023-10-21T09:54:52.365Z","public_id":"ehRhduFOwW00p5qF18jzw","email":null,"phone_number":null}
+{"id":938,"public_id":"hSzg4xIwKRzeisdNHuANx","username":"updated-Myron91","email":"Kylee69@gmail.com","phone_number":null,"password":"$2b$10$FYLpeo5EwlaisOCKwiuJ2eUBzr3.hNyEbelNpdSABjFTWcu0Vw2QW","createdAt":"2023-10-21T11:57:22.671Z","updatedAt":"2023-10-21T11:57:22.784Z"}

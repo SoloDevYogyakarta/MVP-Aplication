@@ -9,6 +9,8 @@ import bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { omit } from 'lodash';
 import { createpath } from '../../utils/system/system';
+import env from '../../utils/env/env';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class UserService {
@@ -42,18 +44,29 @@ export class UserService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    const token = this.jwtService.sign({
-      sub: findOne.id,
-    });
+    const token = this.jwtService.sign(
+      {
+        sub: findOne.id,
+      },
+      { secret: env['SECRET'] },
+    );
     return { accessToken: token, status: HttpStatus.OK };
   }
 
   async created(field: RegisterField) {
-    let where = { username: field.username };
-    if (field.email) {
-      where['email'] = field.email;
+    let where = [{ username: '' }, { email: '' }];
+    if (field.username) {
+      where = [...where, { username: field.username }];
     }
-    const findOne = await userEntity.findOne({ where });
+    if (field.email) {
+      where = [...where, { email: field.email }];
+    }
+
+    const findOne = await userEntity.findOne({
+      where: {
+        [Op.or]: where,
+      },
+    });
     if (findOne) {
       throw new HttpException(
         {
@@ -73,9 +86,16 @@ export class UserService {
       );
     }
     const create = await userEntity.create(omit(field, ['confirmation']));
-    createpath(`../../../src/database/dataTxt/user-service-entity.txt`, create);
+    createpath(
+      `../../../src/database/dataTxt/${'user-service-entity.txt'}`,
+      create,
+    );
     create.save();
-    return { status: HttpStatus.CREATED, message: 'Account has been created' };
+    return {
+      result: create,
+      status: HttpStatus.CREATED,
+      message: 'Account has been created',
+    };
   }
 
   async updated(public_id: string, field: UserUpdatedField) {

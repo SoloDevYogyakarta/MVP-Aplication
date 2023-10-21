@@ -14,7 +14,7 @@ describe('UserRepository', () => {
   it('render correctly', () => expect(repository).toMatchSnapshot());
 
   it('findOne', async () => {
-    const result = getField('user-entity') as UserInstance;
+    const result = getField('user-http-entity') as UserInstance;
     const findOne = await repository.findOne(result.public_id);
     expect(findOne.public_id).toEqual(result.public_id);
   });

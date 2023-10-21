@@ -12,6 +12,7 @@ export const sequelize = new Sequelize(
   {
     host: env['DB_HOST'],
     port: Number(env['DB_PORT']),
+    logging: false,
     database: env['DB_NAME'],
     dialect: env['DB_DIALECT'] as Dialect,
   },
