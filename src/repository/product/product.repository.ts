@@ -28,6 +28,7 @@ export class ProductRepository {
       where: where,
       attributes: productBasicAttribute,
       include: productBasicInclude,
+      order: [['id', 'DESC']],
     });
   }
 }
