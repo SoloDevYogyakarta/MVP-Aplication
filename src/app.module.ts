@@ -14,6 +14,7 @@ import { PassportModule } from '@nestjs/passport';
 import { HistoryRepository } from './repository/history/history.repository';
 import { ProductController } from './controllers/product/product.controller';
 import { ProductRepository } from './repository/product/product.repository';
+import { ProductService } from './services/product/product.service';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { ProductRepository } from './repository/product/product.repository';
     JwtStrategy,
     HistoryRepository,
     ProductRepository,
+    ProductService,
   ],
   exports: [UserService],
 })

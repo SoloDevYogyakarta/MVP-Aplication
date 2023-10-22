@@ -1,11 +1,5 @@
 import { nanoid } from 'nanoid';
-import {
-  DataTypes,
-  Model,
-  ModelAttributes,
-  Optional,
-  Sequelize,
-} from 'sequelize';
+import { DataTypes, Model, ModelAttributes, Optional } from 'sequelize';
 import { BaseEntity } from '../../base-entity/base-entity';
 import { sequelize } from '../../entity';
 

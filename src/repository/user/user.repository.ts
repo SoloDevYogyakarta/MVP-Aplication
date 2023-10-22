@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { dynamicFilter } from '../../utils/dynamic-filter/dynamic-filter';
 import { DyanmicQuery } from '../../validators/query/product.query';
-import {
-  userEntity,
-  UserInstance,
-} from '../../database/entities/authenticates/user-entity/user-entity';
+import { UserInstance } from '../../database/entities/authenticates/user-entity/user-entity';
 import {
   userAssociate,
   userInclude,

@@ -15,6 +15,7 @@ export class ProductRepository {
       where: { public_id },
       attributes: productBasicAttribute,
       include: productBasicInclude,
+      order: [['id', 'DESC']],
     });
     return result;
   }

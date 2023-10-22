@@ -3,24 +3,64 @@ import {
   Delete,
   Get,
   HttpStatus,
+  Post,
   Query,
   Req,
   Res,
+  UploadedFiles,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { DyanmicQuery } from '../../validators/query/product.query';
 import { AuthGuard } from '../../middleware/guards.middleware';
 import { ProductRepository } from '../../repository/product/product.repository';
+import { ProductService } from '../../services/product/product.service';
+import { CustomRequest } from '../../types/custom-request.type';
+import { ProductField } from '../../validators/product/product.validator';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from '../../utils/multer/multer';
 
 @Controller('product')
 export class ProductController {
-  constructor(private readonly repository: ProductRepository) {}
+  constructor(
+    private readonly service: ProductService,
+    private readonly repository: ProductRepository,
+  ) {}
+
+  @UseGuards(AuthGuard)
+  @Post()
+  @UseInterceptors(FilesInterceptor('files', 5, { storage: diskStorage }))
+  async create(
+    @Req() req: CustomRequest,
+    @Res() res: Response,
+    @UploadedFiles() files: Express.Multer.File[],
+  ) {
+    const result = await this.service.create(
+      req.body as unknown as ProductField,
+      req.user.data.public_id,
+      files,
+    );
+    return res.status(result.status).json(result);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post(':id')
+  @UseInterceptors(FilesInterceptor('files', 5, { storage: diskStorage }))
+  async update(
+    @Req() req: Request,
+    @Res() res: Response,
+    @UploadedFiles() files: Express.Multer.File[],
+  ) {
+    const result = await this.service.update(req.body, req.params.id, files);
+    return res.status(result.status).json(result);
+  }
 
   @UseGuards(AuthGuard)
   @Delete(':id')
   async destroy(@Req() req: Request, @Res() res: Response) {
-    return res.status(HttpStatus.OK).json('destroy');
+    const result = await this.service.destroy(req.params.id);
+    return res.status(result.status).json(result);
   }
 
   @UseGuards(AuthGuard)

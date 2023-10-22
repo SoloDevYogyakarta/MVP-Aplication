@@ -45,9 +45,7 @@ export class UserService {
       );
     }
     const token = this.jwtService.sign(
-      {
-        sub: findOne.id,
-      },
+      { data: findOne },
       { secret: env['SECRET'] },
     );
     return { accessToken: token, status: HttpStatus.OK };
@@ -125,10 +123,12 @@ export class UserService {
     });
     if (file?.originalname) {
       fileEnt.filename = file.filename;
+      fileEnt.originalname = file.originalname;
       if (fileEnt.filepath) {
         removepath(`../..${fileEnt.filepath}`);
       }
       fileEnt.filepath = file.path.split('/src')[1];
+      fileEnt.type = file.mimetype.split('/')[0];
       fileEnt.save();
     }
     return { status: HttpStatus.OK, message: 'Account has been updated' };

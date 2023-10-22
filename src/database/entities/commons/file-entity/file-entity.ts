@@ -5,6 +5,7 @@ import { sequelize } from '../../entity';
 
 export class FileEntity extends BaseEntity {
   filename: string;
+  originalname: string;
   filepath: string;
   type: string;
 }
@@ -18,6 +19,7 @@ export const fileEntity = sequelize.define<FileInstance>(
   {
     public_id: DataTypes.STRING,
     filename: DataTypes.STRING,
+    originalname: DataTypes.STRING,
     filepath: DataTypes.STRING,
     type: DataTypes.STRING,
   } as ModelAttributes<FileInstance>,

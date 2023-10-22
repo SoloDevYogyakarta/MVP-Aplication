@@ -47,6 +47,14 @@ describe('UserController', () => {
 
   it('should to be defined', () => expect(app).toBeDefined());
 
+  it('http get me', async () =>
+    await supertest(app.getHttpServer())
+      .get('/user/access/me')
+      .set('content-type', 'application/json')
+      .set('Authorization', `Bearer ${getField('token')}`)
+      .expect(HttpStatus.OK)
+      .then((res) => expect(res.body.public_id).not.toEqual(null)));
+
   it('http user login', async () =>
     await supertest(app.getHttpServer())
       .post('/user/login')

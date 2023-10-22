@@ -25,6 +25,7 @@ import { omit } from 'lodash';
 import { DyanmicQuery } from '../../validators/query/product.query';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from '../../utils/multer/multer';
+import { CustomRequest } from '../../types/custom-request.type';
 
 @Controller('user')
 export class UserController {
@@ -96,5 +97,11 @@ export class UserController {
   async detail(@Req() req: Request, @Res() res: Response) {
     const result = await this.repository.findOne(req.params.id);
     return res.status(HttpStatus.OK).json(result);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('access/me')
+  async me(@Req() req: CustomRequest, @Res() res: Response) {
+    return res.status(HttpStatus.OK).json(req.user.data);
   }
 }
