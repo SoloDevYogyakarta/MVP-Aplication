@@ -6,6 +6,7 @@ export type GetFieldType =
   | 'user-service-entity'
   | 'user-http-entity'
   | 'basic-entity'
+  | 'basic-http-entity'
   | 'variant-entity'
   | 'history-entity'
   | 'product-http-entity'

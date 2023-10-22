@@ -18,7 +18,7 @@ import { ProductRepository } from '../../repository/product/product.repository';
 import { ProductService } from '../../services/product/product.service';
 import { CustomRequest } from '../../types/custom-request.type';
 import { ProductField } from '../../validators/product/product.validator';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from '../../utils/multer/multer';
 
 @Controller('product')

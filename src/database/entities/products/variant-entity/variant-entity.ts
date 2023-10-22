@@ -7,6 +7,7 @@ export class VariantEntity extends BaseEntity {
   name: string;
   type: string;
   desc: string;
+  price: number;
   product_id: string;
 }
 
@@ -21,11 +22,13 @@ export const variantEntity = sequelize.define<VariantInstance>(
     name: DataTypes.STRING,
     type: DataTypes.STRING,
     desc: DataTypes.STRING,
+    price: DataTypes.INTEGER,
     product_id: DataTypes.STRING,
   } as ModelAttributes<VariantInstance>,
   {
     tableName: 'VARIANT',
     schema: 'PRODUCTS',
+    modelName: 'variant',
     timestamps: false,
     hooks: {
       beforeCreate(attributes, options) {

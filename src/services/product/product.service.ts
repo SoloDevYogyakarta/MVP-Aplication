@@ -10,7 +10,7 @@ import { variantEntity } from '../../database/entities/products/variant-entity/v
 import { connectEntity } from '../../database/entities/commons/connect-entity/connect-entity';
 import { fileEntity } from '../../database/entities/commons/file-entity/file-entity';
 import { nanoid } from 'nanoid';
-import { removepath } from '../../utils/system/system';
+import { createpath, removepath } from '../../utils/system/system';
 
 @Injectable()
 export class ProductService {
@@ -38,7 +38,7 @@ export class ProductService {
           : body.variants;
       for (const values of variants) {
         const variant = await variantEntity.create({
-          ...pick(values, ['name', 'type', 'desc']),
+          ...pick(values, ['name', 'type', 'desc', 'price']),
           product_id: basic.public_id,
         });
         variant.save();
@@ -62,6 +62,7 @@ export class ProductService {
         connect.save();
       }
     }
+    createpath(`../../../src/database/dataTxt/basic-http-entity.txt`, basic);
     return { status: HttpStatus.CREATED, message: 'Product has been create' };
   }
 
@@ -101,7 +102,7 @@ export class ProductService {
           HttpStatus.BAD_REQUEST,
         );
       }
-      findVariant.update(pick(variant, ['name', 'type', 'desc']), {
+      findVariant.update(pick(variant, ['name', 'type', 'desc', 'price']), {
         where: { public_id: instance.public_id },
       });
     }
@@ -115,7 +116,11 @@ export class ProductService {
         });
         c_.destroy();
         if (f.filepath) {
-          removepath(`../..${f.filepath}`);
+          try {
+            removepath(`../..${f.filepath}`);
+          } catch (err) {
+            // empty
+          }
         }
         f.destroy();
       }
@@ -166,11 +171,16 @@ export class ProductService {
         where: { public_id: connect.foreign_id },
       });
       if (file.filepath) {
-        removepath(`../..${file.filepath}`);
+        try {
+          removepath(`../..${file.filepath}`);
+        } catch (err) {
+          // empty
+        }
       }
       file.destroy();
       connect.destroy();
     }
+    findOne.destroy();
     return { status: HttpStatus.OK, message: 'Product has been delete' };
   }
 }

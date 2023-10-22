@@ -12,15 +12,15 @@ import {
 
 const type = ['Tuner Up', 'Over Haul'];
 const bulkInsert = [
-  { name: 'KM', type: '80000', desc: '16000' },
-  { name: 'Part replacement', type: 'Merek', desc: 'Catatan' },
-  { name: 'Oli', type: 'Motul', desc: '1L' },
-  { name: 'Belt', type: 'Gates', desc: '1' },
-  { name: 'filter Oli', type: 'Sakura', desc: 'Bawa Sendiri' },
-  { name: 'Roller ', type: 'Dr.Pulley', desc: '11gr' },
-  { name: '11gr', type: 'N/A', desc: '5pcs' },
-  { name: 'oli gearbox', type: 'Valvoline', desc: '120ml' },
-  { name: 'rantai', type: 'sss', desc: 'bawa sendiri' },
+  { name: 'KM', type: '80000', desc: '16000', price: 10000 },
+  { name: 'Part replacement', type: 'Merek', desc: 'Catatan', price: 1000 },
+  { name: 'Oli', type: 'Motul', desc: '1L', price: 1200 },
+  { name: 'Belt', type: 'Gates', desc: '1', price: 500 },
+  { name: 'filter Oli', type: 'Sakura', desc: 'Bawa Sendiri', price: 90000 },
+  { name: 'Roller ', type: 'Dr.Pulley', desc: '11gr', price: 302111 },
+  { name: '11gr', type: 'N/A', desc: '5pcs', price: 23000 },
+  { name: 'oli gearbox', type: 'Valvoline', desc: '120ml', price: 33000 },
+  { name: 'rantai', type: 'sss', desc: 'bawa sendiri', price: 990000 },
 ];
 
 describe('productBasicEntity', () => {

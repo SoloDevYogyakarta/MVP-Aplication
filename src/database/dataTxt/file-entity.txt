@@ -1,1 +1,1 @@
-{"id":2631,"public_id":"6D9FPvjEQe4hgolWm0osI","filename":null,"originalname":null,"filepath":null,"type":null}
+{"id":3527,"public_id":"Bg9FbR2_BA3oLCeIDGCSC","filename":null,"originalname":null,"filepath":null,"type":null}

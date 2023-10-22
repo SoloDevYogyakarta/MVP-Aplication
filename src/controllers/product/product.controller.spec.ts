@@ -14,15 +14,15 @@ import { join } from 'path';
 
 const type = ['Tuner Up', 'Over Haul'];
 const bulkInsert = [
-  { name: 'KM', type: '80000', desc: '16000' },
-  { name: 'Part replacement', type: 'Merek', desc: 'Catatan' },
-  { name: 'Oli', type: 'Motul', desc: '1L' },
-  { name: 'Belt', type: 'Gates', desc: '1' },
-  { name: 'filter Oli', type: 'Sakura', desc: 'Bawa Sendiri' },
-  { name: 'Roller ', type: 'Dr.Pulley', desc: '11gr' },
-  { name: '11gr', type: 'N/A', desc: '5pcs' },
-  { name: 'oli gearbox', type: 'Valvoline', desc: '120ml' },
-  { name: 'rantai', type: 'sss', desc: 'bawa sendiri' },
+  { name: 'KM', type: '80000', desc: '16000', price: 500 },
+  { name: 'Part replacement', type: 'Merek', desc: 'Catatan', price: 222000 },
+  { name: 'Oli', type: 'Motul', desc: '1L', price: 20000 },
+  { name: 'Belt', type: 'Gates', desc: '1', price: 293000 },
+  { name: 'filter Oli', type: 'Sakura', desc: 'Bawa Sendiri', price: 0 },
+  { name: 'Roller ', type: 'Dr.Pulley', desc: '11gr', price: 22000 },
+  { name: '11gr', type: 'N/A', desc: '5pcs', price: 92000 },
+  { name: 'oli gearbox', type: 'Valvoline', desc: '120ml', price: 200 },
+  { name: 'rantai', type: 'sss', desc: 'bawa sendiri', price: 100 },
 ];
 
 describe('ProductController', () => {
@@ -141,7 +141,7 @@ describe('ProductController', () => {
     });
 
     it('http product destroy', async () => {
-      const { public_id } = getField('basic-entity');
+      const { public_id } = getField('basic-http-entity');
       await supertest(app.getHttpServer())
         .delete(`/product/${public_id}`)
         .set('content-type', 'application/json')

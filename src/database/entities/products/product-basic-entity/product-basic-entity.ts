@@ -24,6 +24,7 @@ export const productBasicEntity = sequelize.define<ProductBasicInstance>(
   {
     tableName: 'BASIC',
     schema: 'PRODUCTS',
+    modelName: 'basic',
     timestamps: false,
     hooks: {
       beforeCreate(attributes, options) {

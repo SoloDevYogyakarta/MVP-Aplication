@@ -24,6 +24,7 @@ export const historyEntity = sequelize.define<HistoryInstance>(
   {
     tableName: 'HISTORY',
     schema: 'PRODUCTS',
+    modelName: 'history',
     timestamps: false,
     hooks: {
       beforeCreate(attributes, options) {
