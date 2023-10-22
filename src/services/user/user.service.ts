@@ -3,14 +3,14 @@ import { userEntity } from '../../database/entities/authenticates/user-entity/us
 import {
   LoginField,
   RegisterField,
-  UserUpdatedField,
 } from '../../validators/user/user.validator';
 import bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { omit } from 'lodash';
-import { createpath } from '../../utils/system/system';
+import { createpath, removepath } from '../../utils/system/system';
 import env from '../../utils/env/env';
 import { Op } from 'sequelize';
+import { fileEntity } from '../../database/entities/commons/file-entity/file-entity';
 
 @Injectable()
 export class UserService {
@@ -85,7 +85,10 @@ export class UserService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    const create = await userEntity.create(omit(field, ['confirmation']));
+    const file = await fileEntity.create({});
+    const create = await userEntity.create(
+      omit({ ...field, file_id: file.public_id }, ['confirmation']),
+    );
     createpath(
       `../../../src/database/dataTxt/${'user-service-entity.txt'}`,
       create,
@@ -98,7 +101,11 @@ export class UserService {
     };
   }
 
-  async update(public_id: string, field: UserUpdatedField) {
+  async update(
+    public_id: string,
+    field: { username: string; password: string },
+    file: Express.Multer.File,
+  ) {
     const findOne = await userEntity.findOne({ where: { public_id } });
     if (!findOne) {
       throw new HttpException('false', HttpStatus.INTERNAL_SERVER_ERROR);
@@ -112,6 +119,18 @@ export class UserService {
     }
     findOne.username = field.username;
     findOne.save();
+
+    const fileEnt = await fileEntity.findOne({
+      where: { public_id: findOne.file_id },
+    });
+    if (file?.originalname) {
+      fileEnt.filename = file.filename;
+      if (fileEnt.filepath) {
+        removepath(`../..${fileEnt.filepath}`);
+      }
+      fileEnt.filepath = file.path.split('/src')[1];
+      fileEnt.save();
+    }
     return { status: HttpStatus.OK, message: 'Account has been updated' };
   }
 

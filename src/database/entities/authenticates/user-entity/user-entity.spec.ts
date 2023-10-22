@@ -3,6 +3,7 @@ import { faker } from '@faker-js/faker';
 import { userEntity, UserInstance } from './user-entity';
 import { createpath } from '../../../../utils/system/system';
 import { getField } from '../../../../utils/get-field/get-field';
+import { fileEntity } from '../../commons/file-entity/file-entity';
 
 describe('userEntity', () => {
   let entity: ModelCtor<UserInstance>;
@@ -17,11 +18,15 @@ describe('userEntity', () => {
 
   it('created new user', async () => {
     const username = faker.internet.userName();
+    const file = await fileEntity.create({});
+    file.save();
     const created = await entity.create({
       username,
       password: 'password',
+      file_id: file.public_id,
     });
     created.save();
+    createpath('../../database/dataTxt/file-entity.txt', file);
     createpath('../../database/dataTxt/user-entity.txt', created);
     expect(created.username).toEqual(username);
   });

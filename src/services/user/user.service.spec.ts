@@ -116,10 +116,14 @@ describe('UserService', () => {
 
   it('update', async () => {
     const { public_id } = getField('user-service-entity') as UserInstance;
-    const result = await service.update(public_id, {
-      username: faker.internet.userName(),
-      password: 'password',
-    });
+    const result = await service.update(
+      public_id,
+      {
+        username: faker.internet.userName(),
+        password: 'password',
+      },
+      {} as any,
+    );
     expect(result).toEqual({
       status: HttpStatus.OK,
       message: 'Account has been updated',
@@ -128,10 +132,14 @@ describe('UserService', () => {
 
   it('updated account not found', async () => {
     try {
-      await service.update('dqdqw', {
-        username: 'dqwdq',
-        password: 'password',
-      });
+      await service.update(
+        'dqdqw',
+        {
+          username: 'dqwdq',
+          password: 'password',
+        },
+        {} as any,
+      );
     } catch (err) {
       expect(err.message).toEqual('false');
     }
@@ -140,10 +148,14 @@ describe('UserService', () => {
   it('updated account not found', async () => {
     try {
       const { public_id } = getField('user-service-entity') as UserInstance;
-      await service.update(public_id, {
-        username: 'dqwdq',
-        password: 'passwdqdqord',
-      });
+      await service.update(
+        public_id,
+        {
+          username: 'dqwdq',
+          password: 'passwdqdqord',
+        },
+        {} as any,
+      );
     } catch (err) {
       expect({ status: err.status, message: err.message }).toEqual({
         status: HttpStatus.BAD_REQUEST,

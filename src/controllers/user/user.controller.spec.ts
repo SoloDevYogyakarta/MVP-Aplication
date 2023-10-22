@@ -8,7 +8,6 @@ import supertest from 'supertest';
 import {
   LoginField,
   RegisterField,
-  UserUpdatedField,
 } from '../../validators/user/user.validator';
 import env from '../../utils/env/env';
 import { PassportModule } from '@nestjs/passport';
@@ -18,6 +17,7 @@ import { createpath } from '../../utils/system/system';
 import { faker } from '@faker-js/faker';
 import { getField } from '../../utils/get-field/get-field';
 import { UserInstance } from '../../database/entities/authenticates/user-entity/user-entity';
+import { join } from 'path';
 
 describe('UserController', () => {
   let app: INestApplication;
@@ -276,12 +276,16 @@ describe('UserController', () => {
     const { username, public_id } = getField('user-http-entity');
     await supertest(app.getHttpServer())
       .post(`/user/${public_id}`)
-      .set('content-type', 'application/json')
       .set('Authorization', `Bearer ${getField('token')}`)
-      .send({
-        username,
-        password: 'password',
-      } as Partial<UserUpdatedField>)
+      .field('username', username)
+      .field('password', 'password')
+      .attach(
+        'file',
+        join(
+          __dirname,
+          '../../../391282393_7054748857952078_2554999196306250130_n.jpg',
+        ),
+      )
       .expect(HttpStatus.OK)
       .then((res) => {
         expect(res.body).toEqual({
@@ -297,10 +301,8 @@ describe('UserController', () => {
       .post(`/user/dqwdqdqw`)
       .set('content-type', 'application/json')
       .set('Authorization', `Bearer ${getField('token')}`)
-      .send({
-        username,
-        password: 'password',
-      } as Partial<UserUpdatedField>)
+      .field('username', faker.internet.userName())
+      .field('password', 'password')
       .expect(HttpStatus.INTERNAL_SERVER_ERROR)
       .then((res) => {
         const error = res.error as {
@@ -319,10 +321,8 @@ describe('UserController', () => {
       .post(`/user/${public_id}`)
       .set('content-type', 'application/json')
       .set('Authorization', `Bearer ${getField('token')}`)
-      .send({
-        username: faker.internet.userName(),
-        password: 'dqwdqpassword',
-      } as Partial<UserUpdatedField>)
+      .field('username', faker.internet.userName())
+      .field('password', 'dqwkdmqkwdq')
       .expect(HttpStatus.BAD_REQUEST)
       .then((res) => {
         expect(res.body).toEqual({

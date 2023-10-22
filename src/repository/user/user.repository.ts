@@ -5,6 +5,10 @@ import {
   userEntity,
   UserInstance,
 } from '../../database/entities/authenticates/user-entity/user-entity';
+import {
+  userAssociate,
+  userInclude,
+} from '../../database/associates/user-associate/user-associate';
 
 @Injectable()
 export class UserRepository {
@@ -12,12 +16,19 @@ export class UserRepository {
     let where = {},
       datas = [];
     dynamicFilter(where, datas, query);
-    const result = await userEntity.findAll();
+    const result = await userAssociate.findAll({
+      where: where,
+      include: userInclude,
+      order: [['createdAt', 'DESC']],
+    });
     return result;
   }
 
   async findOne(public_id: string): Promise<UserInstance> {
-    const result = await userEntity.findOne({ where: { public_id } });
+    const result = await userAssociate.findOne({
+      where: { public_id },
+      include: userInclude,
+    });
     return result;
   }
 }

@@ -8,4 +8,5 @@ export type GetFieldType =
   | 'basic-entity'
   | 'variant-entity'
   | 'history-entity'
-  | 'product-http-entity';
+  | 'product-http-entity'
+  | 'file-entity';

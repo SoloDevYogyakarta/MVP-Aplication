@@ -9,6 +9,7 @@ export class UserEntity extends BaseEntity {
   email: string;
   phone_number: number;
   password: string;
+  file_id: string;
 }
 
 export type UserCreationAttribute = Optional<UserEntity, 'id'>;
@@ -23,6 +24,7 @@ export const userEntity = sequelize.define<UserInstance>(
     email: DataTypes.STRING,
     phone_number: DataTypes.INTEGER,
     password: DataTypes.STRING,
+    file_id: DataTypes.STRING,
   } as ModelAttributes<UserInstance>,
   {
     tableName: 'USER',

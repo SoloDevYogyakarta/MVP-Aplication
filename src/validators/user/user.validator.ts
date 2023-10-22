@@ -31,11 +31,3 @@ export class ResetField {
   @IsString()
   email: string;
 }
-
-export class UserUpdatedField {
-  @IsString()
-  username: string;
-
-  @IsString()
-  password: string;
-}

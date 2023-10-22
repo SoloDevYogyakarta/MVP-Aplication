@@ -9,19 +9,22 @@ import {
   Query,
   Req,
   Res,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UserRepository } from '../../repository/user/user.repository';
 import {
   LoginField,
   RegisterField,
-  UserUpdatedField,
 } from '../../validators/user/user.validator';
 import { UserService } from '../../services/user/user.service';
 import { AuthGuard } from '../../middleware/guards.middleware';
 import { createpath } from '../../utils/system/system';
 import { omit } from 'lodash';
 import { DyanmicQuery } from '../../validators/query/product.query';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from '../../utils/multer/multer';
 
 @Controller('user')
 export class UserController {
@@ -59,14 +62,15 @@ export class UserController {
     return res.status(HttpStatus.OK).json('reset');
   }
 
+  @UseInterceptors(FileInterceptor('file', { storage: diskStorage }))
   @UseGuards(AuthGuard)
   @Post(':id')
   async update(
     @Req() req: Request,
     @Res() res: Response,
-    @Body() body: UserUpdatedField,
+    @UploadedFile() file: Express.Multer.File,
   ) {
-    const result = await this.service.update(req.params.id, body);
+    const result = await this.service.update(req.params.id, req.body, file);
     return res.status(result.status).json(result);
   }
 
