@@ -8,6 +8,8 @@ export class FileEntity extends BaseEntity {
   originalname: string;
   filepath: string;
   type: string;
+  width: number;
+  height: number;
 }
 
 export type FileCreationAttribute = Optional<FileEntity, 'id'>;
@@ -22,6 +24,8 @@ export const fileEntity = sequelize.define<FileInstance>(
     originalname: DataTypes.STRING,
     filepath: DataTypes.STRING,
     type: DataTypes.STRING,
+    width: DataTypes.INTEGER,
+    height: DataTypes.INTEGER,
   } as ModelAttributes<FileInstance>,
   {
     tableName: 'FILE',

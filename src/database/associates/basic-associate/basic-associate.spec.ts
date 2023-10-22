@@ -1,17 +1,17 @@
 import { ModelCtor } from 'sequelize';
-import { ProductBasicInstance } from '../../../database/entities/products/product-basic-entity/product-basic-entity';
+import { ProductBasicInstance } from '../../../database/entities/products/basic-entity/basic-entity';
 import { getField } from '../../../utils/get-field/get-field';
 import {
-  productBasicAttribute,
   productBasicAssociate,
+  productBasicAttribute,
   productBasicInclude,
 } from './basic-associate';
 
-describe('productBasicAssociate', () => {
+describe('ProductBasicAssociate', () => {
   let entity: ModelCtor<ProductBasicInstance>;
 
-  beforeEach(async () => {
-    entity = await productBasicAssociate;
+  beforeEach(() => {
+    entity = productBasicAssociate;
   });
 
   it('should to be defined', () => expect(entity).toBeDefined());
@@ -20,7 +20,7 @@ describe('productBasicAssociate', () => {
 
   try {
     it('findOne with relationship', async () => {
-      const { public_id } = getField('basic-entity');
+      const { public_id } = getField('basic-http-entity');
       const findOne = await entity.findOne({
         where: { public_id },
         attributes: productBasicAttribute,
@@ -29,7 +29,7 @@ describe('productBasicAssociate', () => {
       expect(findOne.public_id).toEqual(public_id);
     });
 
-    it('findAll', async () => {
+    it('findAll with relationship', async () => {
       const findAll = await entity.findAll({
         attributes: productBasicAttribute,
         include: productBasicInclude,

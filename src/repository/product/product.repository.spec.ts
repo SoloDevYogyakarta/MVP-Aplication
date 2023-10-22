@@ -14,7 +14,7 @@ describe('ProductRepository', () => {
 
   try {
     it('findOne', async () => {
-      const { public_id } = getField('basic-entity');
+      const { public_id } = getField('basic-http-entity');
       const result = await repository.findOne(public_id);
       expect(result.public_id).toEqual(public_id);
     });
@@ -25,8 +25,8 @@ describe('ProductRepository', () => {
     });
 
     it('findAll with query', async () => {
-      const { mechanis_name } = getField('basic-entity');
-      const result = await repository.findAll({ mechanis_name });
+      const { name } = getField('basic-entity');
+      const result = await repository.findAll({ name });
       expect(result.length).not.toEqual(0);
     });
   } catch (err) {

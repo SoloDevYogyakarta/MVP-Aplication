@@ -23,7 +23,7 @@ describe('UserService', () => {
 
   it('login', async () => {
     const result = await service.login({
-      token: 'Randi.Jast',
+      token: getField('user-http-entity').username,
       password: 'password',
     });
     expect(result.accessToken).not.toEqual(null);
@@ -31,7 +31,7 @@ describe('UserService', () => {
 
   it('login with remail', async () => {
     const result = await service.login({
-      token: getField('user-service-entity').email,
+      token: getField('user-http-entity').email,
       password: 'password',
     });
     expect(result.accessToken).not.toEqual(null);
@@ -50,7 +50,24 @@ describe('UserService', () => {
 
   it('Wrong password', async () => {
     try {
-      await service.login({ token: 'Randi.Jast', password: 'pdqdassword' });
+      await service.login({
+        token: getField('user-http-entity').username,
+        password: 'pdqdassword',
+      });
+    } catch (err) {
+      expect({ status: err.status, message: err.message }).toEqual({
+        status: HttpStatus.BAD_REQUEST,
+        message: 'Wrong password',
+      });
+    }
+  });
+
+  it('Login with email wrong password', async () => {
+    try {
+      await service.login({
+        token: getField('user-http-entity').email,
+        password: 'pdqdassword',
+      });
     } catch (err) {
       expect({ status: err.status, message: err.message }).toEqual({
         status: HttpStatus.BAD_REQUEST,
@@ -87,7 +104,7 @@ describe('UserService', () => {
   it('Username already exists', async () => {
     try {
       await service.create({
-        username: 'Randi.Jast',
+        username: getField('user-http-entity').username,
         password: 'password',
         confirmation: 'password',
       });
@@ -102,7 +119,7 @@ describe('UserService', () => {
   it("Password don'\t match", async () => {
     try {
       await service.create({
-        username: 'Randi.Jadqwdqwdst',
+        username: getField('user-http-entity').email,
         password: 'passdqwdword',
         confirmation: 'password',
       });
@@ -115,14 +132,25 @@ describe('UserService', () => {
   });
 
   it('update', async () => {
-    const { public_id } = getField('user-service-entity') as UserInstance;
+    const { public_id, username } = getField(
+      'user-http-entity',
+    ) as UserInstance;
     const result = await service.update(
       public_id,
       {
-        username: faker.internet.userName(),
+        username,
         password: 'password',
       },
-      {} as any,
+      {
+        fieldname: 'file',
+        originalname: '391282393_7054748857952078_2554999196306250130_n.jpg',
+        encoding: '7bit',
+        mimetype: 'image/jpeg',
+        destination: '/Users/kenedy-/mvpapplication/mvpapplication/src/assets',
+        filename: '6muLn08-89ryTPSsLe0Nc.jpeg',
+        path: '/Users/kenedy-/mvpapplication/mvpapplication/src/assets/6muLn08-89ryTPSsLe0Nc.jpeg',
+        size: 409192,
+      } as Express.Multer.File,
     );
     expect(result).toEqual({
       status: HttpStatus.OK,

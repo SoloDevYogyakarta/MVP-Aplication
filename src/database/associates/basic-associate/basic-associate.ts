@@ -4,13 +4,13 @@ import {
   HasOneOptions,
   Includeable,
 } from 'sequelize';
-import { historyEntity } from '../../../database/entities/products/history-entity/history-entity';
-import { productBasicEntity } from '../../../database/entities/products/product-basic-entity/product-basic-entity';
-import { variantEntity } from '../../../database/entities/products/variant-entity/variant-entity';
+import { productStockEntity } from '../../../database/entities/products/stock-entity/stock-entity';
+import { productBasicEntity } from '../../../database/entities/products/basic-entity/basic-entity';
+import { productpriceEntity } from '../../../database/entities/products/price-entity/price-entity';
 import {
-  connectAssociate,
-  connectFileInclude,
-} from '../connect-associate/connect-associate';
+  joinProductAndFileAssociate,
+  joinProductAndFileInclude,
+} from '../join-associate/join-associate';
 
 const productBasicAttribute: FindAttributeOptions = {
   include: [],
@@ -19,16 +19,16 @@ const productBasicAttribute: FindAttributeOptions = {
 
 const productBasicInclude: Includeable[] = [
   {
-    model: historyEntity,
-    as: 'history',
+    model: productpriceEntity,
+    as: 'price',
   },
   {
-    model: variantEntity,
-    as: 'variant',
+    model: productStockEntity,
+    as: 'stock',
   },
   {
-    model: connectAssociate,
-    include: connectFileInclude,
+    model: joinProductAndFileAssociate,
+    include: joinProductAndFileInclude,
     as: 'files',
   },
 ];
@@ -41,9 +41,9 @@ const options: HasOneOptions | HasManyOptions = {
   },
 };
 
-productBasicEntity.hasOne(historyEntity, { ...options, as: 'history' });
-productBasicEntity.hasMany(variantEntity, { ...options, as: 'variant' });
-productBasicEntity.hasMany(connectAssociate, {
+productBasicEntity.hasOne(productpriceEntity, { ...options, as: 'price' });
+productBasicEntity.hasOne(productStockEntity, { ...options, as: 'stock' });
+productBasicEntity.hasMany(joinProductAndFileAssociate, {
   sourceKey: 'public_id',
   foreignKey: {
     name: 'source_id',

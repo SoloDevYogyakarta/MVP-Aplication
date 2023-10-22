@@ -1,1 +1,0 @@
-{"id":180,"name":"rantai","type":"sss","desc":"bawa sendiri","price":990000,"product_id":"A8_l9MYSM3nu6t6-_GBMH","public_id":"xGS181vrJ9WgMBj7lSYAU"}

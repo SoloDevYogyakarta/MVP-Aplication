@@ -13,5 +13,6 @@ module.exports = {
     'src/app.module.ts',
     'src/database/config',
     'src/database/migrations',
+    'src/database/seeders',
   ],
 };

@@ -3,13 +3,9 @@ import {
   HasManyOptions,
   HasOneOptions,
   Includeable,
-  ModelCtor,
 } from 'sequelize';
 import { userEntity } from '../../../database/entities/authenticates/user-entity/user-entity';
-import {
-  fileEntity,
-  FileInstance,
-} from '../../../database/entities/commons/file-entity/file-entity';
+import { fileEntity } from '../../../database/entities/commons/file-entity/file-entity';
 
 const fileAttribute: FindAttributeOptions = {
   include: [],

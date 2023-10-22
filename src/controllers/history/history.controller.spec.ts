@@ -31,41 +31,5 @@ describe('HistoryController', () => {
     await app.init();
   });
 
-  it('http history all', async () =>
-    await supertest(app.getHttpServer())
-      .get('/history')
-      .set('content-type', 'application/json')
-      .set('Authorization', `Bearer ${getField('token')}`)
-      .expect(HttpStatus.OK)
-      .then((res) => {
-        createpath(
-          '../../database/dataTxt/history-http-entity.txt',
-          res.body[0],
-        );
-        expect(res.body.length).not.toEqual(0);
-      }));
-
-  try {
-    it('http history detail', async () => {
-      const { public_id } = getField('history-entity');
-      await supertest(app.getHttpServer())
-        .get(`/history/${public_id}`)
-        .set('content-type', 'application/json')
-        .set('Authorization', `Bearer ${getField('token')}`)
-        .expect(HttpStatus.OK)
-        .then((res) => expect(res.body.public_id).toEqual(public_id));
-    });
-
-    it('http history updated', async () => {
-      const { public_id } = getField('history-entity');
-      await supertest(app.getHttpServer())
-        .post(`/history/${public_id}`)
-        .set('content-type', 'application/json')
-        .set('Authorization', `Bearer ${getField('token')}`)
-        .expect(HttpStatus.OK)
-        .then((res) => expect(res.body).toEqual('updated'));
-    });
-  } catch (err) {
-    // empty
-  }
+  it('should to be defined', () => expect(app).toBeDefined());
 });

@@ -4,23 +4,23 @@ import {
   productBasicAttribute,
   productBasicInclude,
 } from '../../database/associates/basic-associate/basic-associate';
-import { ProductBasicInstance } from '../../database/entities/products/product-basic-entity/product-basic-entity';
-import { DyanmicQuery } from '../../validators/query/product.query';
+import {
+  ProductBasicEntity,
+  ProductBasicInstance,
+} from '../../database/entities/products/basic-entity/basic-entity';
 import { dynamicFilter } from '../../utils/dynamic-filter/dynamic-filter';
 
 @Injectable()
 export class ProductRepository {
   async findOne(public_id: string): Promise<ProductBasicInstance> {
-    const result = await productBasicAssociate.findOne({
+    return await productBasicAssociate.findOne({
       where: { public_id },
       attributes: productBasicAttribute,
       include: productBasicInclude,
-      order: [['id', 'DESC']],
     });
-    return result;
   }
 
-  async findAll(query: DyanmicQuery): Promise<ProductBasicInstance[]> {
+  async findAll(query: ProductBasicEntity): Promise<ProductBasicInstance[]> {
     let where = {},
       datas = [];
     dynamicFilter(where, datas, query);
@@ -28,7 +28,6 @@ export class ProductRepository {
       where: where,
       attributes: productBasicAttribute,
       include: productBasicInclude,
-      order: [['id', 'DESC']],
     });
   }
 }

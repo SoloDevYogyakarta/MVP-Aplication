@@ -17,9 +17,9 @@ import { AuthGuard } from '../../middleware/guards.middleware';
 import { ProductRepository } from '../../repository/product/product.repository';
 import { ProductService } from '../../services/product/product.service';
 import { CustomRequest } from '../../types/custom-request.type';
-import { ProductField } from '../../validators/product/product.validator';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from '../../utils/multer/multer';
+import { ProductBasicEntity } from '../../database/entities/products/basic-entity/basic-entity';
 
 @Controller('product')
 export class ProductController {
@@ -37,7 +37,7 @@ export class ProductController {
     @UploadedFiles() files: Express.Multer.File[],
   ) {
     const result = await this.service.create(
-      req.body as unknown as ProductField,
+      req.body as unknown as ProductBasicEntity,
       req.user.data.public_id,
       files,
     );

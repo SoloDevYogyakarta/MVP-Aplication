@@ -22,6 +22,7 @@ describe('userEntity', () => {
     file.save();
     const created = await entity.create({
       username,
+      email: faker.internet.email(),
       password: 'password',
       file_id: file.public_id,
     });
