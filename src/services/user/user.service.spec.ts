@@ -31,7 +31,7 @@ describe('UserService', () => {
 
   it('login with remail', async () => {
     const result = await service.login({
-      token: 'email@yahoo.com',
+      token: getField('user-service-entity').email,
       password: 'password',
     });
     expect(result.accessToken).not.toEqual(null);

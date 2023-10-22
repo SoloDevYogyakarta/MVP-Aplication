@@ -13,15 +13,6 @@ module.exports = {
           'user_id',
           { transaction },
         ),
-        queryInterface.addColumn(
-          {
-            tableName: 'BASIC',
-            schema: 'PRODUCTS',
-          },
-          'user_id',
-          { type: Sequelize.DataTypes.STRING(22), allowNull: true },
-          { transaction },
-        ),
       ]);
     });
   },
