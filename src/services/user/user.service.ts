@@ -84,13 +84,11 @@ export class UserService {
       );
     }
     const file = await fileEntity.create({});
+    file.save();
     const create = await userEntity.create(
       omit({ ...field, file_id: file.public_id }, ['confirmation']),
     );
-    createpath(
-      `../../../src/database/dataTxt/${'user-service-entity.txt'}`,
-      create,
-    );
+    createpath(`../../database/dataTxt/${'user-service-entity.txt'}`, create);
     create.save();
     return {
       result: create,
@@ -125,7 +123,11 @@ export class UserService {
       fileEnt.filename = file.filename;
       fileEnt.originalname = file.originalname;
       if (fileEnt.filepath) {
-        removepath(`../..${fileEnt.filepath}`);
+        try {
+          removepath(`../..${fileEnt.filepath}`);
+        } catch (err) {
+          // empty
+        }
       }
       fileEnt.filepath = file.path.split('/src')[1];
       fileEnt.type = file.mimetype.split('/')[0];

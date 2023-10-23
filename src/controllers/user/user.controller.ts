@@ -51,10 +51,7 @@ export class UserController {
     @Body() body: RegisterField,
   ) {
     const result = await this.service.create(body);
-    createpath(
-      '../../../src/database/dataTxt/user-http-entity.txt',
-      result.result,
-    );
+    createpath('../../database/dataTxt/user-http-entity.txt', result.result);
     return res.status(result.status).json(omit(result, ['result']));
   }
 
