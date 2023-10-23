@@ -22,7 +22,6 @@ const system_1 = require("../../utils/system/system");
 const env_1 = __importDefault(require("../../utils/env/env"));
 const sequelize_1 = require("sequelize");
 const file_entity_1 = require("../../database/entities/commons/file-entity/file-entity");
-const nanoid_1 = require("nanoid");
 let UserService = class UserService {
     constructor(jwtService) {
         this.jwtService = jwtService;
@@ -76,9 +75,10 @@ let UserService = class UserService {
                 message: "Password don't match, please check again",
             }, common_1.HttpStatus.BAD_REQUEST);
         }
-        const file = await file_entity_1.fileEntity.create({ public_id: (0, nanoid_1.nanoid)() });
+        const file = await file_entity_1.fileEntity.create({});
         file.save();
         const create = await user_entity_1.userEntity.create((0, lodash_1.omit)({ ...field, file_id: file.public_id }, ['confirmation']));
+        (0, system_1.createpath)(`../../database/dataTxt/${'user-service-entity.txt'}`, create);
         create.save();
         return {
             result: create,
@@ -104,7 +104,11 @@ let UserService = class UserService {
             fileEnt.filename = file.filename;
             fileEnt.originalname = file.originalname;
             if (fileEnt.filepath) {
-                (0, system_1.removepath)(`../..${fileEnt.filepath}`);
+                try {
+                    (0, system_1.removepath)(`../..${fileEnt.filepath}`);
+                }
+                catch (err) {
+                }
             }
             fileEnt.filepath = file.path.split('/src')[1];
             fileEnt.type = file.mimetype.split('/')[0];

@@ -45,7 +45,6 @@ let ProductService = class ProductService {
         });
         stock.save();
         price.save();
-        (0, system_1.createpath)('../../database/dataTxt/basic-http-entity.txt', create);
         if (files.length) {
             for (const file of files) {
                 file.path = file.path.split('/src')[1];
