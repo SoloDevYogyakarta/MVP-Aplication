@@ -11,7 +11,6 @@ export declare class UserService {
         status: HttpStatus;
     }>;
     create(field: RegisterField): Promise<{
-        result: import("../../database/entities/authenticates/user-entity/user-entity").UserInstance;
         status: HttpStatus;
         message: string;
     }>;
