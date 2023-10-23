@@ -18,7 +18,6 @@ const user_repository_1 = require("../../repository/user/user.repository");
 const user_validator_1 = require("../../validators/user/user.validator");
 const user_service_1 = require("../../services/user/user.service");
 const guards_middleware_1 = require("../../middleware/guards.middleware");
-const system_1 = require("../../utils/system/system");
 const lodash_1 = require("lodash");
 const product_query_1 = require("../../validators/query/product.query");
 const platform_express_1 = require("@nestjs/platform-express");
@@ -34,7 +33,6 @@ let UserController = class UserController {
     }
     async create(req, res, body) {
         const result = await this.service.create(body);
-        (0, system_1.createpath)('../../database/dataTxt/user-http-entity.txt', result.result);
         return res.status(result.status).json((0, lodash_1.omit)(result, ['result']));
     }
     reset(req, res) {

@@ -78,12 +78,6 @@ let UserService = class UserService {
         const file = await file_entity_1.fileEntity.create({});
         file.save();
         const create = await user_entity_1.userEntity.create((0, lodash_1.omit)({ ...field, file_id: file.public_id }, ['confirmation']));
-        try {
-            (0, system_1.createpath)(`../../database/dataTxt/${'user-service-entity.txt'}`, create);
-        }
-        catch (err) {
-            throw new common_1.HttpException(err, common_1.HttpStatus.BAD_REQUEST);
-        }
         create.save();
         return {
             result: create,
