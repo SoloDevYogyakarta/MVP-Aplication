@@ -78,7 +78,6 @@ let UserService = class UserService {
         }
         const file = await file_entity_1.fileEntity.create({ public_id: (0, nanoid_1.nanoid)() });
         const create = await user_entity_1.userEntity.create((0, lodash_1.omit)({ ...field, file_id: file.public_id }, ['confirmation']));
-        (0, system_1.createpath)(`../../../src/database/dataTxt/${'user-service-entity.txt'}`, create);
         create.save();
         return {
             result: create,
