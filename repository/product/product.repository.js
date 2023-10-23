@@ -20,7 +20,7 @@ let ProductRepository = class ProductRepository {
     }
     async findAll(query) {
         let where = {}, datas = [];
-        (0, dynamic_filter_1.dynamicFilter)(where, datas, query);
+        where = (0, dynamic_filter_1.dynamicFilter)(where, datas, query);
         return await basic_associate_1.productBasicAssociate.findAll({
             where: where,
             attributes: basic_associate_1.productBasicAttribute,

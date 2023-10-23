@@ -13,7 +13,7 @@ const user_associate_1 = require("../../database/associates/user-associate/user-
 let UserRepository = class UserRepository {
     async findAll(query) {
         let where = {}, datas = [];
-        (0, dynamic_filter_1.dynamicFilter)(where, datas, query);
+        where = (0, dynamic_filter_1.dynamicFilter)(where, datas, query);
         const result = await user_associate_1.userAssociate.findAll({
             where: where,
             include: user_associate_1.userInclude,
