@@ -26,7 +26,6 @@ let ProductController = class ProductController {
         this.repository = repository;
     }
     async create(req, res, files) {
-        console.log(req.body);
         const result = await this.service.create(req.body, req.user.data.public_id, files);
         return res.status(result.status).json(result);
     }
