@@ -75,9 +75,7 @@ let UserService = class UserService {
                 message: "Password don't match, please check again",
             }, common_1.HttpStatus.BAD_REQUEST);
         }
-        const file = await file_entity_1.fileEntity.create({});
-        file.save();
-        const create = await user_entity_1.userEntity.create((0, lodash_1.omit)({ ...field, file_id: file.public_id }, ['confirmation']));
+        const create = await user_entity_1.userEntity.create((0, lodash_1.omit)({ ...field }, ['confirmation']));
         create.save();
         return {
             result: create,
