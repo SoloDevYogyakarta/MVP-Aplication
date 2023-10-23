@@ -47,7 +47,8 @@ let ProductService = class ProductService {
         price.save();
         if (files.length) {
             for (const file of files) {
-                file.path = file.path.split('/src')[1];
+                console.log(file.path);
+                file.path = `/assets${file.path.split('assets')[1]}`;
                 const f = await file_entity_1.fileEntity.create({
                     public_id: (0, nanoid_1.nanoid)(),
                     ...file,
@@ -56,6 +57,7 @@ let ProductService = class ProductService {
                 });
                 f.save();
                 const join = await join_entity_1.joinEntity.create({
+                    public_id: (0, nanoid_1.nanoid)(),
                     source_id: create.public_id,
                     foreign_id: f.public_id,
                 });
@@ -103,7 +105,7 @@ let ProductService = class ProductService {
                 }
                 f.destroy();
                 join.destroy();
-                file.path = file.path.split('/src')[1];
+                file.path = `/assets${file.path.split('assets')[1]}`;
                 const cf = await file_entity_1.fileEntity.create({
                     ...file,
                     filepath: file.path,
