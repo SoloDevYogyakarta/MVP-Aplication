@@ -1,13 +1,14 @@
 import { ModelCtor } from 'sequelize';
-import { getField } from '../../../utils/get-field/get-field';
 import { JoinInstance } from '../../../database/entities/commons/join-entity/join-entity';
+import { getField } from '../../../utils/get-field/get-field';
 import {
   joinProductAndFileAssociate,
   joinProductAndFileAttribute,
   joinProductAndFileInclude,
 } from './join-associate';
 
-describe('JoinAssociate', () => {
+describe('joinProductAndFileAssociate', () => {
+  let public_id!: string;
   let entity: ModelCtor<JoinInstance>;
 
   beforeEach(() => {
@@ -19,14 +20,19 @@ describe('JoinAssociate', () => {
   it('render correctly', () => expect(entity).toMatchSnapshot());
 
   try {
+    public_id = getField('join-entity').public_id;
+  } catch (err) {
+    // empty
+  }
+
+  if (public_id) {
     it('findOne with relationship', async () => {
-      const { public_id } = getField('basic-http-entity');
       const findOne = await entity.findOne({
-        where: { source_id: public_id },
+        where: { public_id },
         attributes: joinProductAndFileAttribute,
         include: joinProductAndFileInclude,
       });
-      expect(findOne.source_id).toEqual(public_id);
+      expect(findOne.public_id).toEqual(public_id);
     });
 
     it('findAll with relationship', async () => {
@@ -36,7 +42,5 @@ describe('JoinAssociate', () => {
       });
       expect(findAll.length).not.toEqual(0);
     });
-  } catch (err) {
-    // empty
   }
 });

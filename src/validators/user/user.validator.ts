@@ -10,7 +10,7 @@ export class LoginField {
 
 export class RegisterField {
   @IsString()
-  username: string;
+  username?: string;
 
   @IsString()
   @IsOptional()

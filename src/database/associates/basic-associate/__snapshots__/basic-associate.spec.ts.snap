@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ProductBasicAssociate render correctly 1`] = `[Function]`;
+exports[`productBasicAssociate render correctly 1`] = `[Function]`;

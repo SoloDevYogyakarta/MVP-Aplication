@@ -23,7 +23,7 @@ export class ProductRepository {
   async findAll(query: ProductBasicEntity): Promise<ProductBasicInstance[]> {
     let where = {},
       datas = [];
-    dynamicFilter(where, datas, query);
+    where = dynamicFilter(where, datas, query);
     return await productBasicAssociate.findAll({
       where: where,
       attributes: productBasicAttribute,

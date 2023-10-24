@@ -14,4 +14,5 @@ export type GetFieldType =
   | 'history-entity'
   | 'product-http-entity'
   | 'file-entity'
+  | 'join-entity'
   | 'connect-entity';

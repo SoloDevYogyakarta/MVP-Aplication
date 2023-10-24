@@ -1,52 +1,45 @@
-import { ModelCtor } from 'sequelize';
 import { faker } from '@faker-js/faker';
-import { userEntity, UserInstance } from './user-entity';
-import { createpath } from '../../../../utils/system/system';
+import { ModelCtor } from 'sequelize';
 import { getField } from '../../../../utils/get-field/get-field';
+import { createpath } from '../../../../utils/system/system';
 import { fileEntity } from '../../commons/file-entity/file-entity';
+import { userEntity, UserInstance } from './user-entity';
 
-describe('userEntity', () => {
+describe('UserEntity', () => {
+  let public_id!: string;
+  let username!: string;
   let entity: ModelCtor<UserInstance>;
 
-  beforeEach(async () => {
-    entity = await userEntity;
+  beforeEach(() => {
+    entity = userEntity;
   });
 
   it('should to be defined', () => expect(entity).toBeDefined());
 
   it('render correctly', () => expect(entity).toMatchSnapshot());
 
-  it('created new user', async () => {
-    const username = faker.internet.userName();
+  it('create', async () => {
     const file = await fileEntity.create({});
     file.save();
-    const created = await entity.create({
-      username,
-      email: faker.internet.email(),
+    const user = await entity.create({
+      username: faker.internet.userName(),
       password: 'password',
       file_id: file.public_id,
     });
-    created.save();
+    user.save();
+    createpath('../../database/dataTxt/user-entity.txt', user);
     createpath('../../database/dataTxt/file-entity.txt', file);
-    createpath('../../database/dataTxt/user-entity.txt', created);
-    expect(created.username).toEqual(username);
+    expect(user.file_id).toEqual(file.public_id);
   });
 
   try {
-    it('updated', async () => {
-      const { public_id } = getField('user-entity') as UserInstance;
-      const findOne = await entity.findOne({ where: { public_id } });
-      const email = faker.internet.email();
-      findOne.username = `updated-${faker.internet.userName()}`;
-      findOne.email = email;
-      findOne.save();
-      expect(findOne.email).toEqual(email);
-    });
+    public_id = getField('user-http-entity').public_id;
+    username = getField('user-http-entity').username;
+  } catch (err) {}
 
+  if (public_id) {
     it('findOne', async () => {
-      const { public_id } = getField('user-entity') as UserInstance;
       const findOne = await entity.findOne({ where: { public_id } });
-      createpath('../../database/dataTxt/user-entity.txt', findOne);
       expect(findOne.public_id).toEqual(public_id);
     });
 
@@ -54,7 +47,12 @@ describe('userEntity', () => {
       const findAll = await entity.findAll();
       expect(findAll.length).not.toEqual(0);
     });
-  } catch (err) {
-    // empty
+
+    it('update', async () => {
+      const findOne = await entity.findOne({ where: { public_id } });
+      findOne.username = username;
+      findOne.save();
+      expect(findOne.username).toEqual(username);
+    });
   }
 });

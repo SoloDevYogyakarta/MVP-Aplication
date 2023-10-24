@@ -4,7 +4,7 @@ import {
   productBasicEntity,
 } from '../../database/entities/products/basic-entity/basic-entity';
 import { pick } from 'lodash';
-import { createpath, joinpath, removepath } from '../../utils/system/system';
+import { joinpath, removepath } from '../../utils/system/system';
 import {
   ProductPriceEntity,
   productpriceEntity,
@@ -55,10 +55,9 @@ export class ProductService {
     });
     stock.save();
     price.save();
-    createpath('../../database/dataTxt/basic-http-entity.txt', create);
-    if (files.length) {
+    if (files?.length) {
       for (const file of files) {
-        file.path = file.path.split('/src')[1];
+        file.path = `/assets${file.path.split('assets')[1]}`;
         const f = await fileEntity.create({
           public_id: nanoid(),
           ...file,
@@ -67,13 +66,18 @@ export class ProductService {
         });
         f.save();
         const join = await joinEntity.create({
+          public_id: nanoid(),
           source_id: create.public_id,
           foreign_id: f.public_id,
         });
         join.save();
       }
     }
-    return { status: HttpStatus.CREATED, message: 'Product has been create' };
+    return {
+      result: create,
+      status: HttpStatus.CREATED,
+      message: 'Product has been create',
+    };
   }
 
   async update(body: Product, public_id: string, files: Express.Multer.File[]) {
@@ -110,7 +114,7 @@ export class ProductService {
         where: { product_id: findOne.public_id },
       },
     );
-    if (files.length) {
+    if (files?.length) {
       for (const file of files) {
         const join = await joinEntity.findOne({
           where: { source_id: findOne.public_id },
@@ -127,8 +131,9 @@ export class ProductService {
         }
         f.destroy();
         join.destroy();
-        file.path = file.path.split('/src')[1];
+        file.path = `/assets${file.path.split('assets')[1]}`;
         const cf = await fileEntity.create({
+          public_id: nanoid(),
           ...file,
           filepath: file.path,
           ...sizeOf(joinpath(`../../assets/${file.filename}`)),

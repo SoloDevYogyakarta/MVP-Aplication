@@ -11,6 +11,7 @@ import { createpath, removepath } from '../../utils/system/system';
 import env from '../../utils/env/env';
 import { Op } from 'sequelize';
 import { fileEntity } from '../../database/entities/commons/file-entity/file-entity';
+import { nanoid } from 'nanoid';
 
 @Injectable()
 export class UserService {
@@ -48,15 +49,22 @@ export class UserService {
       { data: findOne },
       { secret: env['SECRET'] },
     );
+    createpath('../../database/dataTxt/token.txt', token);
     return { accessToken: token, status: HttpStatus.OK };
   }
 
   async create(field: RegisterField) {
     let where = [{ username: '' }, { email: '' }];
+    let message!: string;
     if (field.username) {
+      message = 'Username';
       where = [...where, { username: field.username }];
     }
     if (field.email) {
+      if (field.username) {
+        message = 'Username or ';
+      }
+      message = `${message}Email address`.replace(/undefined/g, '');
       where = [...where, { email: field.email }];
     }
 
@@ -69,7 +77,7 @@ export class UserService {
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
-          message: 'Username already exists, please choose another one',
+          message: `${message} already exists, please choose another one`,
         },
         HttpStatus.BAD_REQUEST,
       );
@@ -83,12 +91,12 @@ export class UserService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    const file = await fileEntity.create({});
+    const file = await fileEntity.create({ public_id: nanoid() });
     file.save();
     const create = await userEntity.create(
       omit({ ...field, file_id: file.public_id }, ['confirmation']),
     );
-    createpath(`../../database/dataTxt/${'user-service-entity.txt'}`, create);
+    createpath('../../database/dataTxt/user-http-entity.txt', create);
     create.save();
     return {
       result: create,
@@ -133,6 +141,7 @@ export class UserService {
       fileEnt.type = file.mimetype.split('/')[0];
       fileEnt.save();
     }
+    createpath('../../database/dataTxt/user-http-entity.txt', findOne);
     return { status: HttpStatus.OK, message: 'Account has been updated' };
   }
 

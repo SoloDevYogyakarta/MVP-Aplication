@@ -8,9 +8,11 @@ export function dynamicFilter(
   query: Object,
 ) {
   Object.keys(query).filter((key) => {
-    datas = [...datas, { [key]: { [Op.iLike]: query[key] } }];
+    datas = [...datas, { [key]: { [Op.substring]: query[key] } }];
   });
   if (some(query)) {
     where = { [Op.or]: datas };
   }
+
+  return where;
 }

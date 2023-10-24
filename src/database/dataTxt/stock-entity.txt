@@ -1,1 +1,0 @@
-{"id":42,"use_stock":true,"value":120,"stock_wording":2,"product_id":"m5jtQsA_wWQ4OFgUzsXkz","public_id":"49QzqVp6VnoAYLDNC7YX8"}

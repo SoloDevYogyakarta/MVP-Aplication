@@ -1,1 +1,0 @@
-{"id":71,"username":"Ruth_Hartmann16","email":"Archibald_Rippin@gmail.com","password":"$2b$10$dqhJJ0jcyoYr9J1pJ1CcfOpoyH9gHC.qp2DQKsVRvPmg400TTTFmm","file_id":"LRKD7xRjMlN1wyTcTC5O6","updatedAt":"2023-10-23T10:46:58.618Z","createdAt":"2023-10-23T10:46:58.618Z","public_id":"9SeTAx5e58HjDwB5bVedA","phone_number":null}

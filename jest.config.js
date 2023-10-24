@@ -14,5 +14,6 @@ module.exports = {
     'src/database/config',
     'src/database/migrations',
     'src/database/seeders',
+    'coverage',
   ],
 };

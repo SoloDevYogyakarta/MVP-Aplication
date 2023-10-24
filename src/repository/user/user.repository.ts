@@ -12,7 +12,7 @@ export class UserRepository {
   async findAll(query: DyanmicQuery): Promise<UserInstance[]> {
     let where = {},
       datas = [];
-    dynamicFilter(where, datas, query);
+    where = dynamicFilter(where, datas, query);
     const result = await userAssociate.findAll({
       where: where,
       include: userInclude,

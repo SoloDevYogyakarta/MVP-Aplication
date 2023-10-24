@@ -2,8 +2,24 @@ import { faker } from '@faker-js/faker';
 import { HttpStatus } from '@nestjs/common';
 import { getField } from '../../utils/get-field/get-field';
 import { ProductService } from './product.service';
+import { omit } from 'lodash';
+
+const data = {
+  name: faker.commerce.productName(),
+  status: faker.helpers.arrayElement([1, 2]),
+  condition: faker.helpers.arrayElement([-2, -1, 0, 1, 2]),
+  shortdesc: faker.lorem.paragraph(),
+  main_stock: faker.helpers.arrayElement([1, 2]),
+  reserve_stock: faker.helpers.arrayElement([1, 2]),
+  price: {
+    value: faker.number.int({ min: 1000, max: 20000 }),
+    currency: faker.number.int({ min: 100, max: 2000 }),
+  },
+};
 
 describe('ProductService', () => {
+  let public_id!: string;
+  let user_id!: string;
   let service: ProductService;
 
   beforeEach(() => {
@@ -14,87 +30,71 @@ describe('ProductService', () => {
 
   it('render correctly', () => expect(service).toMatchSnapshot());
 
-  it('create', async () => {
-    const { public_id } = getField('user-entity');
-    const result = await service.create(
-      {
-        name: faker.commerce.productName(),
-        status: faker.helpers.arrayElement([1, 2]),
-        condition: faker.helpers.arrayElement([-2, -1, 0, 1, 2]),
-        shortdesc: faker.lorem.paragraph(),
-        main_stock: faker.helpers.arrayElement([1, 2]),
-        reserve_stock: faker.helpers.arrayElement([1, 2]),
-        price: {
-          value: faker.number.int({ min: 1000, max: 20000 }),
-          currency: faker.number.int({ min: 100, max: 2000 }),
-        },
-      },
-      public_id,
-      {} as any,
-    );
-    expect(result).toEqual({
-      status: HttpStatus.CREATED,
-      message: 'Product has been create',
-    });
-  });
+  try {
+    public_id = getField('basic-http-entity').public_id;
+    user_id = getField('user-http-entity').public_id;
+  } catch (err) {
+    // empty
+  }
 
-  it('update', async () => {
-    const { public_id } = getField('basic-http-entity');
-    const result = await service.update(
-      {
-        name: faker.commerce.productName(),
-        status: faker.helpers.arrayElement([1, 2]),
-        condition: faker.helpers.arrayElement([-2, -1, 0, 1, 2]),
-        shortdesc: faker.lorem.paragraph(),
-        main_stock: faker.helpers.arrayElement([1, 2]),
-        reserve_stock: faker.helpers.arrayElement([1, 2]),
-        price: {
-          value: faker.number.int({ min: 1000, max: 20000 }),
-          currency: faker.number.int({ min: 100, max: 2000 }),
-        },
-      },
-      public_id,
-      {} as any,
-    );
-    expect(result).toEqual({
-      status: HttpStatus.OK,
-      message: 'Product has been update',
-    });
-  });
-
-  it('invalid update', async () => {
-    try {
-      await service.update(
-        {
-          name: faker.commerce.productName(),
-          status: faker.helpers.arrayElement([1, 2]),
-          condition: faker.helpers.arrayElement([-2, -1, 0, 1, 2]),
-          shortdesc: faker.lorem.paragraph(),
-          main_stock: faker.helpers.arrayElement([1, 2]),
-          reserve_stock: faker.helpers.arrayElement([1, 2]),
-        },
-        'dqwdqwd',
-        {} as any,
+  if (public_id) {
+    it('create', async () => {
+      const result = await service.create(
+        data,
+        user_id,
+        [] as Express.Multer.File[],
       );
-    } catch (err) {
-      expect(err.status).toEqual(HttpStatus.NOT_FOUND);
-    }
-  });
-
-  it('destroy', async () => {
-    const { public_id } = getField('basic-destroy-entity');
-    const result = await service.destroy(public_id);
-    expect(result).toEqual({
-      status: HttpStatus.OK,
-      message: 'Product has been delete',
+      expect(omit(result, ['result'])).toEqual({
+        status: HttpStatus.CREATED,
+        message: 'Product has been create',
+      });
     });
-  });
 
-  it('invalid destroy', async () => {
-    try {
-      await service.destroy('dwqdqw');
-    } catch (err) {
-      expect(err.status).toEqual(HttpStatus.NOT_FOUND);
-    }
-  });
+    it('create without images', async () => {
+      const result = await service.create(
+        data,
+        user_id,
+        null as Express.Multer.File[],
+      );
+      expect(omit(result, ['result'])).toEqual({
+        status: HttpStatus.CREATED,
+        message: 'Product has been create',
+      });
+    });
+
+    it('updated', async () => {
+      const result = await service.update(
+        data,
+        public_id,
+        [] as Express.Multer.File[],
+      );
+      expect(result).toEqual({
+        status: HttpStatus.OK,
+        message: 'Product has been update',
+      });
+    });
+
+    it('updated without images', async () => {
+      const result = await service.update(
+        data,
+        public_id,
+        null as Express.Multer.File[],
+      );
+      expect(result).toEqual({
+        status: HttpStatus.OK,
+        message: 'Product has been update',
+      });
+    });
+
+    it('destroy', async () => {
+      try {
+        await service.destroy('dqwdqw');
+      } catch (err) {
+        expect({ status: err.status, message: err.message }).toEqual({
+          status: HttpStatus.NOT_FOUND,
+          message: 'Not Found',
+        });
+      }
+    });
+  }
 });

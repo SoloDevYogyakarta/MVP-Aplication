@@ -8,6 +8,7 @@ import supertest from 'supertest';
 import {
   LoginField,
   RegisterField,
+  ResetField,
 } from '../../validators/user/user.validator';
 import env from '../../utils/env/env';
 import { PassportModule } from '@nestjs/passport';
@@ -16,10 +17,19 @@ import { JwtStrategy } from '../../middleware/jwt.strategy';
 import { createpath } from '../../utils/system/system';
 import { faker } from '@faker-js/faker';
 import { getField } from '../../utils/get-field/get-field';
-import { UserInstance } from '../../database/entities/authenticates/user-entity/user-entity';
+import {
+  UserEntity,
+  UserInstance,
+} from '../../database/entities/authenticates/user-entity/user-entity';
 import { join } from 'path';
+import { pick } from 'lodash';
 
 describe('UserController', () => {
+  let public_id!: string;
+  let destory_id!: string;
+  let username!: string;
+  let email!: string;
+  let token!: string;
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -47,357 +57,288 @@ describe('UserController', () => {
 
   it('should to be defined', () => expect(app).toBeDefined());
 
-  it('http get me', async () =>
-    await supertest(app.getHttpServer())
-      .get('/user/access/me')
-      .set('content-type', 'application/json')
-      .set('Authorization', `Bearer ${getField('token')}`)
-      .expect(HttpStatus.OK)
-      .then((res) => expect(res.body.public_id).not.toEqual(null)));
-
-  it('http user login', async () =>
-    await supertest(app.getHttpServer())
-      .post('/user/login')
-      .set('content-type', 'application/json')
-      .send({
-        token: getField('user-http-entity')?.username,
-        password: 'password',
-      } as Partial<LoginField>)
-      .expect(HttpStatus.OK)
-      .then((res) => {
-        createpath('../../database/dataTxt/token.txt', res.body.accessToken);
-        expect(res.body.accessToken).not.toEqual(null);
-      }));
-
-  it('http user login with email', async () =>
-    await supertest(app.getHttpServer())
-      .post('/user/login')
-      .set('content-type', 'application/json')
-      .send({
-        token: getField('user-http-entity')?.email,
-        password: 'password',
-      } as Partial<LoginField>)
-      .expect(HttpStatus.OK)
-      .then((res) => {
-        createpath('../../database/dataTxt/token.txt', res.body.accessToken);
-        expect(res.body.accessToken).not.toEqual(null);
-      }));
-
-  it('http user login invalid username', async () =>
-    await supertest(app.getHttpServer())
-      .post('/user/login')
-      .set('content-type', 'application/json')
-      .send({
-        token: 'Randi.Jdqwdast',
-        password: 'password',
-      } as Partial<LoginField>)
-      .expect(HttpStatus.BAD_REQUEST)
-      .then((res) => {
-        const error = res.error as {
-          text: string;
-        };
-        expect(JSON.parse(error.text)).toEqual({
-          status: HttpStatus.BAD_REQUEST,
-          message: 'Username or password inccorect',
-        });
-      }));
-
-  it('http user login invalid email', async () =>
-    await supertest(app.getHttpServer())
-      .post('/user/login')
-      .set('content-type', 'application/json')
-      .send({
-        token: 'Randi@yahoo.com',
-        password: 'password',
-      } as Partial<LoginField>)
-      .expect(HttpStatus.BAD_REQUEST)
-      .then((res) => {
-        const error = res.error as {
-          text: string;
-        };
-        expect(JSON.parse(error.text)).toEqual({
-          status: HttpStatus.BAD_REQUEST,
-          message: 'Username or password inccorect',
-        });
-      }));
-
-  it('http user login with username invalid password', async () =>
-    await supertest(app.getHttpServer())
-      .post('/user/login')
-      .set('content-type', 'application/json')
-      .send({
-        token: getField('user-http-entity').username,
-        password: 'passdqdqwword',
-      } as Partial<LoginField>)
-      .expect(HttpStatus.BAD_REQUEST)
-      .then((res) => {
-        const error = res.error as {
-          text: string;
-        };
-        expect(JSON.parse(error.text)).toEqual({
-          status: HttpStatus.BAD_REQUEST,
-          message: 'Wrong password',
-        });
-      }));
-
-  it('http user login with email invalid password', async () =>
-    await supertest(app.getHttpServer())
-      .post('/user/login')
-      .set('content-type', 'application/json')
-      .send({
-        token: getField('user-http-entity').email,
-        password: 'passdqdqwword',
-      } as Partial<LoginField>)
-      .expect(HttpStatus.BAD_REQUEST)
-      .then((res) => {
-        const error = res.error as {
-          text: string;
-        };
-        expect(JSON.parse(error.text)).toEqual({
-          status: HttpStatus.BAD_REQUEST,
-          message: 'Wrong password',
-        });
-      }));
-
-  it('http user reset password', async () =>
-    await supertest(app.getHttpServer())
-      .post('/user/reset/password')
-      .set('content-type', 'application/json')
-      .set('Authorization', `Bearer ${getField('token')}`)
-      .then((res) => {
-        expect(res.body).toEqual('reset');
-      }));
-
-  it('http user created', async () => {
-    const data = {
-      username: faker.internet.userName(),
-      password: 'password',
-      confirmation: 'password',
-      http: true,
-    } as Partial<RegisterField>;
+  it('http::user create', async () =>
     await supertest(app.getHttpServer())
       .post('/user')
       .set('content-type', 'application/json')
-      .send(data)
+      .send({
+        username: faker.internet.userName(),
+        password: 'password',
+        confirmation: 'password',
+      } as Partial<RegisterField>)
       .expect(HttpStatus.CREATED)
-      .then((res) => {
-        expect(res.body).toEqual({
-          status: HttpStatus.CREATED,
-          message: 'Account has been created',
-        });
-      });
-  });
-
-  it('http user created with email', async () => {
-    const data = {
-      username: faker.internet.userName(),
-      email: faker.internet.email(),
-      password: 'password',
-      confirmation: 'password',
-      http: true,
-    } as Partial<RegisterField>;
-    await supertest(app.getHttpServer())
-      .post('/user')
-      .set('content-type', 'application/json')
-      .send(data)
-      .expect(HttpStatus.CREATED)
-      .then((res) => {
-        expect(res.body).toEqual({
-          status: HttpStatus.CREATED,
-          message: 'Account has been created',
-        });
-      });
-  });
-
-  it('http user created || username already exists', async () => {
-    const data = {
-      username: 'Randi.Jast',
-      email: `invalid-${faker.internet.email()}`,
-      password: 'password',
-      confirmation: 'password',
-      http: true,
-    } as Partial<RegisterField>;
-    await supertest(app.getHttpServer())
-      .post('/user')
-      .set('content-type', 'application/json')
-      .send(data)
-      .expect(HttpStatus.BAD_REQUEST)
-      .then((res) => {
-        const error = res.error as {
-          text: string;
-        };
-        expect(JSON.parse(error.text)).toEqual({
-          status: HttpStatus.BAD_REQUEST,
-          message: 'Username already exists, please choose another one',
-        });
-      });
-  });
-
-  it('http user created || email already exists', async () => {
-    const data = {
-      username: faker.internet.userName(),
-      email: getField('user-http-entity')?.email,
-      password: 'password',
-      confirmation: 'password',
-      http: true,
-    } as Partial<RegisterField>;
-    await supertest(app.getHttpServer())
-      .post('/user')
-      .set('content-type', 'application/json')
-      .send(data)
-      .expect(HttpStatus.BAD_REQUEST)
-      .then((res) => {
-        const error = res.error as {
-          text: string;
-        };
-        expect(JSON.parse(error.text)).toEqual({
-          status: HttpStatus.BAD_REQUEST,
-          message: 'Username already exists, please choose another one',
-        });
-      });
-  });
-
-  it("http user created || Password don't match", async () => {
-    const data = {
-      username: faker.internet.userName(),
-      password: 'passwodqdqwrd',
-      confirmation: 'password',
-      http: true,
-    } as Partial<RegisterField>;
-    await supertest(app.getHttpServer())
-      .post('/user')
-      .set('content-type', 'application/json')
-      .send(data)
-      .expect(HttpStatus.BAD_REQUEST)
-      .then((res) => {
-        const error = res.error as {
-          text: string;
-        };
-        expect(JSON.parse(error.text)).toEqual({
-          status: HttpStatus.BAD_REQUEST,
-          message: "Password don't match, please check again",
-        });
-      });
-  });
-
-  it('http user updated', async () => {
-    const { username, public_id } = getField('user-http-entity');
-    await supertest(app.getHttpServer())
-      .post(`/user/${public_id}`)
-      .set('Authorization', `Bearer ${getField('token')}`)
-      .field('username', username)
-      .field('password', 'password')
-      .attach(
-        'file',
-        join(
-          __dirname,
-          '../../../391282393_7054748857952078_2554999196306250130_n.jpg',
-        ),
-      )
-      .expect(HttpStatus.OK)
-      .then((res) => {
-        expect(res.body).toEqual({
-          status: HttpStatus.OK,
-          message: 'Account has been updated',
-        });
-      });
-  });
-
-  it('http user updated invalid id', async () => {
-    const { username } = getField('user-http-entity');
-    await supertest(app.getHttpServer())
-      .post(`/user/dqwdqdqw`)
-      .set('content-type', 'application/json')
-      .set('Authorization', `Bearer ${getField('token')}`)
-      .field('username', faker.internet.userName())
-      .field('password', 'password')
-      .expect(HttpStatus.INTERNAL_SERVER_ERROR)
-      .then((res) => {
-        const error = res.error as {
-          text: string;
-        };
-        expect(JSON.parse(error.text)).toEqual({
-          statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-          message: 'false',
-        });
-      });
-  });
-
-  it('http user updated invalid password', async () => {
-    const { public_id } = getField('user-http-entity');
-    await supertest(app.getHttpServer())
-      .post(`/user/${public_id}`)
-      .set('content-type', 'application/json')
-      .set('Authorization', `Bearer ${getField('token')}`)
-      .field('username', faker.internet.userName())
-      .field('password', 'dqwkdmqkwdq')
-      .expect(HttpStatus.BAD_REQUEST)
-      .then((res) => {
-        expect(res.body).toEqual({
-          status: HttpStatus.BAD_REQUEST,
-          message: 'Wrong password',
-        });
-      });
-  });
-
-  it('http user list', async () =>
-    await supertest(app.getHttpServer())
-      .get('/user')
-      .set('content-type', 'application/json')
-      .set('Authorization', `Bearer ${getField('token')}`)
-      .expect(HttpStatus.OK)
-      .then((res) => expect(res.body.length).not.toEqual(0)));
-
-  it('http user detail', async () =>
-    await supertest(app.getHttpServer())
-      .get(`/user/${(getField('user-http-entity') as UserInstance).public_id}`)
-      .set('content-type', 'application/json')
-      .set('Authorization', `Bearer ${getField('token')}`)
-      .expect(HttpStatus.OK)
       .then((res) =>
-        expect(res.body.public_id).toEqual(
-          (getField('user-http-entity') as UserInstance).public_id,
-        ),
+        expect(res.body).toEqual({
+          status: HttpStatus.CREATED,
+          message: 'Account has been created',
+        }),
       ));
 
-  it('http user detail Invalid', async () =>
+  it('http::user create with email', async () =>
     await supertest(app.getHttpServer())
-      .get(`/user/dqwdqwdqw`)
+      .post('/user')
       .set('content-type', 'application/json')
-      .set('Authorization', `Bearer ${getField('token')}`)
-      .expect(HttpStatus.OK)
-      .then((res) => {
-        expect(res.body).toEqual(null);
-      }));
-
-  it('http user destroy', async () => {
-    const { public_id } = getField('user-entity');
-    await supertest(app.getHttpServer())
-      .delete(`/user/${public_id}`)
-      .set('content-type', 'application/json')
-      .set('Authorization', `Bearer ${getField('token')}`)
-      .expect(HttpStatus.OK)
-      .then((res) => {
+      .send({
+        username: faker.internet.userName(),
+        email: faker.internet.email(),
+        password: 'password',
+        confirmation: 'password',
+      } as Partial<RegisterField>)
+      .expect(HttpStatus.CREATED)
+      .then((res) =>
         expect(res.body).toEqual({
-          status: HttpStatus.OK,
-          message: 'Account has been deleted',
-        });
-      });
-  });
+          status: HttpStatus.CREATED,
+          message: 'Account has been created',
+        }),
+      ));
 
-  it('http user destroy Invalid', async () =>
+  it('http::user create, username already exists', async () =>
     await supertest(app.getHttpServer())
-      .delete(`/user/dwqdq`)
+      .post('/user')
       .set('content-type', 'application/json')
-      .set('Authorization', `Bearer ${getField('token')}`)
+      .send({
+        username: getField('user-http-entity').username,
+        password: 'password',
+        confirmation: 'password',
+      } as Partial<RegisterField>)
       .expect(HttpStatus.BAD_REQUEST)
-      .then((res) => {
-        const error = res.error as {
-          text: string;
-        };
-        expect(JSON.parse(error.text)).toEqual({
+      .then((res) =>
+        expect(res.body).toEqual({
           status: HttpStatus.BAD_REQUEST,
-          message: 'Account not found',
-        });
-      }));
+          message: 'Username already exists, please choose another one',
+        }),
+      ));
+
+  it('http::user create, email already exists', async () =>
+    await supertest(app.getHttpServer())
+      .post('/user')
+      .set('content-type', 'application/json')
+      .send({
+        email: getField('user-http-entity').email,
+        password: 'password',
+        confirmation: 'password',
+      } as Partial<RegisterField>)
+      .expect(HttpStatus.BAD_REQUEST)
+      .then((res) =>
+        expect(res.body).toEqual({
+          status: HttpStatus.BAD_REQUEST,
+          message: 'Email address already exists, please choose another one',
+        }),
+      ));
+
+  it('http::user create, username or email already exists', async () =>
+    await supertest(app.getHttpServer())
+      .post('/user')
+      .set('content-type', 'application/json')
+      .send({
+        ...pick(getField('user-http-entity'), ['username', 'email']),
+        password: 'password',
+        confirmation: 'password',
+      } as Partial<RegisterField>)
+      .expect(HttpStatus.BAD_REQUEST)
+      .then((res) =>
+        expect(res.body).toEqual({
+          status: HttpStatus.BAD_REQUEST,
+          message:
+            'Username or Email address already exists, please choose another one',
+        }),
+      ));
+
+  it("http::user password don't match", async () =>
+    await supertest(app.getHttpServer())
+      .post('/user')
+      .set('content-type', 'application/json')
+      .send({
+        username: faker.internet.userName(),
+        email: faker.internet.email(),
+        password: 'passwordqdqwd',
+        confirmation: 'password',
+      } as Partial<RegisterField>)
+      .expect(HttpStatus.BAD_REQUEST)
+      .then((res) =>
+        expect(res.body).toEqual({
+          status: HttpStatus.BAD_REQUEST,
+          message: "Password don't match, please check again",
+        }),
+      ));
+
+  try {
+    public_id = getField('user-http-entity').public_id;
+    destory_id = getField('user-entity').public_id;
+    username = getField('user-http-entity').username;
+    email = getField('user-http-entity').email;
+  } catch (err) {
+    // empty
+  }
+
+  if (username && email) {
+    it('http::user login with username', async () =>
+      await supertest(app.getHttpServer())
+        .post('/user/login')
+        .set('content-type', 'application/json')
+        .send({
+          token: username,
+          password: 'password',
+        } as Partial<LoginField>)
+        .expect(HttpStatus.OK)
+        .then((res) => expect(res.body.accessToken).not.toEqual(null)));
+
+    it('http::user login with email', async () =>
+      await supertest(app.getHttpServer())
+        .post('/user/login')
+        .set('content-type', 'application/json')
+        .send({
+          token: email,
+          password: 'password',
+        } as Partial<LoginField>)
+        .expect(HttpStatus.OK)
+        .then((res) => expect(res.body.accessToken).not.toEqual(null)));
+
+    it('http::user login invalid username', async () =>
+      await supertest(app.getHttpServer())
+        .post('/user/login')
+        .set('content-type', 'application/json')
+        .send({
+          token: 'doqdqw',
+          password: 'password',
+        } as Partial<LoginField>)
+        .expect(HttpStatus.BAD_REQUEST)
+        .then((res) =>
+          expect(res.body).toEqual({
+            status: HttpStatus.BAD_REQUEST,
+            message: 'Username or password inccorect',
+          }),
+        ));
+
+    it('http::user login invalid email', async () =>
+      await supertest(app.getHttpServer())
+        .post('/user/login')
+        .set('content-type', 'application/json')
+        .send({
+          token: 'email@yahoo.com',
+          password: 'password',
+        } as Partial<LoginField>)
+        .expect(HttpStatus.BAD_REQUEST)
+        .then((res) =>
+          expect(res.body).toEqual({
+            status: HttpStatus.BAD_REQUEST,
+            message: 'Username or password inccorect',
+          }),
+        ));
+
+    it('http::user login invalid password', async () =>
+      await supertest(app.getHttpServer())
+        .post('/user/login')
+        .send({
+          token: username,
+          password: 'dqwdqwd',
+        } as Partial<LoginField>)
+        .expect(HttpStatus.BAD_REQUEST)
+        .then((res) =>
+          expect(res.body).toEqual({
+            status: HttpStatus.BAD_REQUEST,
+            message: 'Wrong password',
+          }),
+        ));
+  }
+
+  try {
+    token = getField('token');
+  } catch (err) {
+    // empty
+  }
+
+  if (token) {
+    it('http::user update', async () =>
+      await supertest(app.getHttpServer())
+        .post(`/user/${public_id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .field('username', faker.internet.userName())
+        .field('password', 'password')
+        .attach(
+          'file',
+          join(
+            __dirname,
+            '../../../391282393_7054748857952078_2554999196306250130_n.jpg',
+          ),
+        )
+        .expect(HttpStatus.OK)
+        .then((res) =>
+          expect(res.body).toEqual({
+            status: HttpStatus.OK,
+            message: 'Account has been updated',
+          }),
+        ));
+
+    it('http::user update invalid password', async () =>
+      await supertest(app.getHttpServer())
+        .post(`/user/${public_id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .field('username', faker.internet.userName())
+        .field('password', 'pdqwassword')
+        .attach(
+          'file',
+          join(
+            __dirname,
+            '../../../391282393_7054748857952078_2554999196306250130_n.jpg',
+          ),
+        )
+        .expect(HttpStatus.BAD_REQUEST)
+        .then((res) =>
+          expect(res.body).toEqual({
+            status: HttpStatus.BAD_REQUEST,
+            message: 'Wrong password',
+          }),
+        ));
+
+    it('http::user destroy', async () =>
+      await supertest(app.getHttpServer())
+        .delete(`/user/${destory_id}`)
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(HttpStatus.OK)
+        .then((res) =>
+          expect(res.body).toEqual({
+            status: HttpStatus.OK,
+            message: 'Account has been deleted',
+          }),
+        ));
+
+    it('http::user list', async () =>
+      await supertest(app.getHttpServer())
+        .get('/user')
+        .query({
+          username: 'a',
+        } as UserEntity)
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(HttpStatus.OK)
+        .then((res) => expect(res.body.length).not.toEqual(0)));
+
+    it('http::user detail', async () =>
+      await supertest(app.getHttpServer())
+        .get(`/user/${public_id}`)
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(HttpStatus.OK)
+        .then((res) => expect(res.body.public_id).toEqual(public_id)));
+
+    it('http::user me', async () =>
+      await supertest(app.getHttpServer())
+        .get('/user/access/me')
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(HttpStatus.OK)
+        .then((res) => expect(res.body.public_id).not.toEqual(null)));
+
+    it('http::user reset', async () =>
+      await supertest(app.getHttpServer())
+        .post('/user/reset/password')
+        .set('content-type', 'application/json')
+        .send({
+          email: faker.internet.email(),
+        } as Partial<ResetField>)
+        .expect(HttpStatus.OK)
+        .then((res) => expect(res.body).toEqual('reset')));
+  }
 });

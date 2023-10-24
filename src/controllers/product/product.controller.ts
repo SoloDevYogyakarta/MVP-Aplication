@@ -20,6 +20,8 @@ import { CustomRequest } from '../../types/custom-request.type';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from '../../utils/multer/multer';
 import { ProductBasicEntity } from '../../database/entities/products/basic-entity/basic-entity';
+import { createpath } from '../../utils/system/system';
+import { omit } from 'lodash';
 
 @Controller('product')
 export class ProductController {
@@ -41,7 +43,8 @@ export class ProductController {
       req.user.data.public_id,
       files,
     );
-    return res.status(result.status).json(result);
+    createpath('../../database/dataTxt/basic-http-entity.txt', result.result);
+    return res.status(result.status).json(omit(result, ['result']));
   }
 
   @UseGuards(AuthGuard)
