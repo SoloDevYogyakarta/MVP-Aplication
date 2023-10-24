@@ -9,6 +9,7 @@ export class UserEntity extends BaseEntity {
   email: string;
   phone_number: number;
   password: string;
+  role: string;
   file_id: string;
 }
 
@@ -23,6 +24,7 @@ export const userEntity = sequelize.define<UserInstance>(
     username: DataTypes.STRING,
     email: DataTypes.STRING,
     phone_number: DataTypes.INTEGER,
+    role: DataTypes.STRING,
     password: DataTypes.STRING,
     file_id: DataTypes.STRING,
   } as ModelAttributes<UserInstance>,

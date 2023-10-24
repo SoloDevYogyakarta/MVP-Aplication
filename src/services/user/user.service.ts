@@ -3,10 +3,11 @@ import { userEntity } from '../../database/entities/authenticates/user-entity/us
 import {
   LoginField,
   RegisterField,
+  UpdateRoleField,
 } from '../../validators/user/user.validator';
 import bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { omit } from 'lodash';
+import { pick, omit } from 'lodash';
 import { createpath, removepath } from '../../utils/system/system';
 import env from '../../utils/env/env';
 import { Op } from 'sequelize';
@@ -158,5 +159,30 @@ export class UserService {
     }
     findOne.destroy();
     return { status: HttpStatus.OK, message: 'Account has been deleted' };
+  }
+
+  async changeRole(public_id: string, body: UpdateRoleField) {
+    if (!(await this.isAdmin(public_id))) {
+      throw new HttpException('false', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    const findOne = await userEntity.findOne({
+      where: pick(body, ['public_id']),
+    });
+    if (!findOne) {
+      throw new HttpException(
+        { status: HttpStatus.NOT_FOUND, message: 'Not Found' },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    findOne.update(body, { where: pick(body, ['public_id']) });
+    return {
+      status: HttpStatus.OK,
+      message: `Role ${body.role} has been updated`,
+    };
+  }
+
+  async isAdmin(public_id: string) {
+    const findOne = await userEntity.findOne({ where: { public_id } });
+    return findOne?.role === 'admin';
   }
 }

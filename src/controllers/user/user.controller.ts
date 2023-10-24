@@ -17,6 +17,7 @@ import { UserRepository } from '../../repository/user/user.repository';
 import {
   LoginField,
   RegisterField,
+  UpdateRoleField,
 } from '../../validators/user/user.validator';
 import { UserService } from '../../services/user/user.service';
 import { AuthGuard } from '../../middleware/guards.middleware';
@@ -51,6 +52,17 @@ export class UserController {
   ) {
     const result = await this.service.create(body);
     return res.status(result.status).json(omit(result, ['result']));
+  }
+
+  @Post('update/role')
+  @UseGuards(AuthGuard)
+  async updateRole(
+    @Req() req: CustomRequest,
+    @Res() res: Response,
+    @Body() body: UpdateRoleField,
+  ) {
+    const result = await this.service.changeRole(req.user.data.public_id, body);
+    return res.status(result.status).json(result);
   }
 
   @Post('reset/password')

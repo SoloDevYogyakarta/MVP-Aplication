@@ -14,15 +14,16 @@ import env from '../../utils/env/env';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from '../../middleware/local.strategy';
 import { JwtStrategy } from '../../middleware/jwt.strategy';
-import { createpath } from '../../utils/system/system';
 import { faker } from '@faker-js/faker';
 import { getField } from '../../utils/get-field/get-field';
 import {
+  userEntity,
   UserEntity,
-  UserInstance,
 } from '../../database/entities/authenticates/user-entity/user-entity';
 import { join } from 'path';
 import { pick } from 'lodash';
+
+const findOne = userEntity.findOne({ where: { id: 1, role: 'admin' } });
 
 describe('UserController', () => {
   let public_id!: string;
@@ -177,7 +178,7 @@ describe('UserController', () => {
         .post('/user/login')
         .set('content-type', 'application/json')
         .send({
-          token: username,
+          token: (await findOne).username,
           password: 'password',
         } as Partial<LoginField>)
         .expect(HttpStatus.OK)
@@ -188,7 +189,7 @@ describe('UserController', () => {
         .post('/user/login')
         .set('content-type', 'application/json')
         .send({
-          token: email,
+          token: (await findOne).email,
           password: 'password',
         } as Partial<LoginField>)
         .expect(HttpStatus.OK)
@@ -267,6 +268,36 @@ describe('UserController', () => {
           expect(res.body).toEqual({
             status: HttpStatus.OK,
             message: 'Account has been updated',
+          }),
+        ));
+
+    it('http::user update role', async () => {
+      const role = faker.helpers.arrayElement([0, 1]) ? 'admin' : 'member';
+      await supertest(app.getHttpServer())
+        .post('/user/update/role')
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .send({ public_id, role })
+        .expect(HttpStatus.OK)
+        .then((res) =>
+          expect(res.body).toEqual({
+            status: HttpStatus.OK,
+            message: `Role ${role} has been updated`,
+          }),
+        );
+    });
+
+    it('http::user invalid update role', async () =>
+      await supertest(app.getHttpServer())
+        .post('/user/update/role')
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .send({ public_id: 'dwqdqw', role: 'dqwdq' })
+        .expect(HttpStatus.NOT_FOUND)
+        .then((res) =>
+          expect({ status: res.status, message: res.body.message }).toEqual({
+            status: HttpStatus.NOT_FOUND,
+            message: 'Not Found',
           }),
         ));
 

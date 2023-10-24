@@ -1,12 +1,8 @@
-import { faker } from '@faker-js/faker';
 import { HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserInstance } from '../../database/entities/authenticates/user-entity/user-entity';
 import { getField } from '../../utils/get-field/get-field';
 import env from '../../utils/env/env';
 import { UserService } from './user.service';
-import { omit } from 'lodash';
-import { createpath } from '../../utils/system/system';
 
 describe('UserService', () => {
   let username!: string;
@@ -102,6 +98,25 @@ describe('UserService', () => {
           message: 'Account not found',
         });
       }
+    });
+
+    it('invalid update role', async () => {
+      try {
+        await service.changeRole('dqwdq', {
+          public_id: 'dqwdq',
+          role: 'dqdqw',
+        });
+      } catch (err) {
+        expect({ status: err.status, message: err.message }).toEqual({
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'false',
+        });
+      }
+    });
+
+    it('isAdmin', async () => {
+      const result = await service.isAdmin('dqwdq');
+      expect(result).toEqual(false);
     });
   }
 });

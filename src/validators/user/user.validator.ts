@@ -31,3 +31,11 @@ export class ResetField {
   @IsString()
   email: string;
 }
+
+export class UpdateRoleField {
+  @IsString()
+  public_id: string;
+
+  @IsString()
+  role: string;
+}
