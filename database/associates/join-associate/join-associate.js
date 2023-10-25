@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.joinProductAndFileAssociate = exports.joinProductAndFileInclude = exports.joinProductAndFileAttribute = void 0;
+exports.joinFileAssociate = exports.joinFileInclude = exports.joinFileAttribute = void 0;
 const file_entity_1 = require("../../../database/entities/commons/file-entity/file-entity");
 const join_entity_1 = require("../../../database/entities/commons/join-entity/join-entity");
-exports.joinProductAndFileAttribute = {
+exports.joinFileAttribute = {
     include: [],
     exclude: [],
 };
-exports.joinProductAndFileInclude = [
+exports.joinFileInclude = [
     {
         model: file_entity_1.fileEntity,
         as: 'file',
     },
 ];
-const productAndFileAssociate = join_entity_1.joinEntity;
-productAndFileAssociate.hasOne(file_entity_1.fileEntity, {
+const joinFileEntity = join_entity_1.joinEntity;
+joinFileEntity.hasOne(file_entity_1.fileEntity, {
     sourceKey: 'foreign_id',
     foreignKey: {
         name: 'public_id',
@@ -22,5 +22,5 @@ productAndFileAssociate.hasOne(file_entity_1.fileEntity, {
     },
     as: 'file',
 });
-exports.joinProductAndFileAssociate = productAndFileAssociate;
+exports.joinFileAssociate = joinFileEntity;
 //# sourceMappingURL=join-associate.js.map

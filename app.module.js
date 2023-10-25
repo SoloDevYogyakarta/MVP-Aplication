@@ -32,6 +32,7 @@ const promo_repository_1 = require("./repository/promo/promo.repository");
 const schedule_1 = require("@nestjs/schedule");
 const booking_service_1 = require("./services/booking/booking.service");
 const booking_repository_1 = require("./repository/booking/booking.repository");
+const history_service_1 = require("./services/history/history-service");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -59,6 +60,7 @@ exports.AppModule = AppModule = __decorate([
             local_strategy_1.LocalStrategy,
             jwt_strategy_1.JwtStrategy,
             history_repository_1.HistoryRepository,
+            history_service_1.HistoryService,
             product_repository_1.ProductRepository,
             product_service_1.ProductService,
             promo_repository_1.ProductPromoRepository,

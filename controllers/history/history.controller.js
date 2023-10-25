@@ -17,12 +17,11 @@ const common_1 = require("@nestjs/common");
 const history_repository_1 = require("../../repository/history/history.repository");
 const guards_middleware_1 = require("../../middleware/guards.middleware");
 const product_query_1 = require("../../validators/query/product.query");
+const history_service_1 = require("../../services/history/history-service");
 let HistoryController = class HistoryController {
-    constructor(repository) {
+    constructor(repository, service) {
         this.repository = repository;
-    }
-    update(req, res) {
-        return res.status(common_1.HttpStatus.OK).json('updated');
+        this.service = service;
     }
     async list(query, req, res) {
         const result = await this.repository.findAll(query);
@@ -32,19 +31,15 @@ let HistoryController = class HistoryController {
         const result = await this.repository.findOne(req.params.id);
         return res.status(common_1.HttpStatus.OK).json(result);
     }
+    async destroy(req, res) {
+        const result = await this.service.destroy(req.params.id, req.user.data.public_id);
+        return res.status(result.status).json(result);
+    }
 };
 exports.HistoryController = HistoryController;
 __decorate([
-    (0, common_1.Post)(':id'),
-    __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", void 0)
-], HistoryController.prototype, "update", null);
-__decorate([
-    (0, common_1.UseGuards)(guards_middleware_1.AuthGuard),
     (0, common_1.Get)(),
+    (0, common_1.UseGuards)(guards_middleware_1.AuthGuard),
     __param(0, (0, common_1.Query)()),
     __param(1, (0, common_1.Req)()),
     __param(2, (0, common_1.Res)()),
@@ -53,16 +48,26 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], HistoryController.prototype, "list", null);
 __decorate([
-    (0, common_1.UseGuards)(guards_middleware_1.AuthGuard),
     (0, common_1.Get)(':id'),
+    (0, common_1.UseGuards)(guards_middleware_1.AuthGuard),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], HistoryController.prototype, "detail", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    (0, common_1.UseGuards)(guards_middleware_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], HistoryController.prototype, "destroy", null);
 exports.HistoryController = HistoryController = __decorate([
     (0, common_1.Controller)('history'),
-    __metadata("design:paramtypes", [history_repository_1.HistoryRepository])
+    __metadata("design:paramtypes", [history_repository_1.HistoryRepository,
+        history_service_1.HistoryService])
 ], HistoryController);
 //# sourceMappingURL=history.controller.js.map

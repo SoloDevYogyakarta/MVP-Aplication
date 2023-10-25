@@ -20,8 +20,8 @@ const productBasicInclude = [
         as: 'stock',
     },
     {
-        model: join_associate_1.joinProductAndFileAssociate,
-        include: join_associate_1.joinProductAndFileInclude,
+        model: join_associate_1.joinFileAssociate,
+        include: join_associate_1.joinFileInclude,
         as: 'files',
     },
 ];
@@ -35,7 +35,7 @@ const options = {
 };
 basic_entity_1.productBasicEntity.hasOne(price_entity_1.productpriceEntity, { ...options, as: 'price' });
 basic_entity_1.productBasicEntity.hasOne(stock_entity_1.productStockEntity, { ...options, as: 'stock' });
-basic_entity_1.productBasicEntity.hasMany(join_associate_1.joinProductAndFileAssociate, {
+basic_entity_1.productBasicEntity.hasMany(join_associate_1.joinFileAssociate, {
     sourceKey: 'public_id',
     foreignKey: {
         name: 'source_id',
