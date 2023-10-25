@@ -33,7 +33,7 @@ let PromoController = class PromoController {
         return res.status(result.status).json(result);
     }
     async list(query, req, res) {
-        const result = this.repository.findAll(query);
+        const result = await this.repository.findAll(query);
         return res.status(common_1.HttpStatus.OK).json(result);
     }
     async detail(req, res) {
