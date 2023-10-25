@@ -5,6 +5,7 @@ export declare class UserEntity extends BaseEntity {
     email: string;
     phone_number: number;
     password: string;
+    role: string;
     file_id: string;
 }
 export type UserCreationAttribute = Optional<UserEntity, 'id'>;

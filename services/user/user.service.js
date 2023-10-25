@@ -49,14 +49,21 @@ let UserService = class UserService {
             }, common_1.HttpStatus.BAD_REQUEST);
         }
         const token = this.jwtService.sign({ data: findOne }, { secret: env_1.default['SECRET'] });
+        (0, system_1.createpath)('../../database/dataTxt/token.txt', token);
         return { accessToken: token, status: common_1.HttpStatus.OK };
     }
     async create(field) {
         let where = [{ username: '' }, { email: '' }];
+        let message;
         if (field.username) {
+            message = 'Username';
             where = [...where, { username: field.username }];
         }
         if (field.email) {
+            if (field.username) {
+                message = 'Username or ';
+            }
+            message = `${message}Email address`.replace(/undefined/g, '');
             where = [...where, { email: field.email }];
         }
         const findOne = await user_entity_1.userEntity.findOne({
@@ -67,7 +74,7 @@ let UserService = class UserService {
         if (findOne) {
             throw new common_1.HttpException({
                 status: common_1.HttpStatus.BAD_REQUEST,
-                message: 'Username already exists, please choose another one',
+                message: `${message} already exists, please choose another one`,
             }, common_1.HttpStatus.BAD_REQUEST);
         }
         if (field.password !== field.confirmation) {
@@ -79,6 +86,7 @@ let UserService = class UserService {
         const file = await file_entity_1.fileEntity.create({ public_id: (0, nanoid_1.nanoid)() });
         file.save();
         const create = await user_entity_1.userEntity.create((0, lodash_1.omit)({ ...field, file_id: file.public_id }, ['confirmation']));
+        (0, system_1.createpath)('../../database/dataTxt/user-http-entity.txt', create);
         create.save();
         return {
             result: create,
@@ -114,6 +122,7 @@ let UserService = class UserService {
             fileEnt.type = file.mimetype.split('/')[0];
             fileEnt.save();
         }
+        (0, system_1.createpath)('../../database/dataTxt/user-http-entity.txt', findOne);
         return { status: common_1.HttpStatus.OK, message: 'Account has been updated' };
     }
     async destroy(public_id) {
@@ -126,6 +135,26 @@ let UserService = class UserService {
         }
         findOne.destroy();
         return { status: common_1.HttpStatus.OK, message: 'Account has been deleted' };
+    }
+    async changeRole(public_id, body) {
+        if (!(await this.isAdmin(public_id))) {
+            throw new common_1.HttpException('false', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        const findOne = await user_entity_1.userEntity.findOne({
+            where: (0, lodash_1.pick)(body, ['public_id']),
+        });
+        if (!findOne) {
+            throw new common_1.HttpException({ status: common_1.HttpStatus.NOT_FOUND, message: 'Not Found' }, common_1.HttpStatus.NOT_FOUND);
+        }
+        findOne.update(body, { where: (0, lodash_1.pick)(body, ['public_id']) });
+        return {
+            status: common_1.HttpStatus.OK,
+            message: `Role ${body.role} has been updated`,
+        };
+    }
+    async isAdmin(public_id) {
+        const findOne = await user_entity_1.userEntity.findOne({ where: { public_id } });
+        return findOne?.role === 'admin';
     }
 };
 exports.UserService = UserService;

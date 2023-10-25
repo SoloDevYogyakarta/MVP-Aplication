@@ -35,6 +35,10 @@ let UserController = class UserController {
         const result = await this.service.create(body);
         return res.status(result.status).json((0, lodash_1.omit)(result, ['result']));
     }
+    async updateRole(req, res, body) {
+        const result = await this.service.changeRole(req.user.data.public_id, body);
+        return res.status(result.status).json(result);
+    }
     reset(req, res) {
         return res.status(common_1.HttpStatus.OK).json('reset');
     }
@@ -77,6 +81,16 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object, user_validator_1.RegisterField]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "create", null);
+__decorate([
+    (0, common_1.Post)('update/role'),
+    (0, common_1.UseGuards)(guards_middleware_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, user_validator_1.UpdateRoleField]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "updateRole", null);
 __decorate([
     (0, common_1.Post)('reset/password'),
     __param(0, (0, common_1.Req)()),

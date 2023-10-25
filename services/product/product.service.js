@@ -20,8 +20,10 @@ const image_size_1 = __importDefault(require("image-size"));
 const file_entity_1 = require("../../database/entities/commons/file-entity/file-entity");
 const join_entity_1 = require("../../database/entities/commons/join-entity/join-entity");
 const nanoid_1 = require("nanoid");
+const user_entity_1 = require("../../database/entities/authenticates/user-entity/user-entity");
 let ProductService = class ProductService {
     async create(body, user_id, files) {
+        await this.isAdmin(user_id);
         const create = await basic_entity_1.productBasicEntity.create((0, lodash_1.pick)({ ...body, user_id }, [
             'name',
             'status',
@@ -45,9 +47,8 @@ let ProductService = class ProductService {
         });
         stock.save();
         price.save();
-        if (files.length) {
+        if (files?.length) {
             for (const file of files) {
-                console.log(file.path);
                 file.path = `/assets${file.path.split('assets')[1]}`;
                 const f = await file_entity_1.fileEntity.create({
                     public_id: (0, nanoid_1.nanoid)(),
@@ -64,9 +65,14 @@ let ProductService = class ProductService {
                 join.save();
             }
         }
-        return { status: common_1.HttpStatus.CREATED, message: 'Product has been create' };
+        return {
+            result: create,
+            status: common_1.HttpStatus.CREATED,
+            message: 'Product has been create',
+        };
     }
-    async update(body, public_id, files) {
+    async update(body, public_id, files, user_id) {
+        await this.isAdmin(user_id);
         const findOne = await basic_entity_1.productBasicEntity.findOne({ where: { public_id } });
         if (!findOne) {
             throw new common_1.HttpException({
@@ -88,7 +94,7 @@ let ProductService = class ProductService {
         await stock_entity_1.productStockEntity.update(typeof body.stock === 'string' ? JSON.parse(body.stock) : body.stock, {
             where: { product_id: findOne.public_id },
         });
-        if (files.length) {
+        if (files?.length) {
             for (const file of files) {
                 const join = await join_entity_1.joinEntity.findOne({
                     where: { source_id: findOne.public_id },
@@ -107,6 +113,7 @@ let ProductService = class ProductService {
                 join.destroy();
                 file.path = `/assets${file.path.split('assets')[1]}`;
                 const cf = await file_entity_1.fileEntity.create({
+                    public_id: (0, nanoid_1.nanoid)(),
                     ...file,
                     filepath: file.path,
                     ...(0, image_size_1.default)((0, system_1.joinpath)(`../../assets/${file.filename}`)),
@@ -121,7 +128,8 @@ let ProductService = class ProductService {
         }
         return { status: common_1.HttpStatus.OK, message: 'Product has been update' };
     }
-    async destroy(public_id) {
+    async destroy(public_id, user_id) {
+        await this.isAdmin(user_id);
         const findOne = await basic_entity_1.productBasicEntity.findOne({ where: { public_id } });
         if (!findOne) {
             throw new common_1.HttpException({
@@ -156,6 +164,12 @@ let ProductService = class ProductService {
         }
         findOne.destroy();
         return { status: common_1.HttpStatus.OK, message: 'Product has been delete' };
+    }
+    async isAdmin(public_id) {
+        const findOne = await user_entity_1.userEntity.findOne({ where: { public_id } });
+        if (findOne?.role !== 'admin') {
+            throw new common_1.HttpException('false', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 };
 exports.ProductService = ProductService;

@@ -9,8 +9,8 @@ export declare class ProductController {
     private readonly repository;
     constructor(service: ProductService, repository: ProductRepository);
     create(req: CustomRequest, res: Response, files: Express.Multer.File[]): Promise<Response<any, Record<string, any>>>;
-    update(req: Request, res: Response, files: Express.Multer.File[]): Promise<Response<any, Record<string, any>>>;
-    destroy(req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
+    update(req: CustomRequest, res: Response, files: Express.Multer.File[]): Promise<Response<any, Record<string, any>>>;
+    destroy(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
     list(query: DyanmicQuery, res: Response): Promise<Response<any, Record<string, any>>>;
     detail(req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
 }

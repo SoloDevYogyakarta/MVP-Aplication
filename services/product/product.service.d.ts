@@ -9,16 +9,18 @@ type Product = ProductBasicEntity & {
 };
 export declare class ProductService {
     create(body: Product, user_id: string, files: Express.Multer.File[]): Promise<{
+        result: import("../../database/entities/products/basic-entity/basic-entity").ProductBasicInstance;
         status: HttpStatus;
         message: string;
     }>;
-    update(body: Product, public_id: string, files: Express.Multer.File[]): Promise<{
+    update(body: Product, public_id: string, files: Express.Multer.File[], user_id: string): Promise<{
         status: HttpStatus;
         message: string;
     }>;
-    destroy(public_id: string): Promise<{
+    destroy(public_id: string, user_id: string): Promise<{
         status: HttpStatus;
         message: string;
     }>;
+    isAdmin(public_id: string): Promise<void>;
 }
 export {};

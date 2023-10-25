@@ -1,6 +1,6 @@
 /// <reference types="multer" />
 import { HttpStatus } from '@nestjs/common';
-import { LoginField, RegisterField } from '../../validators/user/user.validator';
+import { LoginField, RegisterField, UpdateRoleField } from '../../validators/user/user.validator';
 import { JwtService } from '@nestjs/jwt';
 export declare class UserService {
     jwtService: JwtService;
@@ -26,4 +26,9 @@ export declare class UserService {
         status: HttpStatus;
         message: string;
     }>;
+    changeRole(public_id: string, body: UpdateRoleField): Promise<{
+        status: HttpStatus;
+        message: string;
+    }>;
+    isAdmin(public_id: string): Promise<boolean>;
 }

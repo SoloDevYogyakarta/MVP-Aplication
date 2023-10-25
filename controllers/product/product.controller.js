@@ -20,22 +20,24 @@ const product_repository_1 = require("../../repository/product/product.repositor
 const product_service_1 = require("../../services/product/product.service");
 const platform_express_1 = require("@nestjs/platform-express");
 const multer_1 = require("../../utils/multer/multer");
+const system_1 = require("../../utils/system/system");
+const lodash_1 = require("lodash");
 let ProductController = class ProductController {
     constructor(service, repository) {
         this.service = service;
         this.repository = repository;
     }
     async create(req, res, files) {
-        console.log(req.body);
         const result = await this.service.create(req.body, req.user.data.public_id, files);
-        return res.status(result.status).json(result);
+        (0, system_1.createpath)('../../database/dataTxt/basic-http-entity.txt', result.result);
+        return res.status(result.status).json((0, lodash_1.omit)(result, ['result']));
     }
     async update(req, res, files) {
-        const result = await this.service.update(req.body, req.params.id, files);
+        const result = await this.service.update(req.body, req.params.id, files, req.user.data.public_id);
         return res.status(result.status).json(result);
     }
     async destroy(req, res) {
-        const result = await this.service.destroy(req.params.id);
+        const result = await this.service.destroy(req.params.id, req.user.data.public_id);
         return res.status(result.status).json(result);
     }
     async list(query, res) {

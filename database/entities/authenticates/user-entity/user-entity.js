@@ -17,6 +17,7 @@ exports.userEntity = entity_1.sequelize.define('USER', {
     username: sequelize_1.DataTypes.STRING,
     email: sequelize_1.DataTypes.STRING,
     phone_number: sequelize_1.DataTypes.INTEGER,
+    role: sequelize_1.DataTypes.STRING,
     password: sequelize_1.DataTypes.STRING,
     file_id: sequelize_1.DataTypes.STRING,
 }, {

@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ResetField = exports.RegisterField = exports.LoginField = void 0;
+exports.UpdateRoleField = exports.ResetField = exports.RegisterField = exports.LoginField = void 0;
 const class_validator_1 = require("class-validator");
 class LoginField {
 }
@@ -54,4 +54,15 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], ResetField.prototype, "email", void 0);
+class UpdateRoleField {
+}
+exports.UpdateRoleField = UpdateRoleField;
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateRoleField.prototype, "public_id", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateRoleField.prototype, "role", void 0);
 //# sourceMappingURL=user.validator.js.map
