@@ -15,4 +15,5 @@ export type GetFieldType =
   | 'product-http-entity'
   | 'file-entity'
   | 'join-entity'
-  | 'connect-entity';
+  | 'promo-entity'
+  | 'promo-http-entity';

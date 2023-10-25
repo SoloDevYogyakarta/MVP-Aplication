@@ -1,0 +1,1 @@
+{"id":52,"value":38,"main_stock":1,"reverse_stock":5,"start_time":"2023-10-26T07:17:34.513Z","end_time":"2023-10-26T07:17:34.513Z","product_id":"_yyHA8PJaUF7t1wRhhLbB","updatedAt":"2023-10-25T07:17:34.516Z","createdAt":"2023-10-25T07:17:34.516Z","public_id":"jzJJgELrng1BP2ku93_VB"}

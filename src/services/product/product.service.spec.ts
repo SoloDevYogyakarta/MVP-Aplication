@@ -7,7 +7,7 @@ import { userEntity } from '../../database/entities/authenticates/user-entity/us
 
 const findOne = userEntity.findOne({
   where: { role: 'admin' },
-  order: [['id', 'DESC']],
+  order: [['id', 'ASC']],
 });
 
 const data = {

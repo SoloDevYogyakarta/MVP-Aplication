@@ -17,6 +17,8 @@ import { ProductRepository } from './repository/product/product.repository';
 import { ProductService } from './services/product/product.service';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './middleware/guards.middleware';
+import { ProductPromoService } from './services/promo/promo.service';
+import { ProductPromoRepository } from './repository/promo/promo.repository';
 
 @Module({
   imports: [
@@ -42,6 +44,8 @@ import { AuthGuard } from './middleware/guards.middleware';
     HistoryRepository,
     ProductRepository,
     ProductService,
+    ProductPromoRepository,
+    ProductPromoService,
   ],
   exports: [UserService],
 })
