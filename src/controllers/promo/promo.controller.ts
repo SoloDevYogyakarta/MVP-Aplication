@@ -57,7 +57,7 @@ export class PromoController {
     @Req() req: CustomRequest,
     @Res() res: Response,
   ) {
-    const result = this.repository.findAll(query);
+    const result = await this.repository.findAll(query);
     return res.status(HttpStatus.OK).json(result);
   }
 

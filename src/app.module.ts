@@ -19,6 +19,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './middleware/guards.middleware';
 import { ProductPromoService } from './services/promo/promo.service';
 import { ProductPromoRepository } from './repository/promo/promo.repository';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ProductPromoRepository } from './repository/promo/promo.repository';
       secret: env['SECRET'] || 'token',
       signOptions: { expiresIn: '7d' },
     }),
+    ScheduleModule.forRoot(),
   ],
   controllers: [
     UserController,

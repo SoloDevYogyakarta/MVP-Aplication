@@ -29,7 +29,8 @@ export class ProductService {
   async create(body: Product, user_id: string, files: Express.Multer.File[]) {
     await this.isAdmin(user_id);
     const create = await productBasicEntity.create(
-      pick({ ...body, user_id }, [
+      pick({ ...body, public_id: nanoid(), user_id }, [
+        'public_id',
         'name',
         'status',
         'condition',
