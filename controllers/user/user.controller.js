@@ -59,7 +59,8 @@ let UserController = class UserController {
         return res.status(common_1.HttpStatus.OK).json(result);
     }
     async me(req, res) {
-        return res.status(common_1.HttpStatus.OK).json(req.user.data);
+        const result = await this.repository.findOne(req.user.data.public_id);
+        return res.status(common_1.HttpStatus.OK).json(result);
     }
 };
 exports.UserController = UserController;

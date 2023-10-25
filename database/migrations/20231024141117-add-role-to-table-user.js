@@ -13,7 +13,7 @@ module.exports = {
           'role',
           {
             type: Sequelize.DataTypes.STRING(10),
-            defaultValue: 'mmeber',
+            defaultValue: 'member',
           },
           { transaction },
         ),

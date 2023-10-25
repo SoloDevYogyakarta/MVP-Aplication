@@ -27,8 +27,8 @@ const history_repository_1 = require("./repository/history/history.repository");
 const product_controller_1 = require("./controllers/product/product.controller");
 const product_repository_1 = require("./repository/product/product.repository");
 const product_service_1 = require("./services/product/product.service");
-const core_1 = require("@nestjs/core");
-const guards_middleware_1 = require("./middleware/guards.middleware");
+const promo_service_1 = require("./services/promo/promo.service");
+const promo_repository_1 = require("./repository/promo/promo.repository");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -57,10 +57,8 @@ exports.AppModule = AppModule = __decorate([
             history_repository_1.HistoryRepository,
             product_repository_1.ProductRepository,
             product_service_1.ProductService,
-            {
-                provide: core_1.APP_GUARD,
-                useClass: guards_middleware_1.AuthGuard,
-            },
+            promo_repository_1.ProductPromoRepository,
+            promo_service_1.ProductPromoService,
         ],
         exports: [user_service_1.UserService],
     })
