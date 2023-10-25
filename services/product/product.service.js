@@ -24,7 +24,8 @@ const user_entity_1 = require("../../database/entities/authenticates/user-entity
 let ProductService = class ProductService {
     async create(body, user_id, files) {
         await this.isAdmin(user_id);
-        const create = await basic_entity_1.productBasicEntity.create((0, lodash_1.pick)({ ...body, user_id }, [
+        const create = await basic_entity_1.productBasicEntity.create((0, lodash_1.pick)({ ...body, public_id: (0, nanoid_1.nanoid)(), user_id }, [
+            'public_id',
             'name',
             'status',
             'condition',
