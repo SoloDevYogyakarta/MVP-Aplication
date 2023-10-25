@@ -15,11 +15,11 @@ import { HistoryRepository } from './repository/history/history.repository';
 import { ProductController } from './controllers/product/product.controller';
 import { ProductRepository } from './repository/product/product.repository';
 import { ProductService } from './services/product/product.service';
-import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from './middleware/guards.middleware';
 import { ProductPromoService } from './services/promo/promo.service';
 import { ProductPromoRepository } from './repository/promo/promo.repository';
 import { ScheduleModule } from '@nestjs/schedule';
+import { BookingService } from './services/booking/booking.service';
+import { BookingRepository } from './repository/booking/booking.repository';
 
 @Module({
   imports: [
@@ -48,6 +48,8 @@ import { ScheduleModule } from '@nestjs/schedule';
     ProductService,
     ProductPromoRepository,
     ProductPromoService,
+    BookingService,
+    BookingRepository,
   ],
   exports: [UserService],
 })
