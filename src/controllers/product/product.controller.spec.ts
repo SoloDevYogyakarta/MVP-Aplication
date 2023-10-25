@@ -5,7 +5,6 @@ import { Test } from '@nestjs/testing';
 import { ProductRepository } from '../../repository/product/product.repository';
 import env from '../../utils/env/env';
 import { getField } from '../../utils/get-field/get-field';
-import { createpath } from '../../utils/system/system';
 import supertest from 'supertest';
 import { ProductController } from './product.controller';
 import { ProductService } from '../../services/product/product.service';

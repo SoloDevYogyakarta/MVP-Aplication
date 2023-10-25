@@ -3,6 +3,12 @@ import { HttpStatus } from '@nestjs/common';
 import { getField } from '../../utils/get-field/get-field';
 import { ProductService } from './product.service';
 import { omit } from 'lodash';
+import { userEntity } from '../../database/entities/authenticates/user-entity/user-entity';
+
+const findOne = userEntity.findOne({
+  where: { role: 'admin' },
+  order: [['id', 'DESC']],
+});
 
 const data = {
   name: faker.commerce.productName(),
@@ -63,10 +69,12 @@ describe('ProductService', () => {
     });
 
     it('updated', async () => {
+      const user = await findOne;
       const result = await service.update(
         data,
         public_id,
         [] as Express.Multer.File[],
+        user.public_id,
       );
       expect(result).toEqual({
         status: HttpStatus.OK,
@@ -75,10 +83,12 @@ describe('ProductService', () => {
     });
 
     it('updated without images', async () => {
+      const user = await findOne;
       const result = await service.update(
         data,
         public_id,
         null as Express.Multer.File[],
+        user.public_id,
       );
       expect(result).toEqual({
         status: HttpStatus.OK,
@@ -88,12 +98,21 @@ describe('ProductService', () => {
 
     it('destroy', async () => {
       try {
-        await service.destroy('dqwdqw');
+        const user = await findOne;
+        await service.destroy('dqwdqw', user.public_id);
       } catch (err) {
         expect({ status: err.status, message: err.message }).toEqual({
           status: HttpStatus.NOT_FOUND,
           message: 'Not Found',
         });
+      }
+    });
+
+    it('invalid destroy without admin', async () => {
+      try {
+        await service.destroy('dqwdq', 'dqwdqwd');
+      } catch (err) {
+        expect(err.message).toEqual('false');
       }
     });
   }

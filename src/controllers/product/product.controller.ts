@@ -19,7 +19,6 @@ import { ProductService } from '../../services/product/product.service';
 import { CustomRequest } from '../../types/custom-request.type';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from '../../utils/multer/multer';
-import { ProductBasicEntity } from '../../database/entities/products/basic-entity/basic-entity';
 import { createpath } from '../../utils/system/system';
 import { omit } from 'lodash';
 
@@ -39,7 +38,7 @@ export class ProductController {
     @UploadedFiles() files: Express.Multer.File[],
   ) {
     const result = await this.service.create(
-      req.body as unknown as ProductBasicEntity,
+      req.body,
       req.user.data.public_id,
       files,
     );
@@ -51,18 +50,26 @@ export class ProductController {
   @Post(':id')
   @UseInterceptors(FilesInterceptor('files', 5, { storage: diskStorage }))
   async update(
-    @Req() req: Request,
+    @Req() req: CustomRequest,
     @Res() res: Response,
     @UploadedFiles() files: Express.Multer.File[],
   ) {
-    const result = await this.service.update(req.body, req.params.id, files);
+    const result = await this.service.update(
+      req.body as unknown as { [key: string]: string },
+      req.params.id,
+      files,
+      req.user.data.public_id,
+    );
     return res.status(result.status).json(result);
   }
 
   @UseGuards(AuthGuard)
   @Delete(':id')
-  async destroy(@Req() req: Request, @Res() res: Response) {
-    const result = await this.service.destroy(req.params.id);
+  async destroy(@Req() req: CustomRequest, @Res() res: Response) {
+    const result = await this.service.destroy(
+      req.params.id,
+      req.user.data.public_id,
+    );
     return res.status(result.status).json(result);
   }
 

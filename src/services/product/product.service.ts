@@ -17,6 +17,7 @@ import sizeOf from 'image-size';
 import { fileEntity } from '../../database/entities/commons/file-entity/file-entity';
 import { joinEntity } from '../../database/entities/commons/join-entity/join-entity';
 import { nanoid } from 'nanoid';
+import { userEntity } from '../../database/entities/authenticates/user-entity/user-entity';
 
 type Product = ProductBasicEntity & {
   price?: ProductPriceEntity;
@@ -26,6 +27,7 @@ type Product = ProductBasicEntity & {
 @Injectable()
 export class ProductService {
   async create(body: Product, user_id: string, files: Express.Multer.File[]) {
+    await this.isAdmin(user_id);
     const create = await productBasicEntity.create(
       pick({ ...body, user_id }, [
         'name',
@@ -80,7 +82,13 @@ export class ProductService {
     };
   }
 
-  async update(body: Product, public_id: string, files: Express.Multer.File[]) {
+  async update(
+    body: Product,
+    public_id: string,
+    files: Express.Multer.File[],
+    user_id: string,
+  ) {
+    await this.isAdmin(user_id);
     const findOne = await productBasicEntity.findOne({ where: { public_id } });
     if (!findOne) {
       throw new HttpException(
@@ -149,7 +157,8 @@ export class ProductService {
     return { status: HttpStatus.OK, message: 'Product has been update' };
   }
 
-  async destroy(public_id: string) {
+  async destroy(public_id: string, user_id: string) {
+    await this.isAdmin(user_id);
     const findOne = await productBasicEntity.findOne({ where: { public_id } });
     if (!findOne) {
       throw new HttpException(
@@ -187,5 +196,12 @@ export class ProductService {
     }
     findOne.destroy();
     return { status: HttpStatus.OK, message: 'Product has been delete' };
+  }
+
+  async isAdmin(public_id: string): Promise<void> {
+    const findOne = await userEntity.findOne({ where: { public_id } });
+    if (findOne?.role !== 'admin') {
+      throw new HttpException('false', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }
