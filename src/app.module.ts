@@ -42,10 +42,6 @@ import { AuthGuard } from './middleware/guards.middleware';
     HistoryRepository,
     ProductRepository,
     ProductService,
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
   ],
   exports: [UserService],
 })

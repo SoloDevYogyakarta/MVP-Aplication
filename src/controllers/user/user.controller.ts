@@ -109,6 +109,7 @@ export class UserController {
   @UseGuards(AuthGuard)
   @Get('access/me')
   async me(@Req() req: CustomRequest, @Res() res: Response) {
-    return res.status(HttpStatus.OK).json(req.user.data);
+    const result = await this.repository.findOne(req.user.data.public_id);
+    return res.status(HttpStatus.OK).json(result);
   }
 }
