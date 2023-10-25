@@ -29,6 +29,9 @@ const product_repository_1 = require("./repository/product/product.repository");
 const product_service_1 = require("./services/product/product.service");
 const promo_service_1 = require("./services/promo/promo.service");
 const promo_repository_1 = require("./repository/promo/promo.repository");
+const schedule_1 = require("@nestjs/schedule");
+const booking_service_1 = require("./services/booking/booking.service");
+const booking_repository_1 = require("./repository/booking/booking.repository");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -40,6 +43,7 @@ exports.AppModule = AppModule = __decorate([
                 secret: env_1.default['SECRET'] || 'token',
                 signOptions: { expiresIn: '7d' },
             }),
+            schedule_1.ScheduleModule.forRoot(),
         ],
         controllers: [
             user_controller_1.UserController,
@@ -59,6 +63,8 @@ exports.AppModule = AppModule = __decorate([
             product_service_1.ProductService,
             promo_repository_1.ProductPromoRepository,
             promo_service_1.ProductPromoService,
+            booking_service_1.BookingService,
+            booking_repository_1.BookingRepository,
         ],
         exports: [user_service_1.UserService],
     })
