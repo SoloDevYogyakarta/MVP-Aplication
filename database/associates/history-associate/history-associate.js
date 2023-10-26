@@ -27,8 +27,8 @@ exports.historyAttribute = historyAttribute;
 const historyInclude = [
     {
         model: join_entity_1.joinEntity,
-        include: joinProductInclude,
         as: 'products',
+        include: joinProductInclude,
     },
 ];
 exports.historyInclude = historyInclude;
