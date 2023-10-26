@@ -2,9 +2,9 @@ import { ModelCtor } from 'sequelize';
 import { JoinInstance } from '../../../database/entities/commons/join-entity/join-entity';
 import { getField } from '../../../utils/get-field/get-field';
 import {
-  joinProductAndFileAssociate,
-  joinProductAndFileAttribute,
-  joinProductAndFileInclude,
+  joinFileAssociate,
+  joinFileAttribute,
+  joinFileInclude,
 } from './join-associate';
 
 describe('joinProductAndFileAssociate', () => {
@@ -12,7 +12,7 @@ describe('joinProductAndFileAssociate', () => {
   let entity: ModelCtor<JoinInstance>;
 
   beforeEach(() => {
-    entity = joinProductAndFileAssociate;
+    entity = joinFileAssociate;
   });
 
   it('should to be defined', () => expect(entity).toBeDefined());
@@ -29,16 +29,16 @@ describe('joinProductAndFileAssociate', () => {
     it('findOne with relationship', async () => {
       const findOne = await entity.findOne({
         where: { public_id },
-        attributes: joinProductAndFileAttribute,
-        include: joinProductAndFileInclude,
+        attributes: joinFileAttribute,
+        include: joinFileInclude,
       });
       expect(findOne.public_id).toEqual(public_id);
     });
 
     it('findAll with relationship', async () => {
       const findAll = await entity.findAll({
-        attributes: joinProductAndFileAttribute,
-        include: joinProductAndFileInclude,
+        attributes: joinFileAttribute,
+        include: joinFileInclude,
       });
       expect(findAll.length).not.toEqual(0);
     });

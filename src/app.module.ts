@@ -20,6 +20,7 @@ import { ProductPromoRepository } from './repository/promo/promo.repository';
 import { ScheduleModule } from '@nestjs/schedule';
 import { BookingService } from './services/booking/booking.service';
 import { BookingRepository } from './repository/booking/booking.repository';
+import { HistoryService } from './services/history/history-service';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { BookingRepository } from './repository/booking/booking.repository';
     LocalStrategy,
     JwtStrategy,
     HistoryRepository,
+    HistoryService,
     ProductRepository,
     ProductService,
     ProductPromoRepository,

@@ -8,8 +8,8 @@ import { productStockEntity } from '../../../database/entities/products/stock-en
 import { productBasicEntity } from '../../../database/entities/products/basic-entity/basic-entity';
 import { productpriceEntity } from '../../../database/entities/products/price-entity/price-entity';
 import {
-  joinProductAndFileAssociate,
-  joinProductAndFileInclude,
+  joinFileAssociate,
+  joinFileInclude,
 } from '../join-associate/join-associate';
 
 const productBasicAttribute: FindAttributeOptions = {
@@ -27,8 +27,8 @@ const productBasicInclude: Includeable[] = [
     as: 'stock',
   },
   {
-    model: joinProductAndFileAssociate,
-    include: joinProductAndFileInclude,
+    model: joinFileAssociate,
+    include: joinFileInclude,
     as: 'files',
   },
 ];
@@ -43,7 +43,7 @@ const options: HasOneOptions | HasManyOptions = {
 
 productBasicEntity.hasOne(productpriceEntity, { ...options, as: 'price' });
 productBasicEntity.hasOne(productStockEntity, { ...options, as: 'stock' });
-productBasicEntity.hasMany(joinProductAndFileAssociate, {
+productBasicEntity.hasMany(joinFileAssociate, {
   sourceKey: 'public_id',
   foreignKey: {
     name: 'source_id',

@@ -1,1 +1,1 @@
-{"id":193,"main_stock":10,"reverse_stock":10,"value":96,"start_time":"2023-10-25T10:27:05.429Z","end_time":"2023-10-25T10:27:05.429Z","product_id":"LQ3YYlHE7Hnf6rA8xJ9TR","updatedAt":"2023-10-25T10:27:05.491Z","createdAt":"2023-10-25T10:27:05.491Z","public_id":"aqZ62uF1_7SkPt5AmSYOF"}
+{"id":369,"main_stock":6,"reverse_stock":2,"value":6,"start_time":"2023-10-26T06:54:52.218Z","end_time":"2023-10-26T06:54:52.218Z","product_id":"5Y2zbOlApwWJWumU4FhG5","updatedAt":"2023-10-26T06:54:52.285Z","createdAt":"2023-10-26T06:54:52.285Z","public_id":"Pg-OjaXMzi9Ub2afy3IrA"}

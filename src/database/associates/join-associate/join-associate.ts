@@ -2,21 +2,21 @@ import { FindAttributeOptions, Includeable } from 'sequelize';
 import { fileEntity } from '../../../database/entities/commons/file-entity/file-entity';
 import { joinEntity } from '../../../database/entities/commons/join-entity/join-entity';
 
-export const joinProductAndFileAttribute: FindAttributeOptions = {
+export const joinFileAttribute: FindAttributeOptions = {
   include: [],
   exclude: [],
 };
 
-export const joinProductAndFileInclude: Includeable[] = [
+export const joinFileInclude: Includeable[] = [
   {
     model: fileEntity,
     as: 'file',
   },
 ];
 
-const productAndFileAssociate = joinEntity;
+const joinFileEntity = joinEntity;
 
-productAndFileAssociate.hasOne(fileEntity, {
+joinFileEntity.hasOne(fileEntity, {
   sourceKey: 'foreign_id',
   foreignKey: {
     name: 'public_id',
@@ -25,4 +25,4 @@ productAndFileAssociate.hasOne(fileEntity, {
   as: 'file',
 });
 
-export const joinProductAndFileAssociate = productAndFileAssociate;
+export const joinFileAssociate = joinFileEntity;

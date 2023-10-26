@@ -1,0 +1,1 @@
+{"id":12,"public_id":"P3-UpZqiENLOQ4joUiqDw","name":"Generic Metal Ball","desc":"The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive","user_id":"Hk3YcUFZgDO1e9H3u9B16","updatedAt":"2023-10-26T06:54:52.596Z","createdAt":"2023-10-26T06:54:52.596Z"}

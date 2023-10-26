@@ -12,6 +12,7 @@ export type GetFieldType =
   | 'stock-entity'
   | 'variant-entity'
   | 'history-entity'
+  | 'second-history-entity'
   | 'product-http-entity'
   | 'file-entity'
   | 'join-entity'
