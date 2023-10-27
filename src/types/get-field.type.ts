@@ -19,4 +19,5 @@ export type GetFieldType =
   | 'promo-entity'
   | 'promo-http-entity'
   | 'booking-entity'
-  | 'booking-http-entity';
+  | 'booking-http-entity'
+  | 'sparepart-entity';
