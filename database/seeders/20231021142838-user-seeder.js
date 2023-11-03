@@ -21,7 +21,7 @@ module.exports = {
         {
           public_id: nanoid(),
           full_name: faker.person.fullName(),
-          plat_number: `AA ${Math.floor(1000 + Math.random()) * 9000} HFS`,
+          plat_number: `AA ${Math.floor(1000 + Math.random() * 9000)} HFS`,
           phone_number: faker.phone.number().replace(/-/g, ''),
           motor: faker.commerce.productName(),
           year_production: faker.number.int({ min: 1000, max: 2023 }),
@@ -32,7 +32,7 @@ module.exports = {
         {
           public_id: nanoid(),
           full_name: faker.person.fullName(),
-          plat_number: `AA ${Math.floor(1000 + Math.random()) * 9000} HFS`,
+          plat_number: `AA ${Math.floor(1000 + Math.random() * 9000)} HFS`,
           phone_number: faker.phone.number().replace(/-/g, ''),
           motor: faker.commerce.productName(),
           year_production: faker.number.int({ min: 1000, max: 2023 }),
