@@ -45,7 +45,6 @@ let UserService = class UserService {
             }, common_1.HttpStatus.BAD_REQUEST);
         }
         const token = this.jwtService.sign({ data: findOne }, { secret: env_1.default['SECRET'] });
-        (0, system_1.createpath)('../../database/dataTxt/token.txt', token);
         return { accessToken: token, status: common_1.HttpStatus.OK };
     }
     async create(field) {
