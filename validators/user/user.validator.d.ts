@@ -3,8 +3,7 @@ export declare class LoginField {
     password: string;
 }
 export declare class RegisterField {
-    username?: string;
-    email?: string;
+    plat_number?: string;
     password: string;
     confirmation: string;
     http?: boolean;

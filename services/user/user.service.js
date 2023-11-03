@@ -20,7 +20,6 @@ const jwt_1 = require("@nestjs/jwt");
 const lodash_1 = require("lodash");
 const system_1 = require("../../utils/system/system");
 const env_1 = __importDefault(require("../../utils/env/env"));
-const sequelize_1 = require("sequelize");
 const file_entity_1 = require("../../database/entities/commons/file-entity/file-entity");
 const nanoid_1 = require("nanoid");
 let UserService = class UserService {
@@ -29,12 +28,9 @@ let UserService = class UserService {
         this.regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
     }
     async login(field) {
-        let where = { username: field.token };
-        if (this.regex.test(field.token)) {
-            where = { email: field.token };
-            delete where['username'];
-        }
-        const findOne = await user_entity_1.userEntity.findOne({ where });
+        const findOne = await user_entity_1.userEntity.findOne({
+            where: { plat_number: field.token },
+        });
         if (!findOne) {
             throw new common_1.HttpException({
                 status: common_1.HttpStatus.BAD_REQUEST,
@@ -53,28 +49,13 @@ let UserService = class UserService {
         return { accessToken: token, status: common_1.HttpStatus.OK };
     }
     async create(field) {
-        let where = [{ username: '' }, { email: '' }];
-        let message;
-        if (field.username) {
-            message = 'Username';
-            where = [...where, { username: field.username }];
-        }
-        if (field.email) {
-            if (field.username) {
-                message = 'Username or ';
-            }
-            message = `${message}Email address`.replace(/undefined/g, '');
-            where = [...where, { email: field.email }];
-        }
         const findOne = await user_entity_1.userEntity.findOne({
-            where: {
-                [sequelize_1.Op.or]: where,
-            },
+            where: { plat_number: field.plat_number },
         });
         if (findOne) {
             throw new common_1.HttpException({
                 status: common_1.HttpStatus.BAD_REQUEST,
-                message: `${message} already exists, please choose another one`,
+                message: `Plat number already exists`,
             }, common_1.HttpStatus.BAD_REQUEST);
         }
         if (field.password !== field.confirmation) {
@@ -103,7 +84,7 @@ let UserService = class UserService {
         if (!check) {
             throw new common_1.HttpException({ status: common_1.HttpStatus.BAD_REQUEST, message: 'Wrong password' }, common_1.HttpStatus.BAD_REQUEST);
         }
-        findOne.username = field.username;
+        findOne.plat_number = field.plat_number;
         findOne.save();
         const fileEnt = await file_entity_1.fileEntity.findOne({
             where: { public_id: findOne.file_id },

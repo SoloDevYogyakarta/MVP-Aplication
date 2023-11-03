@@ -14,9 +14,12 @@ class UserEntity extends base_entity_1.BaseEntity {
 exports.UserEntity = UserEntity;
 exports.userEntity = entity_1.sequelize.define('USER', {
     public_id: sequelize_1.DataTypes.STRING,
-    username: sequelize_1.DataTypes.STRING,
-    email: sequelize_1.DataTypes.STRING,
-    phone_number: sequelize_1.DataTypes.INTEGER,
+    full_name: sequelize_1.DataTypes.STRING,
+    plat_number: sequelize_1.DataTypes.STRING,
+    phone_number: sequelize_1.DataTypes.STRING,
+    motor: sequelize_1.DataTypes.STRING,
+    year_production: sequelize_1.DataTypes.INTEGER,
+    address: sequelize_1.DataTypes.TEXT,
     role: sequelize_1.DataTypes.STRING,
     password: sequelize_1.DataTypes.STRING,
     file_id: sequelize_1.DataTypes.STRING,

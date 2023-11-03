@@ -16,7 +16,7 @@ export declare class UserService {
         message: string;
     }>;
     update(public_id: string, field: {
-        username: string;
+        plat_number: string;
         password: string;
     }, file: Express.Multer.File): Promise<{
         status: HttpStatus;

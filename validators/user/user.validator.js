@@ -28,12 +28,7 @@ exports.RegisterField = RegisterField;
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], RegisterField.prototype, "username", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
-], RegisterField.prototype, "email", void 0);
+], RegisterField.prototype, "plat_number", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)

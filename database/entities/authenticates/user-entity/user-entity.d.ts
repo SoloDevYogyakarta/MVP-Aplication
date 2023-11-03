@@ -1,9 +1,12 @@
 import { Model, Optional } from 'sequelize';
 import { BaseEntity } from '../../base-entity/base-entity';
 export declare class UserEntity extends BaseEntity {
-    username: string;
-    email: string;
-    phone_number: number;
+    full_name: string;
+    plat_number: string;
+    phone_number: string;
+    motor: string;
+    year_production: number;
+    address: string;
     password: string;
     role: string;
     file_id: string;

@@ -21,20 +21,29 @@ module.exports = {
           unique: true,
           allowNull: false,
         },
-        username: {
-          type: Sequelize.DataTypes.STRING(75),
-          unique: true,
-          allowNull: false,
-        },
-        email: {
-          type: Sequelize.DataTypes.STRING(115),
-          unique: true,
-          allowNull: true,
+        plat_number: {
+          type: Sequelize.DataTypes.STRING(22),
+          unique: false,
         },
         phone_number: {
           type: Sequelize.DataTypes.STRING(22),
-          unique: true,
-          allowNull: true,
+          allowNull: false,
+        },
+        full_name: {
+          type: Sequelize.DataTypes.STRING(75),
+          allowNull: false,
+        },
+        motor: {
+          type: Sequelize.DataTypes.STRING(75),
+          allowNull: false,
+        },
+        year_production: {
+          type: Sequelize.DataTypes.INTEGER,
+          allowNull: false,
+        },
+        address: {
+          type: Sequelize.DataTypes.TEXT,
+          allowNull: false,
         },
         password: {
           type: Sequelize.DataTypes.TEXT,
