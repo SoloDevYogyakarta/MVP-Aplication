@@ -8,7 +8,16 @@ exports[`UserAssociate render correctly 1`] = `
       "id",
       "password",
     ],
-    "include": [],
+    "include": [
+      [
+        "createdAt",
+        "created_at",
+      ],
+      [
+        "updatedAt",
+        "updated_at",
+      ],
+    ],
   },
   "userHistoryInclude": [
     {
@@ -18,7 +27,16 @@ exports[`UserAssociate render correctly 1`] = `
           "id",
           "user_id",
         ],
-        "include": [],
+        "include": [
+          [
+            "createdAt",
+            "created_at",
+          ],
+          [
+            "updatedAt",
+            "updated_at",
+          ],
+        ],
       },
       "include": [
         {
@@ -28,7 +46,16 @@ exports[`UserAssociate render correctly 1`] = `
               "id",
               "order_id",
             ],
-            "include": [],
+            "include": [
+              [
+                "createdAt",
+                "created_at",
+              ],
+              [
+                "updatedAt",
+                "updated_at",
+              ],
+            ],
           },
           "model": [Function],
         },
@@ -45,7 +72,10 @@ exports[`UserAssociate render correctly 1`] = `
           "user_id",
         ],
         "include": [
-          "updatedAt",
+          [
+            "updatedAt",
+            "updated_at",
+          ],
         ],
       },
       "model": [Function],

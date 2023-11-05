@@ -7,7 +7,10 @@ import {
 } from '../order-associate/order-associate';
 
 const userAttribute: FindAttributeOptions = {
-  include: [],
+  include: [
+    ['createdAt', 'created_at'],
+    ['updatedAt', 'updated_at'],
+  ],
   exclude: ['id', 'password'],
 };
 
@@ -15,7 +18,7 @@ const userInclude: Includeable[] = [
   {
     model: userHistoryEntity,
     attributes: {
-      include: ['updatedAt'],
+      include: [['updatedAt', 'updated_at']],
       exclude: ['id', 'user_id'],
     },
     as: 'activities',
@@ -26,7 +29,10 @@ const userHistoryInclude: Includeable[] = [
   {
     model: orderAssociate,
     attributes: {
-      include: [],
+      include: [
+        ['createdAt', 'created_at'],
+        ['updatedAt', 'updated_at'],
+      ],
       exclude: ['id', 'user_id'],
     },
     include: orderInclude,

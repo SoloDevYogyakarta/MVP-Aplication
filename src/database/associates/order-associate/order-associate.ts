@@ -11,7 +11,10 @@ const orderInclude: Includeable[] = [
   {
     model: historyEntity,
     attributes: {
-      include: [],
+      include: [
+        ['createdAt', 'created_at'],
+        ['updatedAt', 'updated_at'],
+      ],
       exclude: ['id', 'order_id'],
     },
     as: 'history',
