@@ -8,7 +8,7 @@ import { environment } from '../../utils/environment/environment';
 import { ServiceHistoryController } from './history-controller';
 import supertest from 'supertest';
 import { faker } from '@faker-js/faker';
-import { createpath } from '../../utils/system/system';
+import { createpath, joinpath } from '../../utils/system/system';
 
 describe('ServiceHistoryController', () => {
   let destory_id!: number;
@@ -70,6 +70,18 @@ describe('ServiceHistoryController', () => {
               price: faker.number.int({ min: 1000, max: 20000 }),
             },
           ]),
+        )
+        .attach(
+          'file',
+          joinpath(
+            '../../../391282393_7054748857952078_2554999196306250130_n.jpg',
+          ),
+        )
+        .attach(
+          'file',
+          joinpath(
+            '../../../391282393_7054748857952078_2554999196306250130_n.jpg',
+          ),
         )
         .expect(HttpStatus.CREATED)
         .then((res) => {

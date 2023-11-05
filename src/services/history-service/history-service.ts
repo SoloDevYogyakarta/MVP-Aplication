@@ -3,12 +3,18 @@ import { orderEntity } from '../../database/entities/services/order-entity/order
 import { userEntity } from '../../database/entities/authenticate/user-entity/user-entity';
 import { historyEntity } from '../../database/entities/services/history-entity/history-entity';
 import { CreateHistoryField } from '../../dto/history-dto/history-dto';
+import { fileEntity } from '../../database/entities/services/files-entity/files-entity';
 
 @Injectable()
 export class HistoryService {
   private readonly logger = new Logger(HistoryService.name);
 
-  async create(id: number, desc: string, body: CreateHistoryField[]) {
+  async create(
+    id: number,
+    desc: string,
+    body: CreateHistoryField[],
+    files: Express.Multer.File[],
+  ) {
     this.logger.log(HistoryService.name);
     const findOne = await userEntity.findOne({ where: { id } });
     if (!findOne) {
@@ -28,6 +34,16 @@ export class HistoryService {
         order_id: order.id,
       });
       create.save();
+    }
+    for (const file of files) {
+      const filepath = `/assets${file.path.split('/assets')[1]}`;
+      const f = await fileEntity.create({
+        originalname: file.originalname,
+        type: file.mimetype.split('/')[1],
+        filepath,
+        order_id: order.id,
+      });
+      f.save();
     }
     return {
       status: HttpStatus.CREATED,

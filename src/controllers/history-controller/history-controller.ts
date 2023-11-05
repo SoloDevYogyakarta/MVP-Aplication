@@ -18,7 +18,7 @@ import { HistoryService } from '../../services/history-service/history-service';
 import { HistoryRepository } from '../../repository/history-repository/history-repository';
 import { AuthGuard } from '../../middleware/auth-guard/auth-guard';
 import { CustomRequest } from '../../types/custom-request.type';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { uploadOptions } from '../../utils/upload/upload';
 
 @Controller('services/history')
@@ -32,11 +32,11 @@ export class ServiceHistoryController {
 
   @UseGuards(AuthGuard)
   @Post(':id')
-  @UseInterceptors(FileInterceptor('files', { storage: uploadOptions }))
+  @UseInterceptors(FilesInterceptor('file', 5, { storage: uploadOptions }))
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Req() req: CustomRequest,
     @UploadedFiles() files: Express.Multer.File[],
+    @Req() req: CustomRequest,
     @Res() res: Response,
   ) {
     this.logger.log(ServiceHistoryController.name);
@@ -44,6 +44,7 @@ export class ServiceHistoryController {
       req.params.id,
       req.body.desc,
       JSON.parse(req.body.data),
+      files,
     );
     return res.status(result.status).json(omit(result, ['result']));
   }

@@ -6,6 +6,8 @@ exports[`UserAssociate render correctly 1`] = `
   "userAttribute": {
     "exclude": [
       "password",
+      "createdAt",
+      "updatedAt",
     ],
     "include": [
       [
@@ -56,6 +58,14 @@ exports[`UserAssociate render correctly 1`] = `
                 "updated_at",
               ],
             ],
+          },
+          "model": [Function],
+        },
+        {
+          "as": "files",
+          "attributes": {
+            "exclude": [],
+            "include": [],
           },
           "model": [Function],
         },

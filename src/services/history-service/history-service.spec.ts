@@ -25,14 +25,42 @@ describe('HistoryService', () => {
 
   if (user_id) {
     it('create', async () => {
-      const result = await service.create(user_id, faker.lorem.paragraph(), [
-        {
-          name: faker.commerce.productName(),
-          title: faker.commerce.productMaterial(),
-          desc: faker.commerce.productDescription(),
-          price: faker.number.int({ min: 10000, max: 200000 }),
-        },
-      ]);
+      const result = await service.create(
+        user_id,
+        faker.lorem.paragraph(),
+        [
+          {
+            name: faker.commerce.productName(),
+            title: faker.commerce.productMaterial(),
+            desc: faker.commerce.productDescription(),
+            price: faker.number.int({ min: 10000, max: 200000 }),
+          },
+        ],
+        [
+          {
+            fieldname: 'file',
+            originalname:
+              '391282393_7054748857952078_2554999196306250130_n.jpg',
+            encoding: '7bit',
+            mimetype: 'image/jpeg',
+            destination: '/Users/kenedy-/projects/mvpapplication/src/assets',
+            filename: 'tgZLo_ji1269CVmmtYgSA.jpeg',
+            path: '/Users/kenedy-/projects/mvpapplication/src/assets/tgZLo_ji1269CVmmtYgSA.jpeg',
+            size: 409192,
+          },
+          {
+            fieldname: 'file',
+            originalname:
+              '391282393_7054748857952078_2554999196306250130_n.jpg',
+            encoding: '7bit',
+            mimetype: 'image/jpeg',
+            destination: '/Users/kenedy-/projects/mvpapplication/src/assets',
+            filename: '8HFb2FXLsoppQEhT0byBX.jpeg',
+            path: '/Users/kenedy-/projects/mvpapplication/src/assets/8HFb2FXLsoppQEhT0byBX.jpeg',
+            size: 409192,
+          },
+        ] as Express.Multer.File[],
+      );
       createpath('../folder-text/order-http-entity.txt', result.result);
       expect(omit(result, ['result'])).toEqual({
         status: HttpStatus.CREATED,
