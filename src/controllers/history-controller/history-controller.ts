@@ -42,6 +42,7 @@ export class ServiceHistoryController {
     this.logger.log(ServiceHistoryController.name);
     const result = await this.service.create(
       req.params.id,
+      req.body.desc,
       JSON.parse(req.body.data),
     );
     return res.status(result.status).json(omit(result, ['result']));

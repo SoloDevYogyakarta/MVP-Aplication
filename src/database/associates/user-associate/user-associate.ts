@@ -3,6 +3,7 @@ import { userHistoryEntity } from '../../../database/entities/authenticate/histo
 import { userEntity } from '../../../database/entities/authenticate/user-entity/user-entity';
 import {
   orderAssociate,
+  orderAttribute,
   orderInclude,
 } from '../order-associate/order-associate';
 
@@ -11,7 +12,7 @@ const userAttribute: FindAttributeOptions = {
     ['createdAt', 'created_at'],
     ['updatedAt', 'updated_at'],
   ],
-  exclude: ['password'],
+  exclude: ['password', 'createdAt', 'updatedAt'],
 };
 
 const userInclude: Includeable[] = [
@@ -28,13 +29,7 @@ const userInclude: Includeable[] = [
 const userHistoryInclude: Includeable[] = [
   {
     model: orderAssociate,
-    attributes: {
-      include: [
-        ['createdAt', 'created_at'],
-        ['updatedAt', 'updated_at'],
-      ],
-      exclude: [],
-    },
+    attributes: orderAttribute,
     include: orderInclude,
     as: 'order',
   },

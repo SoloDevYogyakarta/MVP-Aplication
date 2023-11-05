@@ -26,6 +26,7 @@ describe('HistoryEntity', () => {
   if (user_id) {
     it('create', async () => {
       const order = await orderEntity.create({
+        desc: faker.lorem.paragraph(),
         user_id,
       });
       order.save();

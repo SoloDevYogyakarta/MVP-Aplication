@@ -43,7 +43,7 @@ export class HistoryRepository {
 
   async visit(id: number): Promise<number> {
     const query = await sequelize.query(
-      `SELECT a.user_id,COUNT(*) as visit FROM 'SERVICES.ORDER' AS a WHERE a.user_id = '${id}' `,
+      `SELECT a.user_id,COUNT(*) as visit FROM 'PRODUCTS.ORDER' AS a WHERE a.user_id = '${id}' `,
     );
     const visit = query[0].find(
       (item: { user_id: number; visit: number }) => item.user_id === id,

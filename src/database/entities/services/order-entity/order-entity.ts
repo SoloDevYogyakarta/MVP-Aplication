@@ -3,6 +3,7 @@ import { BaseEntity } from '../../base-entity/base-entity';
 import { sequelize } from '../../entity';
 
 export class OrderEntity extends BaseEntity {
+  desc: string;
   user_id: number;
 }
 
@@ -13,10 +14,11 @@ export interface OrderInstance
 export const orderEntity = sequelize.define<OrderInstance>(
   'ORDER',
   {
+    desc: DataTypes.TEXT,
     user_id: DataTypes.INTEGER,
   } as ModelAttributes<OrderInstance>,
   {
     tableName: 'ORDER',
-    schema: 'SERVICES',
+    schema: 'PRODUCTS',
   },
 );

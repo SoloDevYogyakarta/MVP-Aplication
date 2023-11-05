@@ -25,7 +25,7 @@ describe('HistoryService', () => {
 
   if (user_id) {
     it('create', async () => {
-      const result = await service.create(user_id, [
+      const result = await service.create(user_id, faker.lorem.paragraph(), [
         {
           name: faker.commerce.productName(),
           title: faker.commerce.productMaterial(),

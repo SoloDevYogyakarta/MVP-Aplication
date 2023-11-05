@@ -8,7 +8,7 @@ import { CreateHistoryField } from '../../dto/history-dto/history-dto';
 export class HistoryService {
   private readonly logger = new Logger(HistoryService.name);
 
-  async create(id: number, body: CreateHistoryField[]) {
+  async create(id: number, desc: string, body: CreateHistoryField[]) {
     this.logger.log(HistoryService.name);
     const findOne = await userEntity.findOne({ where: { id } });
     if (!findOne) {
@@ -20,7 +20,7 @@ export class HistoryService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    const order = await orderEntity.create({ user_id: findOne.id });
+    const order = await orderEntity.create({ desc, user_id: findOne.id });
     order.save();
     for (const values of body) {
       const create = await historyEntity.create({

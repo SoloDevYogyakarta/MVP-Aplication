@@ -6,7 +6,7 @@ module.exports = {
     await queryInterface.createTable(
       {
         tableName: 'ORDER',
-        schema: 'SERVICES',
+        schema: 'PRODUCTS',
       },
       {
         id: {
@@ -19,6 +19,10 @@ module.exports = {
         user_id: {
           type: Sequelize.DataTypes.INTEGER,
           allowNull: false,
+        },
+        desc: {
+          type: Sequelize.DataTypes.TEXT,
+          allowNull: true,
         },
         createdAt: {
           type: Sequelize.DataTypes.DATE,
@@ -36,7 +40,7 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable({
       tableName: 'ORDER',
-      schema: 'SERVICES',
+      schema: 'PRODUCTS',
     });
   },
 };

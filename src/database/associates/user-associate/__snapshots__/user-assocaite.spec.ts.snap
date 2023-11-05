@@ -22,7 +22,10 @@ exports[`UserAssociate render correctly 1`] = `
     {
       "as": "order",
       "attributes": {
-        "exclude": [],
+        "exclude": [
+          "createdAt",
+          "updatedAt",
+        ],
         "include": [
           [
             "createdAt",
@@ -40,6 +43,8 @@ exports[`UserAssociate render correctly 1`] = `
           "attributes": {
             "exclude": [
               "order_id",
+              "createdAt",
+              "updatedAt",
             ],
             "include": [
               [

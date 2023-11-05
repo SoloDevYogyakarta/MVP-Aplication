@@ -3,8 +3,11 @@ import { historyEntity } from '../../../database/entities/services/history-entit
 import { orderEntity } from '../../../database/entities/services/order-entity/order-entity';
 
 const orderAttribute: FindAttributeOptions = {
-  include: [],
-  exclude: [],
+  include: [
+    ['createdAt', 'created_at'],
+    ['updatedAt', 'updated_at'],
+  ],
+  exclude: ['createdAt', 'updatedAt'],
 };
 
 const orderInclude: Includeable[] = [
@@ -15,7 +18,7 @@ const orderInclude: Includeable[] = [
         ['createdAt', 'created_at'],
         ['updatedAt', 'updated_at'],
       ],
-      exclude: ['order_id'],
+      exclude: ['order_id', 'createdAt', 'updatedAt'],
     },
     as: 'history',
   },

@@ -59,6 +59,7 @@ describe('ServiceHistoryController', () => {
       await supertest(app.getHttpServer())
         .post(`/services/history/${user_id}`)
         .set('Authorization', `Bearer ${token}`)
+        .field('desc', faker.lorem.paragraph())
         .field(
           'data',
           JSON.stringify([
