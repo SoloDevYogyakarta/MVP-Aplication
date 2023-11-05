@@ -11,7 +11,7 @@ const userInclude: Includeable[] = [
   {
     model: userHistoryEntity,
     attributes: {
-      include: [],
+      include: ['updatedAt'],
       exclude: ['id', 'user_id'],
     },
     as: 'history',

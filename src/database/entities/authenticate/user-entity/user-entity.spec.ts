@@ -33,8 +33,27 @@ describe('UserEntity', () => {
     expect(create.plat_number).not.toBe(null);
   });
 
+  it('create', async () => {
+    const create = await entity.create({
+      plat_number: `B ${Math.floor(1000 + Math.random() * 9999)} SHA`,
+      phone_number: faker.phone.number(),
+      name: faker.person.fullName(),
+      motor: faker.commerce.productName(),
+      address: faker.location.streetAddress(),
+      year_production: Math.floor(1000 + Math.random() * 2023),
+      role: 'admin',
+      password: await bcrypt.hashSync('password', 10),
+    });
+    create.save();
+    createpath(
+      '../folder-text/user-destroy-with-relationship-entity.txt',
+      create,
+    );
+    expect(create.plat_number).not.toBe(null);
+  });
+
   try {
-    public_id = getfield('user-entity').public_id;
+    public_id = getfield('user-http-entity').public_id;
   } catch (err) {
     // empty
   }

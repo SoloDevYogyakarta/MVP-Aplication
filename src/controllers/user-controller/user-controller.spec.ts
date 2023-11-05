@@ -21,6 +21,8 @@ describe('UserController', () => {
   let app: INestApplication;
   let token!: string;
   let user!: UserInstance;
+  let destroy_id!: string;
+  let single_destroy_id!: string;
   let admin!: UserInstance;
 
   beforeEach(async () => {
@@ -57,6 +59,16 @@ describe('UserController', () => {
   }
   try {
     admin = getfield('user-admin-entity');
+  } catch (err) {
+    // empty
+  }
+  try {
+    single_destroy_id = getfield('user-entity').public_id;
+  } catch (err) {
+    // empty
+  }
+  try {
+    destroy_id = getfield('user-history-destroy-entity').user_id;
   } catch (err) {
     // empty
   }
@@ -382,6 +394,48 @@ describe('UserController', () => {
         .set('Authorization', `Bearer ${token}`)
         .expect(HttpStatus.OK)
         .then((res) => expect(res.body).not.toEqual(null));
+    });
+
+    it('http::user destroy', async () => {
+      await supertest(app.getHttpServer())
+        .delete(`/user/${single_destroy_id}`)
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(HttpStatus.OK)
+        .then((res) =>
+          expect(res.body).toEqual({
+            status: HttpStatus.OK,
+            message: 'Account has been delete',
+          }),
+        );
+    });
+
+    it('http::user destroy with relationship', async () => {
+      await supertest(app.getHttpServer())
+        .delete(`/user/${destroy_id}`)
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(HttpStatus.OK)
+        .then((res) =>
+          expect(res.body).toEqual({
+            status: HttpStatus.OK,
+            message: 'Account has been delete',
+          }),
+        );
+    });
+
+    it('http::user invalid destroy', async () => {
+      await supertest(app.getHttpServer())
+        .delete(`/user/dqwdqdwq`)
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(HttpStatus.BAD_REQUEST)
+        .then((res) =>
+          expect(res.body).toEqual({
+            status: HttpStatus.BAD_REQUEST,
+            message: 'Account not found',
+          }),
+        );
     });
   }
 });

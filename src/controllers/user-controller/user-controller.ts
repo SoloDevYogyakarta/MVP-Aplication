@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -92,5 +93,13 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   async me(@Req() req: CustomRequest, @Res() res: Response) {
     return res.status(HttpStatus.OK).json(req.user);
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete(':id')
+  @HttpCode(HttpStatus.OK)
+  async destroy(@Req() req: CustomRequest, @Res() res: Response) {
+    const result = await this.service.destroy(req.params.id);
+    return res.status(result.status).json(result);
   }
 }

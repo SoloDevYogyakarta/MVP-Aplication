@@ -1,0 +1,1 @@
+{"id":206,"plat_number":"B 6485 SHA","phone_number":"411.743.3473","name":"Brent Huel","motor":"Ergonomic Fresh Soap","address":"2689 Mills Oval","year_production":1460,"role":"admin","password":"$2b$10$.GWJvhNdIXsNaVd9pB7zjecM5bGJN6U7hzPCiEYAfL6tWpbd9FP7m","updatedAt":"2023-11-05T09:51:05.490Z","createdAt":"2023-11-05T09:51:05.490Z","public_id":"G-n1INKCrmT6UMngdmRdo"}

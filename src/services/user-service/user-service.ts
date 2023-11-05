@@ -151,4 +151,27 @@ export class UserService {
     findOne.save();
     return { status: HttpStatus.OK, message: 'Password has been update' };
   }
+
+  async destroy(public_id: string) {
+    const findOne = await userEntity.findOne({ where: { public_id } });
+    if (!findOne) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          message: 'Account not found',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    const history = await userHistoryEntity.findAll({
+      where: { user_id: findOne.public_id },
+    });
+
+    for (const values of history) {
+      values?.destroy();
+    }
+    findOne.destroy();
+    return { status: HttpStatus.OK, message: 'Account has been delete' };
+  }
 }

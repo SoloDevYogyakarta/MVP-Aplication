@@ -7,6 +7,7 @@ import { createpath } from '../../../../utils/system/system';
 
 describe('UserHistoryEntity', () => {
   let user!: UserInstance;
+  let destroy!: UserInstance;
   let public_id!: string;
   let entity: ModelCtor<UserHistoryInstance>;
 
@@ -25,6 +26,11 @@ describe('UserHistoryEntity', () => {
   }
   try {
     public_id = getfield('user-history-entity').public_id;
+  } catch (err) {
+    // empty
+  }
+  try {
+    destroy = getfield('user-destroy-with-relationship-entity');
   } catch (err) {
     // empty
   }
@@ -47,6 +53,27 @@ describe('UserHistoryEntity', () => {
       create.save();
       createpath('../folder-text/user-history-entity.txt', create);
       expect(create.user_id).toEqual(user.public_id);
+    });
+  }
+
+  if (destroy) {
+    it('create', async () => {
+      const create = await entity.create({
+        ...omit(destroy, [
+          'id',
+          'public_id',
+          'motor',
+          'year_production',
+          'role',
+          'password',
+          'createdAt',
+          'updatedAt',
+        ]),
+        user_id: destroy.public_id,
+      });
+      create.save();
+      createpath('../folder-text/user-history-destroy-entity.txt', create);
+      expect(create.user_id).toEqual(destroy.public_id);
     });
   }
 
