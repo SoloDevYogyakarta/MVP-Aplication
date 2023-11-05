@@ -8,10 +8,11 @@ class HistoryEntity extends base_entity_1.BaseEntity {
 }
 exports.HistoryEntity = HistoryEntity;
 exports.historyEntity = entity_1.sequelize.define('HISTORY', {
-    public_id: sequelize_1.DataTypes.STRING,
     name: sequelize_1.DataTypes.STRING,
+    title: sequelize_1.DataTypes.STRING,
     desc: sequelize_1.DataTypes.STRING,
-    user_id: sequelize_1.DataTypes.STRING,
+    price: sequelize_1.DataTypes.INTEGER,
+    order_id: sequelize_1.DataTypes.INTEGER,
 }, {
     tableName: 'HISTORY',
     schema: 'SERVICES',
