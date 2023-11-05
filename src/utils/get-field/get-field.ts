@@ -1,13 +1,13 @@
 import { GetFieldType } from 'src/types/get-field.type';
 import { readpath } from '../system/system';
 
-export function getField(filename?: GetFieldType) {
+export function getfield(filename?: GetFieldType) {
   try {
-    const inc = ['token', 'fake'];
+    const inc = ['fake', 'token', 'token_member'];
     if (inc.includes(filename)) {
-      return readpath(`../../database/dataTxt/${filename}.txt`);
+      return readpath(`../folder-text/${filename}.txt`);
     }
-    return JSON.parse(readpath(`../../database/dataTxt/${filename}.txt`));
+    return JSON.parse(readpath(`../folder-text/${filename}.txt`));
   } catch (err) {
     throw new Error(err);
   }

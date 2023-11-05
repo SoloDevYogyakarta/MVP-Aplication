@@ -1,19 +1,20 @@
-import { getField } from './get-field';
+import { getfield } from './get-field';
 
-describe('get-field', () => {
-  it('should to be defined', () => expect(getField).toBeDefined());
+describe('getfield', () => {
+  it('should to be defined', () => expect(getfield).toBeDefined());
 
-  it('render correctly', () => expect(getField).toMatchSnapshot());
+  it('render correctly', () => expect(getfield).toMatchSnapshot());
 
-  it('should can read filename object.txt', () =>
-    expect(getField('object')).toEqual({ message: 'works!' }));
+  it('read file fake.txt', () => expect(getfield('fake')).toEqual('fake'));
 
-  it('should can read filename fake.txt', () =>
-    expect(getField('fake')).toEqual('fake'));
+  it('read file object.txt', () =>
+    expect(getfield('object')).toEqual({
+      message: 'works!',
+    }));
 
-  it('should to be error', () => {
+  it('error', () => {
     try {
-      getField();
+      getfield();
     } catch (err) {
       expect(err.toString()).toContain('ENOENT:');
     }

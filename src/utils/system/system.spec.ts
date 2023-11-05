@@ -1,23 +1,27 @@
-import { createpath, joinpath, readpath, removepath } from './system';
+import * as system from './system';
 
-describe('system', () => {
-  it('createpath', () => {
-    const create = createpath('../../database/dataTxt/object.txt', {
+describe('System', () => {
+  it('should to be defined', () => expect(system).toBeDefined());
+
+  it('render correctly', () => expect(system).toMatchSnapshot());
+
+  it('createpath should to be successfully', () => {
+    const create = system.createpath('../folder-text/object.txt', {
       message: 'works!',
     });
-    createpath('../../database/dataTxt/fake.txt', 'fake');
-    createpath('../../database/dataTxt/remove.txt', 'remove');
+    system.createpath('../folder-text/remove.txt', 'remove');
+    system.createpath('../folder-text/fake.txt', 'fake');
     expect(create).toEqual(undefined);
   });
 
   it('joinpath should to be successfully', () =>
-    expect(joinpath('../../database/dataTxt')).toContain('dataTxt'));
+    expect(system.joinpath('../folder-text')).toContain('folder-text'));
 
   it('readpath should to be successfully', () =>
-    expect(JSON.parse(readpath('../../database/dataTxt/object.txt'))).toEqual({
+    expect(JSON.parse(system.readpath('../folder-text/object.txt'))).toEqual({
       message: 'works!',
     }));
 
   it('removepath should to be successfully', () =>
-    expect(removepath('../../database/dataTxt/remove.txt')).toEqual(undefined));
+    expect(system.removepath('../folder-text/remove.txt')).toEqual(undefined));
 });

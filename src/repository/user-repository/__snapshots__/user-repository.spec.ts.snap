@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserRepository render correctly 1`] = `
+UserRepository {
+  "logger": Logger {
+    "context": "UserRepository",
+    "options": {},
+  },
+}
+`;

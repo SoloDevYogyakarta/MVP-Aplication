@@ -3,7 +3,7 @@ module.exports = {
   rootDir: 'src',
   testRegex: '.*\\.spec\\.ts$',
   transform: {
-    '^.+\\.(t|j)s$': ['ts-jest', '@swc/jest'],
+    '^.+\\.(t|j)s$': 'ts-jest',
   },
   collectCoverageFrom: ['**/*.(t|j)s'],
   coverageDirectory: '../coverage',
@@ -14,6 +14,13 @@ module.exports = {
     'src/database/config',
     'src/database/migrations',
     'src/database/seeders',
-    'coverage',
   ],
+  coverageThreshold: {
+    global: {
+      branches: 100,
+      lines: 100,
+      functions: 100,
+      statements: 100,
+    },
+  },
 };

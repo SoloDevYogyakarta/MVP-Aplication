@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserService render correctly 1`] = `
+UserService {
+  "jwtService": JwtService {
+    "logger": Logger {
+      "context": "JwtService",
+      "options": {},
+    },
+    "options": {
+      "secret": "secret",
+      "signOptions": {
+        "expiresIn": "7d",
+      },
+    },
+  },
+  "logger": Logger {
+    "context": "UserService",
+    "options": {},
+  },
+}
+`;

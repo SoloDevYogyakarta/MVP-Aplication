@@ -1,8 +1,7 @@
 import { Request } from 'express';
-import { UserInstance } from '../database/entities/authenticates/user-entity/user-entity';
+import { UserEntity } from '../database/entities/authenticate/user-entity/user-entity';
 
 export interface CustomRequest extends Request {
-  user: {
-    data: UserInstance;
-  };
+  params: any;
+  data: { user: UserEntity };
 }

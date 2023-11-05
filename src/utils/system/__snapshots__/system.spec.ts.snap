@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`System render correctly 1`] = `
+{
+  "createpath": [Function],
+  "joinpath": [Function],
+  "readpath": [Function],
+  "removepath": [Function],
+}
+`;
