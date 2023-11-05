@@ -5,7 +5,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
       {
-        tableName: 'HISTORY',
+        tableName: 'ORDER',
         schema: 'SERVICES',
       },
       {
@@ -21,21 +21,9 @@ module.exports = {
           unique: true,
           allowNull: false,
         },
-        name: {
-          type: Sequelize.DataTypes.TEXT,
+        user_id: {
+          type: Sequelize.DataTypes.STRING(22),
           allowNull: false,
-        },
-        title: {
-          type: Sequelize.DataTypes.TEXT,
-          allowNull: false,
-        },
-        desc: {
-          type: Sequelize.DataTypes.TEXT,
-          allowNull: true,
-        },
-        price: {
-          type: Sequelize.DataTypes.INTEGER,
-          defaultValue: 0,
         },
         createdAt: {
           type: Sequelize.DataTypes.DATE,
@@ -46,17 +34,13 @@ module.exports = {
           defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
           onUpdate: Sequelize.literal('CURRENT_TIMESTAMP'),
         },
-        order_id: {
-          type: Sequelize.DataTypes.STRING(22),
-          allowNull: false,
-        },
       },
     );
   },
 
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable({
-      tableName: 'HISTORY',
+      tableName: 'ORDER',
       schema: 'SERVICES',
     });
   },

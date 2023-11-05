@@ -13,6 +13,7 @@ import { createpath } from '../../utils/system/system';
 describe('ServiceHistoryController', () => {
   let destory_id!: string;
   let user_id!: string;
+  let order_id!: string;
   let token!: string;
   let app: INestApplication;
 
@@ -53,6 +54,11 @@ describe('ServiceHistoryController', () => {
   } catch (err) {
     // empty
   }
+  try {
+    order_id = getfield('order-http-entity').public_id;
+  } catch (err) {
+    // empty
+  }
 
   if (user_id && token) {
     it('http::history create', async () => {
@@ -71,12 +77,12 @@ describe('ServiceHistoryController', () => {
           ]),
         )
         .expect(HttpStatus.CREATED)
-        .then((res) =>
+        .then((res) => {
           expect(res.body).toEqual({
             status: HttpStatus.CREATED,
             message: 'History has been added',
-          }),
-        );
+          });
+        });
     });
 
     it('http::history invalid create', async () => {
@@ -151,6 +157,36 @@ describe('ServiceHistoryController', () => {
           expect(res.body).toEqual({
             status: HttpStatus.BAD_REQUEST,
             message: 'History not found',
+          }),
+        );
+    });
+  }
+
+  if (order_id) {
+    it('http::history destory order', async () => {
+      await supertest(app.getHttpServer())
+        .delete(`/services/history/order/${order_id}`)
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(HttpStatus.OK)
+        .then((res) =>
+          expect(res.body).toEqual({
+            status: HttpStatus.OK,
+            message: 'Order has been delete',
+          }),
+        );
+    });
+
+    it('http::history invalid destory order', async () => {
+      await supertest(app.getHttpServer())
+        .delete(`/services/history/order/dwqdqwd`)
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(HttpStatus.BAD_REQUEST)
+        .then((res) =>
+          expect(res.body).toEqual({
+            status: HttpStatus.BAD_REQUEST,
+            message: 'Order not found',
           }),
         );
     });

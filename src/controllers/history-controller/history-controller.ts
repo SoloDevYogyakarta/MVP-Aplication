@@ -13,6 +13,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { omit } from 'lodash';
 import { HistoryService } from '../../services/history-service/history-service';
 import { HistoryRepository } from '../../repository/history-repository/history-repository';
 import { AuthGuard } from '../../middleware/auth-guard/auth-guard';
@@ -43,7 +44,7 @@ export class ServiceHistoryController {
       req.params.id,
       JSON.parse(req.body.data),
     );
-    return res.status(result.status).json(result);
+    return res.status(result.status).json(omit(result, ['result']));
   }
 
   @UseGuards(AuthGuard)
@@ -62,6 +63,14 @@ export class ServiceHistoryController {
     this.logger.log(ServiceHistoryController.name);
     const result = await this.repository.findOne(req.params.id);
     return res.status(HttpStatus.OK).json(result);
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete('order/:id')
+  @HttpCode(HttpStatus.OK)
+  async destroyOrder(@Req() req: CustomRequest, @Res() res: Response) {
+    const result = await this.service.destroyOrder(req.params.id);
+    return res.status(result.status).json(result);
   }
 
   @UseGuards(AuthGuard)

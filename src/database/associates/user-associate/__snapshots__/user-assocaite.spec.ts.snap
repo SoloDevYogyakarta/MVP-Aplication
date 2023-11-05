@@ -12,7 +12,7 @@ exports[`UserAssociate render correctly 1`] = `
   },
   "userHistoryInclude": [
     {
-      "as": "history",
+      "as": "order",
       "attributes": {
         "exclude": [
           "id",
@@ -20,6 +20,19 @@ exports[`UserAssociate render correctly 1`] = `
         ],
         "include": [],
       },
+      "include": [
+        {
+          "as": "history",
+          "attributes": {
+            "exclude": [
+              "id",
+              "order_id",
+            ],
+            "include": [],
+          },
+          "model": [Function],
+        },
+      ],
       "model": [Function],
     },
   ],

@@ -10,4 +10,6 @@ export type GetFieldType =
   | 'user-history-entity'
   | 'user-history-destroy-entity'
   | 'history-entity'
-  | 'history-http-entity';
+  | 'history-http-entity'
+  | 'order-entity'
+  | 'order-http-entity';

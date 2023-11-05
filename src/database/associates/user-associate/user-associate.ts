@@ -1,7 +1,10 @@
 import { FindAttributeOptions, Includeable } from 'sequelize';
-import { historyEntity } from '../../../database/entities/services/history-entity/history-entity';
 import { userHistoryEntity } from '../../../database/entities/authenticate/history-entity/history-entity';
 import { userEntity } from '../../../database/entities/authenticate/user-entity/user-entity';
+import {
+  orderAssociate,
+  orderInclude,
+} from '../order-associate/order-associate';
 
 const userAttribute: FindAttributeOptions = {
   include: [],
@@ -21,12 +24,13 @@ const userInclude: Includeable[] = [
 
 const userHistoryInclude: Includeable[] = [
   {
-    model: historyEntity,
+    model: orderAssociate,
     attributes: {
       include: [],
       exclude: ['id', 'user_id'],
     },
-    as: 'history',
+    include: orderInclude,
+    as: 'order',
   },
 ];
 
@@ -35,10 +39,10 @@ userEntity.hasMany(userHistoryEntity, {
   foreignKey: { name: 'user_id', allowNull: true },
   as: 'activities',
 });
-userEntity.hasMany(historyEntity, {
+userEntity.hasMany(orderAssociate, {
   sourceKey: 'public_id',
   foreignKey: { name: 'user_id', allowNull: true },
-  as: 'history',
+  as: 'order',
 });
 
 const userAssociate = userEntity;

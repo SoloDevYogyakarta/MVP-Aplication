@@ -3,6 +3,7 @@ import { ModelCtor } from 'sequelize';
 import { createpath } from '../../../../utils/system/system';
 import { getfield } from '../../../../utils/get-field/get-field';
 import { historyEntity, HistoryInstance } from './history-entity';
+import { orderEntity } from '../order-entity/order-entity';
 
 describe('HistoryEntity', () => {
   let user_id!: string;
@@ -24,25 +25,22 @@ describe('HistoryEntity', () => {
 
   if (user_id) {
     it('create', async () => {
-      try {
-        const create = await entity.create({
-          name: faker.commerce.productName(),
-          title: faker.commerce.productMaterial(),
-          desc: faker.commerce.productDescription(),
-          price: faker.number.int({ min: 10000, max: 200000 }),
-          user_id,
-        });
-        create.save();
-        createpath('../folder-text/history-entity.txt', create);
-        expect(create.user_id).toEqual(user_id);
-      } catch (err) {
-        console.log(err);
-      }
-    });
-
-    it('findOne', async () => {
-      const findOne = await entity.findOne({ where: { user_id } });
-      expect(findOne.user_id).toEqual(user_id);
+      const order = await orderEntity.create({
+        user_id,
+      });
+      order.save();
+      createpath('../folder-text/order-entity.txt', order);
+      expect(order.user_id).toEqual(user_id);
+      const create = await entity.create({
+        name: faker.commerce.productName(),
+        title: faker.commerce.productMaterial(),
+        desc: faker.commerce.productDescription(),
+        price: faker.number.int({ min: 10000, max: 200000 }),
+        order_id: order.public_id,
+      });
+      create.save();
+      createpath('../folder-text/history-entity.txt', create);
+      expect(create.order_id).toEqual(order.public_id);
     });
 
     it('findAll', async () => {
