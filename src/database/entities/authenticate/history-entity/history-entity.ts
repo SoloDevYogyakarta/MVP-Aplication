@@ -18,7 +18,6 @@ export interface UserHistoryInstance
 export const userHistoryEntity = sequelize.define<UserHistoryInstance>(
   'HISTORY',
   {
-    public_id: DataTypes.STRING,
     plat_number: DataTypes.STRING,
     phone_number: DataTypes.STRING,
     name: DataTypes.STRING,
@@ -29,11 +28,5 @@ export const userHistoryEntity = sequelize.define<UserHistoryInstance>(
     tableName: 'HISTORY',
     schema: 'AUTHENTICATE',
     timestamps: false,
-    hooks: {
-      beforeCreate(attributes, options) {
-        const instance = attributes;
-        instance.public_id = nanoid();
-      },
-    },
   },
 );
