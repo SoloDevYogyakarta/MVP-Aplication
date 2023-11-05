@@ -66,14 +66,6 @@ export class ServiceHistoryController {
   }
 
   @UseGuards(AuthGuard)
-  @Delete('order/:id')
-  @HttpCode(HttpStatus.OK)
-  async destroyOrder(@Req() req: CustomRequest, @Res() res: Response) {
-    const result = await this.service.destroyOrder(req.params.id);
-    return res.status(result.status).json(result);
-  }
-
-  @UseGuards(AuthGuard)
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async destroy(@Req() req: CustomRequest, @Res() res: Response) {
