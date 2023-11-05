@@ -14,7 +14,7 @@ describe('UserRepository', () => {
   it('render correctly', () => expect(repository).toMatchSnapshot());
 
   try {
-    public_id = getfield('user-entity').public_id;
+    public_id = getfield('user-http-entity').public_id;
   } catch (err) {
     // empty
   }
