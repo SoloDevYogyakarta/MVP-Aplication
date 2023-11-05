@@ -21,7 +21,7 @@ import { CustomRequest } from '../../types/custom-request.type';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { uploadOptions } from '../../utils/upload/upload';
 
-@Controller('services/history')
+@Controller('history')
 export class ServiceHistoryController {
   private readonly logger = new Logger(ServiceHistoryController.name);
 

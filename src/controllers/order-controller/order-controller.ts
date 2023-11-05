@@ -13,7 +13,7 @@ import { CustomRequest } from '../../types/custom-request.type';
 import { AuthGuard } from '../../middleware/auth-guard/auth-guard';
 import { OrderService } from '../../services/order-service/order-service';
 
-@Controller('services/order')
+@Controller('order')
 export class ServicesOrderController {
   private readonly logger = new Logger(ServicesOrderController.name);
 

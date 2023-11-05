@@ -57,7 +57,7 @@ describe('ServiceHistoryController', () => {
   if (user_id && token) {
     it('http::history create', async () => {
       await supertest(app.getHttpServer())
-        .post(`/services/history/${user_id}`)
+        .post(`/history/${user_id}`)
         .set('Authorization', `Bearer ${token}`)
         .field('desc', faker.lorem.paragraph())
         .field(
@@ -94,7 +94,7 @@ describe('ServiceHistoryController', () => {
 
     it('http::history invalid create', async () => {
       await supertest(app.getHttpServer())
-        .post(`/services/history/dqwdqwdq`)
+        .post(`/history/dqwdqwdq`)
         .set('Authorization', `Bearer ${token}`)
         .field(
           'data',
@@ -118,7 +118,7 @@ describe('ServiceHistoryController', () => {
 
     it('http::history all', async () => {
       await supertest(app.getHttpServer())
-        .get('/services/history')
+        .get('/history')
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .expect(HttpStatus.OK)
@@ -129,7 +129,7 @@ describe('ServiceHistoryController', () => {
 
     it('http::history detail', async () => {
       await supertest(app.getHttpServer())
-        .get(`/services/history/${user_id}`)
+        .get(`/history/${user_id}`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .then((res) => {
@@ -142,7 +142,7 @@ describe('ServiceHistoryController', () => {
   if (destory_id) {
     it('http::history destroy', async () => {
       await supertest(app.getHttpServer())
-        .delete(`/services/history/${destory_id}`)
+        .delete(`/history/${destory_id}`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .expect(HttpStatus.OK)
@@ -156,7 +156,7 @@ describe('ServiceHistoryController', () => {
 
     it('http::history invalid destroy', async () => {
       await supertest(app.getHttpServer())
-        .delete(`/services/history/dqwdqwdq`)
+        .delete(`/history/dqwdqwdq`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .expect(HttpStatus.BAD_REQUEST)
