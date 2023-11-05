@@ -19,7 +19,7 @@ const userInclude: Includeable[] = [
     model: userHistoryEntity,
     attributes: {
       include: [['updatedAt', 'updated_at']],
-      exclude: ['user_id'],
+      exclude: [],
     },
     as: 'activities',
   },
@@ -33,7 +33,7 @@ const userHistoryInclude: Includeable[] = [
         ['createdAt', 'created_at'],
         ['updatedAt', 'updated_at'],
       ],
-      exclude: ['user_id'],
+      exclude: [],
     },
     include: orderInclude,
     as: 'order',
@@ -41,7 +41,7 @@ const userHistoryInclude: Includeable[] = [
 ];
 
 userEntity.hasMany(userHistoryEntity, {
-  sourceKey: 'public_id',
+  sourceKey: 'id',
   foreignKey: { name: 'user_id', allowNull: true },
   as: 'activities',
 });

@@ -22,9 +22,7 @@ exports[`UserAssociate render correctly 1`] = `
     {
       "as": "order",
       "attributes": {
-        "exclude": [
-          "user_id",
-        ],
+        "exclude": [],
         "include": [
           [
             "createdAt",
@@ -64,9 +62,7 @@ exports[`UserAssociate render correctly 1`] = `
     {
       "as": "activities",
       "attributes": {
-        "exclude": [
-          "user_id",
-        ],
+        "exclude": [],
         "include": [
           [
             "updatedAt",
