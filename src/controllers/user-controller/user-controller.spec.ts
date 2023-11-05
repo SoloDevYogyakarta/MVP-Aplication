@@ -96,7 +96,7 @@ describe('UserController', () => {
       );
   });
 
-  if (user?.public_id) {
+  if (user?.id) {
     it('http::user create already exists', async () => {
       await supertest(app.getHttpServer())
         .post('/user')
@@ -167,7 +167,7 @@ describe('UserController', () => {
       );
   });
 
-  if (admin?.public_id) {
+  if (admin?.id) {
     it('http::user login', async () => {
       await supertest(app.getHttpServer())
         .post('/user/login')
@@ -184,7 +184,7 @@ describe('UserController', () => {
     });
   }
 
-  if (user?.public_id) {
+  if (user?.id) {
     it('http::user login role member', async () => {
       await supertest(app.getHttpServer())
         .post('/user/login')
@@ -235,10 +235,10 @@ describe('UserController', () => {
       );
   });
 
-  if (token && user?.public_id) {
+  if (token && user?.id) {
     it('http::user update', async () => {
       await supertest(app.getHttpServer())
-        .post(`/user/update/${user.public_id}`)
+        .post(`/user/update/${user.id}`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .send({
@@ -278,7 +278,7 @@ describe('UserController', () => {
 
     it('http::user update password', async () => {
       await supertest(app.getHttpServer())
-        .post(`/user/update/password/${user.public_id}`)
+        .post(`/user/update/password/${user.id}`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .send({
@@ -318,7 +318,7 @@ describe('UserController', () => {
 
     it('http::user update wrong password', async () => {
       await supertest(app.getHttpServer())
-        .post(`/user/update/password/${user.public_id}`)
+        .post(`/user/update/password/${user.id}`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .send({
@@ -338,7 +338,7 @@ describe('UserController', () => {
 
     it('http::user update password dont match', async () => {
       await supertest(app.getHttpServer())
-        .post(`/user/update/password/${user.public_id}`)
+        .post(`/user/update/password/${user.id}`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .send({
@@ -367,16 +367,16 @@ describe('UserController', () => {
 
     it('http::user detail', async () => {
       await supertest(app.getHttpServer())
-        .get(`/user/${user.public_id}`)
+        .get(`/user/${user.id}`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .expect(HttpStatus.OK)
-        .then((res) => expect(res.body.public_id).toEqual(user.public_id));
+        .then((res) => expect(res.body.id).toEqual(user.id));
     });
 
     it('http::user detail unauthorization', async () => {
       await supertest(app.getHttpServer())
-        .get(`/user/${user.public_id}`)
+        .get(`/user/${user.id}`)
         .set('content-type', 'application/json')
         .expect(HttpStatus.UNAUTHORIZED)
         .then((res) =>

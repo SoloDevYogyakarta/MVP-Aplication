@@ -18,10 +18,10 @@ export class UserRepository {
     });
   }
 
-  async findOne(public_id: string): Promise<UserInstance> {
+  async findOne(id: number): Promise<UserInstance> {
     this.logger.log(UserRepository.name);
     return await userAssociate.findOne({
-      where: { public_id },
+      where: { id },
       attributes: userAttribute,
       include: userInclude,
     });

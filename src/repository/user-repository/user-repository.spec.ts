@@ -2,7 +2,7 @@ import { getfield } from '../../utils/get-field/get-field';
 import { UserRepository } from './user-repository';
 
 describe('UserRepository', () => {
-  let public_id!: string;
+  let id!: number;
   let repository: UserRepository;
 
   beforeEach(() => {
@@ -14,15 +14,15 @@ describe('UserRepository', () => {
   it('render correctly', () => expect(repository).toMatchSnapshot());
 
   try {
-    public_id = getfield('user-http-entity').public_id;
+    id = getfield('user-http-entity').id;
   } catch (err) {
     // empty
   }
 
-  if (public_id) {
+  if (id) {
     it('findOne', async () => {
-      const findOne = await repository.findOne(public_id);
-      expect(findOne.public_id).toEqual(public_id);
+      const findOne = await repository.findOne(id);
+      expect(findOne.id).toEqual(id);
     });
 
     it('findAll', async () => {

@@ -22,7 +22,6 @@ export interface UserInstance
 export const userEntity = sequelize.define<UserInstance>(
   'USER',
   {
-    public_id: DataTypes.STRING,
     plat_number: DataTypes.STRING,
     phone_number: DataTypes.STRING,
     name: DataTypes.STRING,
@@ -35,11 +34,5 @@ export const userEntity = sequelize.define<UserInstance>(
   {
     tableName: 'USER',
     schema: 'AUTHENTICATE',
-    hooks: {
-      beforeCreate(attributes, options) {
-        const instance = attributes;
-        instance.public_id = nanoid();
-      },
-    },
   },
 );

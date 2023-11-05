@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const { faker } = require('@faker-js/faker');
-const { nanoid } = require('nanoid');
 const fs = require('fs');
 const { join } = require('path');
 ('use strict');
@@ -10,7 +9,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     const password = await bcrypt.hashSync('password', 15);
     const admin = {
-      public_id: nanoid(),
+      id: 1,
       plat_number: `SS ${Math.floor(1000 + Math.random() * 9999)} SHA`,
       phone_number: faker.phone.number(),
       name: faker.person.fullName(),

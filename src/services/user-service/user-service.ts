@@ -86,8 +86,8 @@ export class UserService {
     };
   }
 
-  async update(public_id: string, body: RegisterField) {
-    const findOne = await userEntity.findOne({ where: { public_id } });
+  async update(id: number, body: RegisterField) {
+    const findOne = await userEntity.findOne({ where: { id } });
     if (!findOne) {
       throw new HttpException(
         {
@@ -112,13 +112,13 @@ export class UserService {
     history.save();
     findOne.update(
       omit(body, ['motor', 'year_production', 'password', 'confirmation']),
-      { where: { public_id } },
+      { where: { id } },
     );
     return { status: HttpStatus.OK, message: 'Account has been update' };
   }
 
-  async changePassword(public_id: string, body: ChangePasswordField) {
-    const findOne = await userEntity.findOne({ where: { public_id } });
+  async changePassword(id: number, body: ChangePasswordField) {
+    const findOne = await userEntity.findOne({ where: { id } });
     if (!findOne) {
       throw new HttpException(
         {

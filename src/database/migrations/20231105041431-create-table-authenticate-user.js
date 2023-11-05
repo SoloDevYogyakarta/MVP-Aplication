@@ -16,11 +16,6 @@ module.exports = {
           unique: true,
           allowNull: false,
         },
-        public_id: {
-          type: Sequelize.DataTypes.STRING(22),
-          unique: true,
-          allowNull: false,
-        },
         plat_number: {
           type: Sequelize.DataTypes.STRING(22),
           allowNull: false,
