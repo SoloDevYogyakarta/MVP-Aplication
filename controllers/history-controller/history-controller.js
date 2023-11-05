@@ -21,6 +21,7 @@ const history_repository_1 = require("../../repository/history-repository/histor
 const auth_guard_1 = require("../../middleware/auth-guard/auth-guard");
 const platform_express_1 = require("@nestjs/platform-express");
 const upload_1 = require("../../utils/upload/upload");
+const system_1 = require("../../utils/system/system");
 let ServiceHistoryController = ServiceHistoryController_1 = class ServiceHistoryController {
     constructor(repository, service) {
         this.repository = repository;
@@ -29,7 +30,18 @@ let ServiceHistoryController = ServiceHistoryController_1 = class ServiceHistory
     }
     async create(files, req, res) {
         this.logger.log(ServiceHistoryController_1.name);
+        let ids = [];
         const result = await this.service.create(req.params.id, req.body.desc, JSON.parse(req.body.data), files);
+        ids = [...result.ids, result.result.id];
+        (0, system_1.createpath)('../folder-text/order-ids.txt', ids);
+        (0, system_1.createpath)('../folder-text/visit.txt', result.findOne.id);
+        return res
+            .status(result.status)
+            .json((0, lodash_1.omit)(result, ['result', 'ids', 'findOne']));
+    }
+    async update(files, req, res) {
+        this.logger.log(ServiceHistoryController_1.name);
+        const result = await this.service.update(req.params.id, req.body.desc, JSON.parse(req.body.data), files);
         return res.status(result.status).json((0, lodash_1.omit)(result, ['result']));
     }
     async all(res) {
@@ -60,6 +72,18 @@ __decorate([
     __metadata("design:paramtypes", [Array, Object, Object]),
     __metadata("design:returntype", Promise)
 ], ServiceHistoryController.prototype, "create", null);
+__decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.Post)('update/:id'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)('file', 5, { storage: upload_1.uploadOptions })),
+    (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
+    __param(0, (0, common_1.UploadedFiles)()),
+    __param(1, (0, common_1.Req)()),
+    __param(2, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Array, Object, Object]),
+    __metadata("design:returntype", Promise)
+], ServiceHistoryController.prototype, "update", null);
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)(),

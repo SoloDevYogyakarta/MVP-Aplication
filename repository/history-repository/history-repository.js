@@ -40,12 +40,12 @@ let HistoryRepository = HistoryRepository_1 = class HistoryRepository {
             include: user_associate_1.userHistoryInclude,
         });
         result = JSON.parse(JSON.stringify(result));
-        result['visit'] = await this.visit(id);
+        result['visit'] = Number(await this.visit(id));
         return result;
     }
     async visit(id) {
-        const query = await entity_1.sequelize.query(`SELECT COUNT(*) as visit FROM "PRODUCTS"."ORDER" AS a WHERE a.user_id = '${id}'`);
-        const visit = query[0].find((item) => item.user_id === id);
+        const query = await entity_1.sequelize.query(`SELECT a.user_id, COUNT(a.user_id) as visit FROM "PRODUCTS"."ORDER" AS a WHERE a.user_id = '${id}' GROUP BY a.user_id `);
+        const visit = query[0].find((item) => Number(item.user_id) === Number(id));
         return visit?.visit ? visit.visit : 0;
     }
 };
