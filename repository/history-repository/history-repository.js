@@ -44,7 +44,7 @@ let HistoryRepository = HistoryRepository_1 = class HistoryRepository {
         return result;
     }
     async visit(id) {
-        const query = await entity_1.sequelize.query(`SELECT a.user_id,COUNT(*) as visit FROM 'PRODUCTS.ORDER' AS a WHERE a.user_id = '${id}' `);
+        const query = await entity_1.sequelize.query(`SELECT COUNT(*) as visit FROM "PRODUCTS"."ORDER" AS a WHERE a.user_id = '${id}'`);
         const visit = query[0].find((item) => item.user_id === id);
         return visit?.visit ? visit.visit : 0;
     }
