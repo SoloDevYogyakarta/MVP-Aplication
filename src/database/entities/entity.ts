@@ -1,5 +1,6 @@
 import { Dialect, Sequelize } from 'sequelize';
 import { environment } from '../../utils/environment/environment';
+import { joinpath } from '../../utils/system/system';
 
 export const sequelize = new Sequelize(
   environment['DB_NAME'],
@@ -10,6 +11,7 @@ export const sequelize = new Sequelize(
     host: environment['DB_HOST'],
     port: Number(environment['DB_PORT']),
     database: environment['DB_NAME'],
+    storage: joinpath('../mvpapplication.sqlite'),
     dialect: environment['DB_DIALECT'] as Dialect,
   },
 );
