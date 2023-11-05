@@ -8,9 +8,9 @@ import { CreateHistoryField } from '../../dto/history-dto/history-dto';
 export class HistoryService {
   private readonly logger = new Logger(HistoryService.name);
 
-  async create(public_id: string, body: CreateHistoryField[]) {
+  async create(id: number, body: CreateHistoryField[]) {
     this.logger.log(HistoryService.name);
-    const findOne = await userEntity.findOne({ where: { public_id } });
+    const findOne = await userEntity.findOne({ where: { id } });
     if (!findOne) {
       throw new HttpException(
         {
@@ -20,12 +20,12 @@ export class HistoryService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    const order = await orderEntity.create({ user_id: findOne.public_id });
+    const order = await orderEntity.create({ user_id: findOne.id });
     order.save();
     for (const values of body) {
       const create = await historyEntity.create({
         ...values,
-        order_id: order.public_id,
+        order_id: order.id,
       });
       create.save();
     }
@@ -36,8 +36,8 @@ export class HistoryService {
     };
   }
 
-  async destroy(public_id: string) {
-    const findOne = await historyEntity.findOne({ where: { public_id } });
+  async destroy(id: number) {
+    const findOne = await historyEntity.findOne({ where: { id } });
     if (!findOne) {
       throw new HttpException(
         {

@@ -16,13 +16,8 @@ module.exports = {
           unique: true,
           allowNull: false,
         },
-        public_id: {
-          type: Sequelize.DataTypes.STRING(22),
-          unique: true,
-          allowNull: false,
-        },
         user_id: {
-          type: Sequelize.DataTypes.STRING(22),
+          type: Sequelize.DataTypes.INTEGER,
           allowNull: false,
         },
         createdAt: {

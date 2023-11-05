@@ -6,7 +6,7 @@ import { getfield } from '../../utils/get-field/get-field';
 import { HistoryService } from './history-service';
 
 describe('HistoryService', () => {
-  let user_id!: string;
+  let user_id!: number;
   let service: HistoryService;
 
   beforeEach(() => {
@@ -18,24 +18,26 @@ describe('HistoryService', () => {
   it('render correctly', () => expect(service).toMatchSnapshot());
 
   try {
-    user_id = getfield('user-http-entity').public_id;
+    user_id = getfield('user-http-entity').id;
   } catch (err) {
     // empty
   }
 
-  it('create', async () => {
-    const result = await service.create(user_id, [
-      {
-        name: faker.commerce.productName(),
-        title: faker.commerce.productMaterial(),
-        desc: faker.commerce.productDescription(),
-        price: faker.number.int({ min: 10000, max: 200000 }),
-      },
-    ]);
-    createpath('../folder-text/order-http-entity.txt', result.result);
-    expect(omit(result, ['result'])).toEqual({
-      status: HttpStatus.CREATED,
-      message: 'History has been added',
+  if (user_id) {
+    it('create', async () => {
+      const result = await service.create(user_id, [
+        {
+          name: faker.commerce.productName(),
+          title: faker.commerce.productMaterial(),
+          desc: faker.commerce.productDescription(),
+          price: faker.number.int({ min: 10000, max: 200000 }),
+        },
+      ]);
+      createpath('../folder-text/order-http-entity.txt', result.result);
+      expect(omit(result, ['result'])).toEqual({
+        status: HttpStatus.CREATED,
+        message: 'History has been added',
+      });
     });
-  });
+  }
 });

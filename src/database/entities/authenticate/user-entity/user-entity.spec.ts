@@ -6,7 +6,7 @@ import { createpath } from '../../../../utils/system/system';
 import { userEntity, UserInstance } from './user-entity';
 
 describe('UserEntity', () => {
-  let public_id!: string;
+  let id!: number;
   let entity: ModelCtor<UserInstance>;
 
   beforeEach(() => {
@@ -53,15 +53,15 @@ describe('UserEntity', () => {
   });
 
   try {
-    public_id = getfield('user-http-entity').public_id;
+    id = getfield('user-http-entity').id;
   } catch (err) {
     // empty
   }
 
-  if (public_id) {
+  if (id) {
     it('findOne', async () => {
-      const findOne = await entity.findOne({ where: { public_id } });
-      expect(findOne.public_id).toEqual(public_id);
+      const findOne = await entity.findOne({ where: { id } });
+      expect(findOne.id).toEqual(id);
     });
 
     it('findAll', async () => {

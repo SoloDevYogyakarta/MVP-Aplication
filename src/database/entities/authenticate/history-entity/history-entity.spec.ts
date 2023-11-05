@@ -8,7 +8,7 @@ import { createpath } from '../../../../utils/system/system';
 describe('UserHistoryEntity', () => {
   let user!: UserInstance;
   let destroy!: UserInstance;
-  let public_id!: string;
+  let id!: number;
   let entity: ModelCtor<UserHistoryInstance>;
 
   beforeEach(() => {
@@ -25,7 +25,7 @@ describe('UserHistoryEntity', () => {
     // empty
   }
   try {
-    public_id = getfield('user-history-entity').public_id;
+    id = getfield('user-history-entity').id;
   } catch (err) {
     // empty
   }
@@ -40,7 +40,6 @@ describe('UserHistoryEntity', () => {
       const create = await entity.create({
         ...omit(user, [
           'id',
-          'public_id',
           'motor',
           'year_production',
           'role',
@@ -48,11 +47,11 @@ describe('UserHistoryEntity', () => {
           'createdAt',
           'updatedAt',
         ]),
-        user_id: user.public_id,
+        user_id: user.id,
       });
       create.save();
       createpath('../folder-text/user-history-entity.txt', create);
-      expect(create.user_id).toEqual(user.public_id);
+      expect(create.user_id).toEqual(user.id);
     });
   }
 
@@ -61,7 +60,7 @@ describe('UserHistoryEntity', () => {
       const create = await entity.create({
         ...omit(destroy, [
           'id',
-          'public_id',
+          'id',
           'motor',
           'year_production',
           'role',
@@ -69,18 +68,18 @@ describe('UserHistoryEntity', () => {
           'createdAt',
           'updatedAt',
         ]),
-        user_id: destroy.public_id,
+        user_id: destroy.id,
       });
       create.save();
       createpath('../folder-text/user-history-destroy-entity.txt', create);
-      expect(create.user_id).toEqual(destroy.public_id);
+      expect(create.user_id).toEqual(destroy.id);
     });
   }
 
-  if (public_id) {
+  if (id) {
     it('findOne', async () => {
-      const findOne = await entity.findOne({ where: { public_id } });
-      expect(findOne.public_id).toEqual(public_id);
+      const findOne = await entity.findOne({ where: { id } });
+      expect(findOne.id).toEqual(id);
     });
 
     it('findAll', async () => {

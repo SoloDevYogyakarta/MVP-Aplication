@@ -1,1 +1,0 @@
-{"id":158,"plat_number":"B 7043 SHA","phone_number":"(715) 551-9323 x0526","name":"Lee Feest","motor":"Luxurious Metal Salad","address":"228 Spencer Coves","year_production":2298,"role":"admin","password":"$2b$10$FwA5uV05poRdjqg.NDS7LOUYhVn5MoAc6BvIm1HTGdCSkg.ouonn2","updatedAt":"2023-11-05T09:43:34.168Z","createdAt":"2023-11-05T09:43:34.168Z","public_id":"bE4nN6WycdCvaT1KSEkKm"}

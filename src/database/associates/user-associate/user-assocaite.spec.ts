@@ -2,26 +2,26 @@ import { getfield } from '../../../utils/get-field/get-field';
 import * as user from './user-associate';
 
 describe('UserAssociate', () => {
-  let public_id!: string;
+  let id!: number;
 
   it('should to be defined', () => expect(user).toBeDefined());
 
   it('render correctly', () => expect(user).toMatchSnapshot());
 
   try {
-    public_id = getfield('user-http-entity').public_id;
+    id = getfield('user-http-entity').id;
   } catch (err) {
     // empty
   }
 
-  if (public_id) {
+  if (id) {
     it('findOne with relationship', async () => {
       const findOne = await user.userAssociate.findOne({
-        where: { public_id },
+        where: { id },
         attributes: user.userAttribute,
         include: user.userInclude,
       });
-      expect(findOne.public_id).toEqual(public_id);
+      expect(findOne.id).toEqual(id);
     });
 
     it('findAll with relationship', async () => {
@@ -34,11 +34,11 @@ describe('UserAssociate', () => {
 
     it('findOne with relationship history', async () => {
       const findOne = await user.userAssociate.findOne({
-        where: { public_id },
+        where: { id },
         attributes: user.userAttribute,
         include: user.userHistoryInclude,
       });
-      expect(findOne.public_id).toEqual(public_id);
+      expect(findOne.id).toEqual(id);
     });
 
     it('findAll with relationship history', async () => {

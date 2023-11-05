@@ -21,8 +21,8 @@ describe('UserController', () => {
   let app: INestApplication;
   let token!: string;
   let user!: UserInstance;
-  let destroy_id!: string;
-  let single_destroy_id!: string;
+  let destroy_id!: number;
+  let single_destroy_id!: number;
   let admin!: UserInstance;
 
   beforeEach(async () => {
@@ -63,7 +63,7 @@ describe('UserController', () => {
     // empty
   }
   try {
-    single_destroy_id = getfield('user-entity').public_id;
+    single_destroy_id = getfield('user-entity').id;
   } catch (err) {
     // empty
   }

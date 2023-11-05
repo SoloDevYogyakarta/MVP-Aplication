@@ -11,8 +11,8 @@ import { faker } from '@faker-js/faker';
 import { createpath } from '../../utils/system/system';
 
 describe('ServiceHistoryController', () => {
-  let destory_id!: string;
-  let user_id!: string;
+  let destory_id!: number;
+  let user_id!: number;
   let token!: string;
   let app: INestApplication;
 
@@ -44,12 +44,12 @@ describe('ServiceHistoryController', () => {
     // empty
   }
   try {
-    user_id = getfield('user-http-entity').public_id;
+    user_id = getfield('user-http-entity').id;
   } catch (err) {
     // empty
   }
   try {
-    destory_id = getfield('history-entity').public_id;
+    destory_id = getfield('history-entity').id;
   } catch (err) {
     // empty
   }
@@ -121,7 +121,7 @@ describe('ServiceHistoryController', () => {
         .set('Authorization', `Bearer ${token}`)
         .then((res) => {
           createpath('../folder-text/history-http-entity.txt', res.body);
-          expect(res.body.public_id).toEqual(user_id);
+          expect(res.body.id).toEqual(user_id);
         });
     });
   }

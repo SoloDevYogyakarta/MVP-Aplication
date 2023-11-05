@@ -6,7 +6,7 @@ import { historyEntity, HistoryInstance } from './history-entity';
 import { orderEntity } from '../order-entity/order-entity';
 
 describe('HistoryEntity', () => {
-  let user_id!: string;
+  let user_id!: number;
   let entity: ModelCtor<HistoryInstance>;
 
   beforeEach(() => {
@@ -18,7 +18,7 @@ describe('HistoryEntity', () => {
   it('render correctly', () => expect(entity).toMatchSnapshot());
 
   try {
-    user_id = getfield('user-http-entity').public_id;
+    user_id = getfield('user-http-entity').id;
   } catch (err) {
     // empty
   }
@@ -36,11 +36,11 @@ describe('HistoryEntity', () => {
         title: faker.commerce.productMaterial(),
         desc: faker.commerce.productDescription(),
         price: faker.number.int({ min: 10000, max: 200000 }),
-        order_id: order.public_id,
+        order_id: order.id,
       });
       create.save();
       createpath('../folder-text/history-entity.txt', create);
-      expect(create.order_id).toEqual(order.public_id);
+      expect(create.order_id).toEqual(order.id);
     });
 
     it('findAll', async () => {

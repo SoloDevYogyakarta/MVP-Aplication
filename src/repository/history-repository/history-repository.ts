@@ -18,9 +18,9 @@ export class HistoryRepository {
       include: userHistoryInclude,
     });
     for (const values of result) {
-      const visit = await this.visit(values.public_id);
+      const visit = await this.visit(values.id);
       result = JSON.parse(JSON.stringify(result)).map((item: UserInstance) => {
-        if (item.public_id === values.public_id) {
+        if (item.id === values.id) {
           item['visit'] = visit;
         }
         return item;
@@ -29,25 +29,25 @@ export class HistoryRepository {
     return result;
   }
 
-  async findOne(public_id: string): Promise<UserInstance> {
+  async findOne(id: number): Promise<UserInstance> {
     this.logger.log(HistoryRepository.name);
     let result = await userAssociate.findOne({
-      where: { public_id },
+      where: { id },
       attributes: userAttribute,
       include: userHistoryInclude,
     });
     result = JSON.parse(JSON.stringify(result));
-    result['visit'] = await this.visit(public_id);
+    result['visit'] = await this.visit(id);
     return result;
   }
 
-  async visit(public_id: string): Promise<number> {
+  async visit(id: number): Promise<number> {
     const query = await sequelize.query(
-      `SELECT a.user_id,COUNT(*) as visit FROM 'SERVICES.ORDER' AS a WHERE a.user_id = '${public_id}' `,
+      `SELECT a.user_id,COUNT(*) as visit FROM 'SERVICES.ORDER' AS a WHERE a.user_id = '${id}' `,
     );
     const visit = query[0].find(
-      (item: { user_id: string; visit: number }) => item.user_id === public_id,
-    ) as { user_id: string; visit: number };
+      (item: { user_id: number; visit: number }) => item.user_id === id,
+    ) as { user_id: number; visit: number };
     return visit?.visit ? visit.visit : 0;
   }
 }

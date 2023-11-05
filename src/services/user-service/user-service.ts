@@ -107,7 +107,7 @@ export class UserService {
         'createdAt',
         'updatedAt',
       ]),
-      user_id: findOne.public_id,
+      user_id: findOne.id,
     });
     history.save();
     findOne.update(
@@ -152,8 +152,8 @@ export class UserService {
     return { status: HttpStatus.OK, message: 'Password has been update' };
   }
 
-  async destroy(public_id: string) {
-    const findOne = await userEntity.findOne({ where: { public_id } });
+  async destroy(id: number) {
+    const findOne = await userEntity.findOne({ where: { id } });
     if (!findOne) {
       throw new HttpException(
         {
@@ -165,7 +165,7 @@ export class UserService {
     }
 
     const history = await userHistoryEntity.findAll({
-      where: { user_id: findOne.public_id },
+      where: { user_id: findOne.id },
     });
 
     for (const values of history) {

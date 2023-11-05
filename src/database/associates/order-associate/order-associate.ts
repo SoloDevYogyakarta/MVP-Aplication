@@ -15,14 +15,14 @@ const orderInclude: Includeable[] = [
         ['createdAt', 'created_at'],
         ['updatedAt', 'updated_at'],
       ],
-      exclude: ['id', 'order_id'],
+      exclude: ['order_id'],
     },
     as: 'history',
   },
 ];
 
 orderEntity.hasMany(historyEntity, {
-  sourceKey: 'public_id',
+  sourceKey: 'id',
   foreignKey: { name: 'order_id', allowNull: true },
   as: 'history',
 });

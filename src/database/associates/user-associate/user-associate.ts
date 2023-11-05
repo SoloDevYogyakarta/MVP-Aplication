@@ -11,7 +11,7 @@ const userAttribute: FindAttributeOptions = {
     ['createdAt', 'created_at'],
     ['updatedAt', 'updated_at'],
   ],
-  exclude: ['id', 'password'],
+  exclude: ['password'],
 };
 
 const userInclude: Includeable[] = [
@@ -19,7 +19,7 @@ const userInclude: Includeable[] = [
     model: userHistoryEntity,
     attributes: {
       include: [['updatedAt', 'updated_at']],
-      exclude: ['id', 'user_id'],
+      exclude: ['user_id'],
     },
     as: 'activities',
   },
@@ -33,7 +33,7 @@ const userHistoryInclude: Includeable[] = [
         ['createdAt', 'created_at'],
         ['updatedAt', 'updated_at'],
       ],
-      exclude: ['id', 'user_id'],
+      exclude: ['user_id'],
     },
     include: orderInclude,
     as: 'order',
@@ -46,7 +46,7 @@ userEntity.hasMany(userHistoryEntity, {
   as: 'activities',
 });
 userEntity.hasMany(orderAssociate, {
-  sourceKey: 'public_id',
+  sourceKey: 'id',
   foreignKey: { name: 'user_id', allowNull: true },
   as: 'order',
 });

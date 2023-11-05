@@ -7,7 +7,7 @@ import {
 } from './order-associate';
 
 describe('OrderAssociate', () => {
-  let public_id!: string;
+  let id!: number;
   let entity: ModelCtor<OrderInstance>;
 
   beforeEach(() => {
@@ -18,14 +18,14 @@ describe('OrderAssociate', () => {
 
   it('render correctly', () => expect(entity).toMatchSnapshot());
 
-  if (public_id) {
+  if (id) {
     it('findOne with relationship', async () => {
       const findOne = await entity.findOne({
-        where: { public_id },
+        where: { id },
         attributes: orderAttribute,
         include: orderInclude,
       });
-      expect(findOne.public_id).toEqual(public_id);
+      expect(findOne.id).toEqual(id);
     });
 
     it('findAll', async () => {

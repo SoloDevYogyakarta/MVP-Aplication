@@ -16,11 +16,6 @@ module.exports = {
           unique: true,
           allowNull: false,
         },
-        public_id: {
-          type: Sequelize.DataTypes.STRING(22),
-          unique: true,
-          allowNull: false,
-        },
         name: {
           type: Sequelize.DataTypes.TEXT,
           allowNull: false,
@@ -47,7 +42,7 @@ module.exports = {
           onUpdate: Sequelize.literal('CURRENT_TIMESTAMP'),
         },
         order_id: {
-          type: Sequelize.DataTypes.STRING(22),
+          type: Sequelize.DataTypes.INTEGER,
           allowNull: false,
         },
       },

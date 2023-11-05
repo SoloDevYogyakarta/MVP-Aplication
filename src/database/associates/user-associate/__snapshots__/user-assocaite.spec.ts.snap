@@ -5,7 +5,6 @@ exports[`UserAssociate render correctly 1`] = `
   "userAssociate": [Function],
   "userAttribute": {
     "exclude": [
-      "id",
       "password",
     ],
     "include": [
@@ -24,7 +23,6 @@ exports[`UserAssociate render correctly 1`] = `
       "as": "order",
       "attributes": {
         "exclude": [
-          "id",
           "user_id",
         ],
         "include": [
@@ -43,7 +41,6 @@ exports[`UserAssociate render correctly 1`] = `
           "as": "history",
           "attributes": {
             "exclude": [
-              "id",
               "order_id",
             ],
             "include": [
@@ -68,7 +65,6 @@ exports[`UserAssociate render correctly 1`] = `
       "as": "activities",
       "attributes": {
         "exclude": [
-          "id",
           "user_id",
         ],
         "include": [

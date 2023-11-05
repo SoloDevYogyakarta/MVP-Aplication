@@ -4,8 +4,8 @@ import { orderEntity } from '../../database/entities/services/order-entity/order
 
 @Injectable()
 export class OrderService {
-  async destroy(public_id: string) {
-    const findOne = await orderEntity.findOne({ where: { public_id } });
+  async destroy(id: number) {
+    const findOne = await orderEntity.findOne({ where: { id } });
     if (!findOne) {
       throw new HttpException(
         {
@@ -16,7 +16,7 @@ export class OrderService {
       );
     }
     const history = await historyEntity.findAll({
-      where: { order_id: findOne.public_id },
+      where: { order_id: findOne.id },
     });
     for (const values of history) {
       values?.destroy();

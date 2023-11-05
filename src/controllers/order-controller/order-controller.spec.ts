@@ -8,7 +8,7 @@ import { ServicesOrderController } from './order-controller';
 import { OrderService } from '../../services/order-service/order-service';
 
 describe('ServicesOrderController', () => {
-  let public_id!: string;
+  let id!: number;
   let token!: string;
   let app: INestApplication;
 
@@ -41,15 +41,15 @@ describe('ServicesOrderController', () => {
   }
 
   try {
-    public_id = getfield('order-http-entity').public_id;
+    id = getfield('order-http-entity').id;
   } catch (err) {
     // empty
   }
 
-  if (public_id) {
+  if (id) {
     it('http::order destroy', async () => {
       await supertest(app.getHttpServer())
-        .delete(`/services/order/${public_id}`)
+        .delete(`/services/order/${id}`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .expect(HttpStatus.OK)
