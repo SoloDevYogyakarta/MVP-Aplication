@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`UserController render correctly 1`] = `
+exports[`ServiceHistoryController render correctly 1`] = `
 Server {
   "_connections": 0,
   "_events": {

@@ -8,4 +8,6 @@ export type GetFieldType =
   | 'user-admin-entity'
   | 'user-http-entity'
   | 'user-history-entity'
-  | 'user-history-destroy-entity';
+  | 'user-history-destroy-entity'
+  | 'history-entity'
+  | 'history-http-entity';
