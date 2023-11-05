@@ -9,6 +9,7 @@ import {
 } from '../../dto/user-dto/user-dto';
 import { environment } from '../../utils/environment/environment';
 import { JwtService } from '@nestjs/jwt';
+import { userHistoryEntity } from '../../database/entities/authenticate/history-entity/history-entity';
 
 @Injectable()
 export class UserService {
@@ -96,6 +97,19 @@ export class UserService {
         HttpStatus.BAD_REQUEST,
       );
     }
+
+    const history = await userHistoryEntity.create({
+      ...omit(JSON.parse(JSON.stringify(findOne)), [
+        'id',
+        'public_id',
+        'role',
+        'password',
+        'createdAt',
+        'updatedAt',
+      ]),
+      user_id: findOne.public_id,
+    });
+    history.save();
     findOne.update(
       omit(body, ['motor', 'year_production', 'password', 'confirmation']),
       { where: { public_id } },

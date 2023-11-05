@@ -1,8 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import {
-  userEntity,
-  UserInstance,
-} from '../../database/entities/authenticate/user-entity/user-entity';
+  userAssociate,
+  userAttribute,
+  userInclude,
+} from '../../database/associates/user-associate/user-associate';
+import { UserInstance } from '../../database/entities/authenticate/user-entity/user-entity';
 
 @Injectable()
 export class UserRepository {
@@ -10,11 +12,18 @@ export class UserRepository {
 
   async findAll(): Promise<UserInstance[]> {
     this.logger.log(UserRepository.name);
-    return await userEntity.findAll();
+    return await userAssociate.findAll({
+      attributes: userAttribute,
+      include: userInclude,
+    });
   }
 
   async findOne(public_id: string): Promise<UserInstance> {
     this.logger.log(UserRepository.name);
-    return await userEntity.findOne({ where: { public_id } });
+    return await userAssociate.findOne({
+      where: { public_id },
+      attributes: userAttribute,
+      include: userInclude,
+    });
   }
 }
