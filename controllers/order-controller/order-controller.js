@@ -40,7 +40,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ServicesOrderController.prototype, "destroy", null);
 exports.ServicesOrderController = ServicesOrderController = ServicesOrderController_1 = __decorate([
-    (0, common_1.Controller)('services/order'),
+    (0, common_1.Controller)('order'),
     __metadata("design:paramtypes", [order_service_1.OrderService])
 ], ServicesOrderController);
 //# sourceMappingURL=order-controller.js.map

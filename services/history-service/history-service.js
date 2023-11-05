@@ -9,6 +9,7 @@ var HistoryService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HistoryService = void 0;
 const common_1 = require("@nestjs/common");
+const lodash_1 = require("lodash");
 const order_entity_1 = require("../../database/entities/services/order-entity/order-entity");
 const user_entity_1 = require("../../database/entities/authenticate/user-entity/user-entity");
 const history_entity_1 = require("../../database/entities/services/history-entity/history-entity");
@@ -29,19 +30,23 @@ let HistoryService = HistoryService_1 = class HistoryService {
         const order = await order_entity_1.orderEntity.create({ desc, user_id: findOne.id });
         order.save();
         for (const values of body) {
-            const create = await history_entity_1.historyEntity.create({
-                ...values,
-                order_id: order.id,
-            });
-            create.save();
+            if ((0, lodash_1.some)((0, lodash_1.omit)(values, ['file_desc', 'browse']))) {
+                const create = await history_entity_1.historyEntity.create({
+                    ...(0, lodash_1.omit)(values, ['file_desc', 'browse']),
+                    order_id: order.id,
+                });
+                create.save();
+            }
         }
-        for (const file of files) {
+        for (const [index, file] of files.entries()) {
             const filepath = `/assets${file.path.split('/assets')[1]}`;
             const f = await files_entity_1.fileEntity.create({
                 originalname: file.originalname,
                 type: file.mimetype.split('/')[1],
                 filepath,
                 order_id: order.id,
+                desc: body[index]?.file_desc,
+                browse: body[index]?.browse,
             });
             f.save();
         }

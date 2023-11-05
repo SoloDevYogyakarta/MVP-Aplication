@@ -4,6 +4,8 @@ export declare class FileEntity extends BaseEntity {
     originalname: string;
     filepath: string;
     type: string;
+    desc: string;
+    browse: string;
     order_id: number;
 }
 export type FileCreationAttribute = Optional<FileEntity, 'id'>;

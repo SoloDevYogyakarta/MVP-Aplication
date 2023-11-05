@@ -11,6 +11,8 @@ exports.fileEntity = entity_1.sequelize.define('FILES', {
     originalname: sequelize_1.DataTypes.STRING,
     filepath: sequelize_1.DataTypes.STRING,
     type: sequelize_1.DataTypes.STRING,
+    desc: sequelize_1.DataTypes.TEXT,
+    browse: sequelize_1.DataTypes.STRING,
     order_id: sequelize_1.DataTypes.INTEGER,
 }, {
     tableName: 'FILES',

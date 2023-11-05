@@ -3,4 +3,6 @@ export declare class CreateHistoryField {
     title: string;
     desc: string;
     price: number;
+    file_desc: string;
+    browse: string;
 }

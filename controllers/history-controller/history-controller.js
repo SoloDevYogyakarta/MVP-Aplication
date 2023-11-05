@@ -90,7 +90,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ServiceHistoryController.prototype, "destroy", null);
 exports.ServiceHistoryController = ServiceHistoryController = ServiceHistoryController_1 = __decorate([
-    (0, common_1.Controller)('services/history'),
+    (0, common_1.Controller)('history'),
     __metadata("design:paramtypes", [history_repository_1.HistoryRepository,
         history_service_1.HistoryService])
 ], ServiceHistoryController);

@@ -31,4 +31,14 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], CreateHistoryField.prototype, "price", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateHistoryField.prototype, "file_desc", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateHistoryField.prototype, "browse", void 0);
 //# sourceMappingURL=history-dto.js.map
