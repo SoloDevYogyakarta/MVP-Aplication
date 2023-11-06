@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BookingRepository render correctly 1`] = `
+BookingRepository {
+  "logger": Logger {
+    "context": "BookingRepository",
+    "options": {},
+  },
+}
+`;

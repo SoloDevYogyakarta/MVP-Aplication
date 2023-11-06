@@ -17,4 +17,6 @@ export type GetFieldType =
   | 'visit'
   | 'promo-entity'
   | 'promo-http-entity'
-  | 'promo-destroy-image-entity';
+  | 'promo-destroy-image-entity'
+  | 'booking-entity'
+  | 'booking-http-entity';
