@@ -1,6 +1,4 @@
-import { nanoid } from 'nanoid';
 import { DataTypes, Model, ModelAttributes, Optional } from 'sequelize';
-import { SuperTest } from 'supertest';
 import { BaseEntity } from '../../base-entity/base-entity';
 import { sequelize } from '../../entity';
 
@@ -12,6 +10,7 @@ export class UserEntity extends BaseEntity {
   year_production: number;
   address: string;
   role: string;
+  is_active: boolean;
   password: string;
 }
 
@@ -29,6 +28,7 @@ export const userEntity = sequelize.define<UserInstance>(
     year_production: DataTypes.INTEGER,
     address: DataTypes.STRING,
     role: DataTypes.STRING,
+    is_active: DataTypes.BOOLEAN,
     password: DataTypes.STRING,
   } as ModelAttributes<UserInstance>,
   {

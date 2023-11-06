@@ -3,7 +3,13 @@ import { readpath } from '../system/system';
 
 export function getfield(filename?: GetFieldType) {
   try {
-    const inc = ['fake', 'token', 'token_member'];
+    const inc = [
+      'fake',
+      'token',
+      'token_member',
+      'token-logout',
+      'token-inactive',
+    ];
     if (inc.includes(filename)) {
       return readpath(`../folder-text/${filename}.txt`);
     }

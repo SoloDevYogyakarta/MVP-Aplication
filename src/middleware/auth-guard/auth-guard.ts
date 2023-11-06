@@ -23,6 +23,9 @@ export class AuthGuard implements CanActivate {
       secret: environment['SECRET'],
     });
     request['user'] = payload;
+    if (!payload?.data?.is_active) {
+      throw new UnauthorizedException();
+    }
     return true;
   }
 

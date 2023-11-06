@@ -2,6 +2,8 @@ export type GetFieldType =
   | 'fake'
   | 'object'
   | 'token'
+  | 'token-logout'
+  | 'token-inactive'
   | 'token_member'
   | 'user-entity'
   | 'user-destroy-with-relationship-entity'

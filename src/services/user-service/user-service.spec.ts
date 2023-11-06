@@ -5,12 +5,16 @@ import { omit } from 'lodash';
 import { createpath } from '../../utils/system/system';
 import { environment } from '../../utils/environment/environment';
 import { UserService } from './user-service';
+import { UserEntity } from '../../database/entities/authenticate/user-entity/user-entity';
+import { getfield } from '../../utils/get-field/get-field';
 
 describe('UserService', () => {
+  let user!: UserEntity;
+  let jwtService: JwtService;
   let service: UserService;
 
   beforeEach(() => {
-    const jwtService = new JwtService({
+    jwtService = new JwtService({
       secret: environment['SECRET'],
       signOptions: {
         expiresIn: '7d',
@@ -22,6 +26,12 @@ describe('UserService', () => {
   it('should to be defined', () => expect(service).toBeDefined());
 
   it('render correctly', () => expect(service).toMatchSnapshot());
+
+  try {
+    user = getfield('user-http-entity');
+  } catch (err) {
+    // empty
+  }
 
   it('create', async () => {
     const result = await service.create({
@@ -40,4 +50,34 @@ describe('UserService', () => {
       message: 'Account has been create',
     });
   });
+
+  it('invalid logout', async () => {
+    try {
+      await service.logout(0);
+    } catch (err) {
+      expect(err.message).toEqual('false');
+    }
+  });
+
+  if (user) {
+    it('login', async () => {
+      const result = await service.login({
+        token: user.plat_number,
+        password: 'password',
+      });
+      createpath('../folder-text/token-logout.txt', result.access_token);
+      expect(result.access_token).not.toEqual(null);
+    });
+
+    it('invalid logout', async () => {
+      const result = await service.logout(user.id);
+      user = JSON.parse(JSON.stringify(result.findOne));
+      const token = jwtService.sign(
+        { data: user },
+        { secret: environment['SECRET'] },
+      );
+      createpath('../folder-text/token-inactive.txt', token);
+      expect(omit(result, ['findOne'])).toEqual({ message: true });
+    });
+  }
 });

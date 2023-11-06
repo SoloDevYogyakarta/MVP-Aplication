@@ -41,6 +41,8 @@ export class UserService {
         HttpStatus.BAD_REQUEST,
       );
     }
+    findOne.is_active = true;
+    findOne.save();
     const access_token = this.jwtService.sign(
       {
         data: JSON.parse(JSON.stringify(findOne)),
@@ -173,5 +175,21 @@ export class UserService {
     }
     findOne.destroy();
     return { status: HttpStatus.OK, message: 'Account has been delete' };
+  }
+
+  async logout(id: number) {
+    const findOne = await userEntity.findOne({ where: { id } });
+    if (!findOne) {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'false',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+    findOne.is_active = false;
+    findOne.save();
+    return { message: true, findOne };
   }
 }

@@ -6,10 +6,6 @@ class LoginField {
 
   @IsString()
   password: string;
-
-  @IsString()
-  @IsOptional()
-  secret: string = 'SECRET';
 }
 
 class RegisterField {

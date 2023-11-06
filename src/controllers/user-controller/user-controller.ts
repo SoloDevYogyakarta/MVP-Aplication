@@ -106,4 +106,12 @@ export class UserController {
     const result = await this.service.destroy(req.params.id);
     return res.status(result.status).json(result);
   }
+
+  @UseGuards(AuthGuard)
+  @Post('logout')
+  @HttpCode(HttpStatus.OK)
+  async logout(@Req() req: CustomRequest, @Res() res: Response) {
+    const result = await this.service.logout(req.user.data.id);
+    return res.status(HttpStatus.OK).json(omit(result, ['findOne']));
+  }
 }

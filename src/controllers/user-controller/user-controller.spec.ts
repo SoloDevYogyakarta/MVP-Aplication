@@ -22,6 +22,8 @@ describe('UserController', () => {
   let app: INestApplication;
   let token!: string;
   let user!: UserInstance;
+  let token_logout!: string;
+  let invalid_token!: string;
   let destroy_id!: number;
   let single_destroy_id!: number;
   let admin!: UserInstance;
@@ -76,6 +78,16 @@ describe('UserController', () => {
   }
   try {
     visit = getfield('visit');
+  } catch (err) {
+    // empty
+  }
+  try {
+    token_logout = getfield('token-logout');
+  } catch (err) {
+    // empty
+  }
+  try {
+    invalid_token = getfield('token-inactive');
   } catch (err) {
     // empty
   }
@@ -385,6 +397,20 @@ describe('UserController', () => {
         });
     });
 
+    it('http::history detail', async () => {
+      await supertest(app.getHttpServer())
+        .get(`/users/${user.id}/services`)
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${invalid_token}`)
+        .expect(HttpStatus.UNAUTHORIZED)
+        .then((res) =>
+          expect(res.body).toEqual({
+            statusCode: HttpStatus.UNAUTHORIZED,
+            message: 'Unauthorized',
+          }),
+        );
+    });
+
     if (visit) {
       it('http::history detail visit', async () => {
         await supertest(app.getHttpServer())
@@ -460,6 +486,17 @@ describe('UserController', () => {
             message: 'Account not found',
           }),
         );
+    });
+  }
+
+  if (token_logout) {
+    it('http::user logout', async () => {
+      await supertest(app.getHttpServer())
+        .post('/users/logout')
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token_logout}`)
+        .expect(HttpStatus.OK)
+        .then((res) => expect(res.body).toEqual({ message: true }));
     });
   }
 });
