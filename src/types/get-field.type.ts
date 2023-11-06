@@ -14,4 +14,7 @@ export type GetFieldType =
   | 'order-entity'
   | 'order-http-entity'
   | 'order-ids'
-  | 'visit';
+  | 'visit'
+  | 'promo-entity'
+  | 'promo-http-entity'
+  | 'promo-destroy-image-entity';

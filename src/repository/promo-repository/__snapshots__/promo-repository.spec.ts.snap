@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PromoRepository render correctly 1`] = `
+PromoRepository {
+  "logger": Logger {
+    "context": "PromoRepository",
+    "options": {},
+  },
+}
+`;

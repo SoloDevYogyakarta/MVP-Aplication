@@ -3,5 +3,7 @@ import { UserEntity } from '../database/entities/authenticate/user-entity/user-e
 
 export interface CustomRequest extends Request {
   params: any;
-  data: { user: UserEntity };
+  user: {
+    data: UserEntity;
+  };
 }
