@@ -17,14 +17,12 @@ exports.ServiceHistoryController = void 0;
 const common_1 = require("@nestjs/common");
 const lodash_1 = require("lodash");
 const history_service_1 = require("../../services/history-service/history-service");
-const history_repository_1 = require("../../repository/history-repository/history-repository");
 const auth_guard_1 = require("../../middleware/auth-guard/auth-guard");
 const platform_express_1 = require("@nestjs/platform-express");
 const upload_1 = require("../../utils/upload/upload");
 const system_1 = require("../../utils/system/system");
 let ServiceHistoryController = ServiceHistoryController_1 = class ServiceHistoryController {
-    constructor(repository, service) {
-        this.repository = repository;
+    constructor(service) {
         this.service = service;
         this.logger = new common_1.Logger(ServiceHistoryController_1.name);
     }
@@ -43,16 +41,6 @@ let ServiceHistoryController = ServiceHistoryController_1 = class ServiceHistory
         this.logger.log(ServiceHistoryController_1.name);
         const result = await this.service.update(req.params.id, req.body.desc, JSON.parse(req.body.data), files);
         return res.status(result.status).json((0, lodash_1.omit)(result, ['result']));
-    }
-    async all(res) {
-        this.logger.log(ServiceHistoryController_1.name);
-        const result = await this.repository.findAll();
-        return res.status(common_1.HttpStatus.OK).json(result);
-    }
-    async detail(req, res) {
-        this.logger.log(ServiceHistoryController_1.name);
-        const result = await this.repository.findOne(req.params.id);
-        return res.status(common_1.HttpStatus.OK).json(result);
     }
     async destroy(req, res) {
         const result = await this.service.destroy(req.params.id);
@@ -86,25 +74,6 @@ __decorate([
 ], ServiceHistoryController.prototype, "update", null);
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.Get)(),
-    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
-    __param(0, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], ServiceHistoryController.prototype, "all", null);
-__decorate([
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.Get)(':id'),
-    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
-    __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", Promise)
-], ServiceHistoryController.prototype, "detail", null);
-__decorate([
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Delete)(':id'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __param(0, (0, common_1.Req)()),
@@ -115,7 +84,6 @@ __decorate([
 ], ServiceHistoryController.prototype, "destroy", null);
 exports.ServiceHistoryController = ServiceHistoryController = ServiceHistoryController_1 = __decorate([
     (0, common_1.Controller)('history'),
-    __metadata("design:paramtypes", [history_repository_1.HistoryRepository,
-        history_service_1.HistoryService])
+    __metadata("design:paramtypes", [history_service_1.HistoryService])
 ], ServiceHistoryController);
 //# sourceMappingURL=history-controller.js.map
