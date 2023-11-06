@@ -25,7 +25,7 @@ let HistoryRepository = HistoryRepository_1 = class HistoryRepository {
             const visit = await this.visit(values.id);
             result = JSON.parse(JSON.stringify(result)).map((item) => {
                 if (item.id === values.id) {
-                    item['visit'] = visit;
+                    item['visit'] = Number(visit);
                 }
                 return item;
             });
