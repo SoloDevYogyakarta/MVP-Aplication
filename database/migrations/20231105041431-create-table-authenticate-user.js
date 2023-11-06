@@ -48,6 +48,10 @@ module.exports = {
           type: Sequelize.DataTypes.TEXT,
           allowNull: true,
         },
+        is_active: {
+          type: Sequelize.DataTypes.BOOLEAN,
+          defaultValue: false,
+        },
         createdAt: {
           type: Sequelize.DataTypes.DATE,
           defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
