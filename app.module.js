@@ -9,14 +9,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
+const booking_controller_1 = require("./controllers/booking-controller/booking-controller");
 const history_controller_1 = require("./controllers/history-controller/history-controller");
 const order_controller_1 = require("./controllers/order-controller/order-controller");
 const promo_controller_1 = require("./controllers/promo-controller/promo-controller");
 const user_controller_1 = require("./controllers/user-controller/user-controller");
 const jwt_strategy_1 = require("./middleware/jwt-strategy/jwt-strategy");
+const booking_repository_1 = require("./repository/booking-repository/booking-repository");
 const history_repository_1 = require("./repository/history-repository/history-repository");
 const promo_repository_1 = require("./repository/promo-repository/promo-repository");
 const user_repository_1 = require("./repository/user-repository/user-repository");
+const booking_service_1 = require("./services/booking-service/booking-service");
 const history_service_1 = require("./services/history-service/history-service");
 const order_service_1 = require("./services/order-service/order-service");
 const promo_service_1 = require("./services/promo-service/promo-service");
@@ -40,6 +43,7 @@ exports.AppModule = AppModule = __decorate([
             history_controller_1.ServiceHistoryController,
             order_controller_1.ServicesOrderController,
             promo_controller_1.PromoController,
+            booking_controller_1.BookingController,
         ],
         providers: [
             user_service_1.UserService,
@@ -50,6 +54,8 @@ exports.AppModule = AppModule = __decorate([
             order_service_1.OrderService,
             promo_service_1.PromoService,
             promo_repository_1.PromoRepository,
+            booking_repository_1.BookingRepository,
+            booking_service_1.BookingService,
         ],
         exports: [user_service_1.UserService],
     })
