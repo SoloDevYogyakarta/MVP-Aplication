@@ -22,13 +22,14 @@ import { UserRepository } from '../../repository/user-repository/user-repository
 import { UserService } from '../../services/user-service/user-service';
 import { AuthGuard } from '../../middleware/auth-guard/auth-guard';
 import { CustomRequest } from '../../types/custom-request.type';
+import { HistoryRepository } from '../../repository/history-repository/history-repository';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   private readonly logger = new Logger(UserController.name);
 
   constructor(
-    private readonly repository: UserRepository,
+    private readonly repository: HistoryRepository,
     private readonly service: UserService,
   ) {}
 
@@ -76,14 +77,16 @@ export class UserController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async all(@Res() res: Response) {
+    this.logger.log(UserController.name);
     const result = await this.repository.findAll();
     return res.status(HttpStatus.OK).json(result);
   }
 
   @UseGuards(AuthGuard)
-  @Get(':id')
+  @Get(':id/services')
   @HttpCode(HttpStatus.OK)
   async detail(@Req() req: CustomRequest, @Res() res: Response) {
+    this.logger.log(UserController.name);
     const result = await this.repository.findOne(req.params.id);
     return res.status(HttpStatus.OK).json(result);
   }

@@ -1,7 +1,6 @@
 import {
   Controller,
   Delete,
-  Get,
   HttpCode,
   HttpStatus,
   Logger,
@@ -15,7 +14,6 @@ import {
 import { Response } from 'express';
 import { omit } from 'lodash';
 import { HistoryService } from '../../services/history-service/history-service';
-import { HistoryRepository } from '../../repository/history-repository/history-repository';
 import { AuthGuard } from '../../middleware/auth-guard/auth-guard';
 import { CustomRequest } from '../../types/custom-request.type';
 import { FilesInterceptor } from '@nestjs/platform-express';
@@ -26,10 +24,7 @@ import { createpath } from '../../utils/system/system';
 export class ServiceHistoryController {
   private readonly logger = new Logger(ServiceHistoryController.name);
 
-  constructor(
-    private readonly repository: HistoryRepository,
-    private readonly service: HistoryService,
-  ) {}
+  constructor(private readonly service: HistoryService) {}
 
   @UseGuards(AuthGuard)
   @Post(':id')
@@ -73,24 +68,6 @@ export class ServiceHistoryController {
       files,
     );
     return res.status(result.status).json(omit(result, ['result']));
-  }
-
-  @UseGuards(AuthGuard)
-  @Get()
-  @HttpCode(HttpStatus.OK)
-  async all(@Res() res: Response) {
-    this.logger.log(ServiceHistoryController.name);
-    const result = await this.repository.findAll();
-    return res.status(HttpStatus.OK).json(result);
-  }
-
-  @UseGuards(AuthGuard)
-  @Get(':id')
-  @HttpCode(HttpStatus.OK)
-  async detail(@Req() req: CustomRequest, @Res() res: Response) {
-    this.logger.log(ServiceHistoryController.name);
-    const result = await this.repository.findOne(req.params.id);
-    return res.status(HttpStatus.OK).json(result);
   }
 
   @UseGuards(AuthGuard)

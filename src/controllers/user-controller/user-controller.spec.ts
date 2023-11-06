@@ -2,7 +2,6 @@ import { HttpStatus, INestApplication } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 import { environment } from '../../utils/environment/environment';
-import { UserRepository } from '../../repository/user-repository/user-repository';
 import { UserService } from '../../services/user-service/user-service';
 import { UserController } from './user-controller';
 import supertest from 'supertest';
@@ -16,6 +15,7 @@ import { UserInstance } from '../../database/entities/authenticate/user-entity/u
 import { createpath } from '../../utils/system/system';
 import { getfield } from '../../utils/get-field/get-field';
 import { JwtStrategy } from '../../middleware/jwt-strategy/jwt-strategy';
+import { HistoryRepository } from '../../repository/history-repository/history-repository';
 
 describe('UserController', () => {
   let app: INestApplication;
@@ -24,6 +24,7 @@ describe('UserController', () => {
   let destroy_id!: number;
   let single_destroy_id!: number;
   let admin!: UserInstance;
+  let visit!: number;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -36,7 +37,7 @@ describe('UserController', () => {
         }),
       ],
       controllers: [UserController],
-      providers: [UserService, UserRepository, JwtStrategy],
+      providers: [UserService, HistoryRepository, JwtStrategy],
     }).compile();
 
     app = moduleRef.createNestApplication();
@@ -72,10 +73,15 @@ describe('UserController', () => {
   } catch (err) {
     // empty
   }
+  try {
+    visit = getfield('visit');
+  } catch (err) {
+    // empty
+  }
 
   it('http::user create', async () => {
     await supertest(app.getHttpServer())
-      .post('/user')
+      .post('/users')
       .set('content-type', 'application/json')
       .send({
         plat_number: `BG ${Math.floor(1000 + Math.random() * 9999)} JAK`,
@@ -99,7 +105,7 @@ describe('UserController', () => {
   if (user?.id) {
     it('http::user create already exists', async () => {
       await supertest(app.getHttpServer())
-        .post('/user')
+        .post('/users')
         .set('content-type', 'application/json')
         .send({
           plat_number: user.plat_number,
@@ -123,7 +129,7 @@ describe('UserController', () => {
 
   it('http::user create already exists', async () => {
     await supertest(app.getHttpServer())
-      .post('/user')
+      .post('/users')
       .set('content-type', 'application/json')
       .send({
         plat_number: admin.plat_number,
@@ -146,7 +152,7 @@ describe('UserController', () => {
 
   it("http::user create password don't match ", async () => {
     await supertest(app.getHttpServer())
-      .post('/user')
+      .post('/users')
       .set('content-type', 'application/json')
       .send({
         plat_number: `BG ${Math.floor(1000 + Math.random() * 9999)} JAK`,
@@ -170,7 +176,7 @@ describe('UserController', () => {
   if (admin?.id) {
     it('http::user login', async () => {
       await supertest(app.getHttpServer())
-        .post('/user/login')
+        .post('/users/login')
         .set('content-type', 'application/json')
         .send({
           token: admin.plat_number,
@@ -187,7 +193,7 @@ describe('UserController', () => {
   if (user?.id) {
     it('http::user login role member', async () => {
       await supertest(app.getHttpServer())
-        .post('/user/login')
+        .post('/users/login')
         .set('content-type', 'application/json')
         .send({
           token: user.plat_number,
@@ -202,7 +208,7 @@ describe('UserController', () => {
 
     it('http::user invalid password login', async () => {
       await supertest(app.getHttpServer())
-        .post('/user/login')
+        .post('/users/login')
         .set('content-type', 'application/json')
         .send({
           token: user.plat_number,
@@ -220,7 +226,7 @@ describe('UserController', () => {
 
   it('http::user invalid login', async () => {
     await supertest(app.getHttpServer())
-      .post('/user/login')
+      .post('/users/login')
       .set('content-type', 'application/json')
       .send({
         token: 'dqdqw',
@@ -238,7 +244,7 @@ describe('UserController', () => {
   if (token && user?.id) {
     it('http::user update', async () => {
       await supertest(app.getHttpServer())
-        .post(`/user/update/${user.id}`)
+        .post(`/users/update/${user.id}`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .send({
@@ -258,7 +264,7 @@ describe('UserController', () => {
 
     it('http::user invalid update', async () => {
       await supertest(app.getHttpServer())
-        .post(`/user/update/0000`)
+        .post(`/users/update/0000`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .send({
@@ -278,7 +284,7 @@ describe('UserController', () => {
 
     it('http::user update password', async () => {
       await supertest(app.getHttpServer())
-        .post(`/user/update/password/${user.id}`)
+        .post(`/users/update/password/${user.id}`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .send({
@@ -298,7 +304,7 @@ describe('UserController', () => {
 
     it('http::user invalid update password', async () => {
       await supertest(app.getHttpServer())
-        .post(`/user/update/password/00`)
+        .post(`/users/update/password/00`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .send({
@@ -318,7 +324,7 @@ describe('UserController', () => {
 
     it('http::user update wrong password', async () => {
       await supertest(app.getHttpServer())
-        .post(`/user/update/password/${user.id}`)
+        .post(`/users/update/password/${user.id}`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .send({
@@ -338,7 +344,7 @@ describe('UserController', () => {
 
     it('http::user update password dont match', async () => {
       await supertest(app.getHttpServer())
-        .post(`/user/update/password/${user.id}`)
+        .post(`/users/update/password/${user.id}`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .send({
@@ -356,27 +362,44 @@ describe('UserController', () => {
         );
     });
 
-    it('http::user all', async () => {
+    it('http::history all', async () => {
       await supertest(app.getHttpServer())
-        .get('/user')
+        .get('/users')
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .expect(HttpStatus.OK)
-        .then((res) => expect(res.body).not.toEqual(0));
+        .then((res) => {
+          expect(res.body.length).not.toEqual(0);
+        });
     });
 
-    it('http::user detail', async () => {
+    it('http::history detail', async () => {
       await supertest(app.getHttpServer())
-        .get(`/user/${user.id}`)
+        .get(`/users/${user.id}/services`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
-        .expect(HttpStatus.OK)
-        .then((res) => expect(res.body.id).toEqual(user.id));
+        .then((res) => {
+          createpath('../folder-text/history-http-entity.txt', res.body);
+          expect(res.body.id).toEqual(user.id);
+        });
     });
+
+    if (visit) {
+      it('http::history detail visit', async () => {
+        await supertest(app.getHttpServer())
+          .get(`/users/${visit}/services`)
+          .set('content-type', 'application/json')
+          .set('Authorization', `Bearer ${token}`)
+          .then(async (res) => {
+            createpath('../folder-text/history-http-entity.txt', res.body);
+            expect(res.body.visit).not.toEqual(0);
+          });
+      });
+    }
 
     it('http::user detail unauthorization', async () => {
       await supertest(app.getHttpServer())
-        .get(`/user/${user.id}`)
+        .get(`/users/${user.id}/services`)
         .set('content-type', 'application/json')
         .expect(HttpStatus.UNAUTHORIZED)
         .then((res) =>
@@ -389,7 +412,7 @@ describe('UserController', () => {
 
     it('http::user me', async () => {
       await supertest(app.getHttpServer())
-        .get('/user/current/user')
+        .get('/users/current/user')
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .expect(HttpStatus.OK)
@@ -398,7 +421,7 @@ describe('UserController', () => {
 
     it('http::user destroy', async () => {
       await supertest(app.getHttpServer())
-        .delete(`/user/${single_destroy_id}`)
+        .delete(`/users/${single_destroy_id}`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .expect(HttpStatus.OK)
@@ -412,7 +435,7 @@ describe('UserController', () => {
 
     it('http::user destroy with relationship', async () => {
       await supertest(app.getHttpServer())
-        .delete(`/user/${destroy_id}`)
+        .delete(`/users/${destroy_id}`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .expect(HttpStatus.OK)
@@ -426,7 +449,7 @@ describe('UserController', () => {
 
     it('http::user invalid destroy', async () => {
       await supertest(app.getHttpServer())
-        .delete(`/user/0000`)
+        .delete(`/users/0000`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .expect(HttpStatus.BAD_REQUEST)

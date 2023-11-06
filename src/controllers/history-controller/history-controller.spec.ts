@@ -2,20 +2,18 @@ import { HttpStatus, INestApplication } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 import { getfield } from '../../utils/get-field/get-field';
-import { HistoryRepository } from '../../repository/history-repository/history-repository';
 import { HistoryService } from '../../services/history-service/history-service';
 import { environment } from '../../utils/environment/environment';
 import { ServiceHistoryController } from './history-controller';
 import supertest from 'supertest';
 import { faker } from '@faker-js/faker';
-import { createpath, joinpath } from '../../utils/system/system';
+import { joinpath } from '../../utils/system/system';
 
 describe('ServiceHistoryController', () => {
   let ids!: number[];
   let destory_id!: number;
   let user_id!: number;
   let token!: string;
-  let visit!: number;
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -29,7 +27,7 @@ describe('ServiceHistoryController', () => {
         }),
       ],
       controllers: [ServiceHistoryController],
-      providers: [HistoryService, HistoryRepository],
+      providers: [HistoryService],
     }).compile();
 
     app = moduleRef.createNestApplication();
@@ -57,11 +55,6 @@ describe('ServiceHistoryController', () => {
   }
   try {
     ids = getfield('order-ids') as number[];
-  } catch (err) {
-    // empty
-  }
-  try {
-    visit = getfield('visit');
   } catch (err) {
     // empty
   }
@@ -160,41 +153,6 @@ describe('ServiceHistoryController', () => {
             message: 'Account not found',
           }),
         );
-    });
-
-    it('http::history all', async () => {
-      await supertest(app.getHttpServer())
-        .get('/history')
-        .set('content-type', 'application/json')
-        .set('Authorization', `Bearer ${token}`)
-        .expect(HttpStatus.OK)
-        .then((res) => {
-          expect(res.body.length).not.toEqual(0);
-        });
-    });
-
-    it('http::history detail', async () => {
-      await supertest(app.getHttpServer())
-        .get(`/history/${user_id}`)
-        .set('content-type', 'application/json')
-        .set('Authorization', `Bearer ${token}`)
-        .then((res) => {
-          createpath('../folder-text/history-http-entity.txt', res.body);
-          expect(res.body.id).toEqual(user_id);
-        });
-    });
-  }
-
-  if (visit) {
-    it('http::history detail visit', async () => {
-      await supertest(app.getHttpServer())
-        .get(`/history/${visit}`)
-        .set('content-type', 'application/json')
-        .set('Authorization', `Bearer ${token}`)
-        .then(async (res) => {
-          createpath('../folder-text/history-http-entity.txt', res.body);
-          expect(res.body.visit).not.toEqual(0);
-        });
     });
   }
 
