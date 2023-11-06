@@ -4,4 +4,10 @@ export declare class HistoryRepository {
     findAll(): Promise<UserInstance[]>;
     findOne(id: number): Promise<UserInstance>;
     visit(id: number): Promise<number>;
+    totalOrder(id: number): Promise<{
+        id: number;
+        user_id: number;
+        total: string;
+    }[]>;
+    total(id: number): Promise<number>;
 }
