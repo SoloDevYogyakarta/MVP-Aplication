@@ -21,7 +21,7 @@ export class HistoryRepository {
       const visit = await this.visit(values.id);
       result = JSON.parse(JSON.stringify(result)).map((item: UserInstance) => {
         if (item.id === values.id) {
-          item['visit'] = visit;
+          item['visit'] = Number(visit);
         }
         return item;
       });
@@ -37,16 +37,17 @@ export class HistoryRepository {
       include: userHistoryInclude,
     });
     result = JSON.parse(JSON.stringify(result));
-    result['visit'] = await this.visit(id);
+    result['visit'] = Number(await this.visit(id));
     return result;
   }
 
   async visit(id: number): Promise<number> {
     const query = await sequelize.query(
-      `SELECT a.user_id,COUNT(*) as visit FROM 'PRODUCTS.ORDER' AS a WHERE a.user_id = '${id}' `,
+      `SELECT a.user_id, COUNT(a.user_id) as visit FROM "PRODUCTS"."ORDER" AS a WHERE a.user_id = '${id}' GROUP BY a.user_id `,
     );
     const visit = query[0].find(
-      (item: { user_id: number; visit: number }) => item.user_id === id,
+      (item: { user_id: number; visit: number }) =>
+        Number(item.user_id) === Number(id),
     ) as { user_id: number; visit: number };
     return visit?.visit ? visit.visit : 0;
   }

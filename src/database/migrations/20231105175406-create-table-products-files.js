@@ -32,6 +32,14 @@ module.exports = {
           type: Sequelize.DataTypes.STRING(20),
           allowNull: true,
         },
+        desc: {
+          type: Sequelize.DataTypes.TEXT,
+          allowNull: true,
+        },
+        browse: {
+          type: Sequelize.DataTypes.STRING(75),
+          allowNull: true,
+        },
         order_id: {
           type: Sequelize.DataTypes.INTEGER,
           allowNull: false,

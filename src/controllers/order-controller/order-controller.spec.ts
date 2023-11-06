@@ -63,7 +63,7 @@ describe('ServicesOrderController', () => {
 
     it('http::order invalid destroy', async () => {
       await supertest(app.getHttpServer())
-        .delete(`/order/dwqdqwd`)
+        .delete(`/order/0000`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .expect(HttpStatus.BAD_REQUEST)

@@ -258,7 +258,7 @@ describe('UserController', () => {
 
     it('http::user invalid update', async () => {
       await supertest(app.getHttpServer())
-        .post(`/user/update/dqwdqwd`)
+        .post(`/user/update/0000`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .send({
@@ -298,7 +298,7 @@ describe('UserController', () => {
 
     it('http::user invalid update password', async () => {
       await supertest(app.getHttpServer())
-        .post(`/user/update/password/dqwdqwd`)
+        .post(`/user/update/password/00`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .send({
@@ -426,7 +426,7 @@ describe('UserController', () => {
 
     it('http::user invalid destroy', async () => {
       await supertest(app.getHttpServer())
-        .delete(`/user/dqwdqdwq`)
+        .delete(`/user/0000`)
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .expect(HttpStatus.BAD_REQUEST)

@@ -1,1 +1,1 @@
-{"id":1,"plat_number":"SS 10860 SHA","phone_number":"290.857.6131","name":"Dianna Zemlak","motor":"Luxurious Granite Fish","address":"15265 Lee Street","year_production":2139,"password":"$2b$15$52Q.Je7ibs2/45l98zyJr.ZhDJbBz4VxqMI6Ggn77gnuOxojT0sje"}
+{"id":1,"plat_number":"SS 9075 SHA","phone_number":"346-849-8380 x58377","name":"Johnnie Weimann","motor":"Awesome Metal Pants","address":"6707 Hermann Ridge","role":"admin","year_production":1454,"password":"$2b$15$LtyA/loI/k93rQaV6Fz8audRxhN6/.9IbV0zGiPl.6xqwQ2groPVS"}

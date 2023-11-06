@@ -6,6 +6,8 @@ export class FileEntity extends BaseEntity {
   originalname: string;
   filepath: string;
   type: string;
+  desc: string;
+  browse: string;
   order_id: number;
 }
 
@@ -19,6 +21,8 @@ export const fileEntity = sequelize.define<FileInstance>(
     originalname: DataTypes.STRING,
     filepath: DataTypes.STRING,
     type: DataTypes.STRING,
+    desc: DataTypes.TEXT,
+    browse: DataTypes.STRING,
     order_id: DataTypes.INTEGER,
   } as ModelAttributes<FileInstance>,
   {

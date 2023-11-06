@@ -15,6 +15,7 @@ module.exports = {
       name: faker.person.fullName(),
       motor: faker.commerce.productName(),
       address: faker.location.streetAddress(),
+      role: 'admin',
       year_production: Math.floor(1000 + Math.random() * 2023),
       password,
     };

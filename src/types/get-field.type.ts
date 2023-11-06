@@ -12,4 +12,6 @@ export type GetFieldType =
   | 'history-entity'
   | 'history-http-entity'
   | 'order-entity'
-  | 'order-http-entity';
+  | 'order-http-entity'
+  | 'order-ids'
+  | 'visit';

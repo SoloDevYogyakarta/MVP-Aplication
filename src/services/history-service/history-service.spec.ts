@@ -34,6 +34,8 @@ describe('HistoryService', () => {
             title: faker.commerce.productMaterial(),
             desc: faker.commerce.productDescription(),
             price: faker.number.int({ min: 10000, max: 200000 }),
+            file_desc: faker.lorem.paragraph(),
+            browse: 'Upload',
           },
         ],
         [
@@ -62,7 +64,7 @@ describe('HistoryService', () => {
         ] as Express.Multer.File[],
       );
       createpath('../folder-text/order-http-entity.txt', result.result);
-      expect(omit(result, ['result'])).toEqual({
+      expect(omit(result, ['result', 'ids', 'findOne'])).toEqual({
         status: HttpStatus.CREATED,
         message: 'History has been added',
       });
