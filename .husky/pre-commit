@@ -4,3 +4,4 @@
 npx pretty-quick --staged
 
 npm run build
+npm run test
