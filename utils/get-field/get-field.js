@@ -4,7 +4,13 @@ exports.getfield = void 0;
 const system_1 = require("../system/system");
 function getfield(filename) {
     try {
-        const inc = ['fake', 'token', 'token_member'];
+        const inc = [
+            'fake',
+            'token',
+            'token_member',
+            'token-logout',
+            'token-inactive',
+        ];
         if (inc.includes(filename)) {
             return (0, system_1.readpath)(`../folder-text/${filename}.txt`);
         }

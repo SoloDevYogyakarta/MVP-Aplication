@@ -1,7 +1,6 @@
 declare class LoginField {
     token: string;
     password: string;
-    secret: string;
 }
 declare class RegisterField {
     plat_number: string;

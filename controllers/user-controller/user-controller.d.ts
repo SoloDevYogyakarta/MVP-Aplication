@@ -18,4 +18,5 @@ export declare class UserController {
     detail(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
     me(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
     destroy(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
+    logout(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
 }

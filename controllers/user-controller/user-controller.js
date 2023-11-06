@@ -63,6 +63,10 @@ let UserController = UserController_1 = class UserController {
         const result = await this.service.destroy(req.params.id);
         return res.status(result.status).json(result);
     }
+    async logout(req, res) {
+        const result = await this.service.logout(req.user.data.id);
+        return res.status(common_1.HttpStatus.OK).json((0, lodash_1.omit)(result, ['findOne']));
+    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -144,6 +148,16 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "destroy", null);
+__decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.Post)('logout'),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "logout", null);
 exports.UserController = UserController = UserController_1 = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [user_repository_1.UserRepository,

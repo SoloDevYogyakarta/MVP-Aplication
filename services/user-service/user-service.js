@@ -44,6 +44,8 @@ let UserService = UserService_1 = class UserService {
                 message: 'Invalid username or password',
             }, common_1.HttpStatus.BAD_REQUEST);
         }
+        findOne.is_active = true;
+        findOne.save();
         const access_token = this.jwtService.sign({
             data: JSON.parse(JSON.stringify(findOne)),
         }, { secret: environment_1.environment['SECRET'] });
@@ -140,6 +142,18 @@ let UserService = UserService_1 = class UserService {
         }
         findOne.destroy();
         return { status: common_1.HttpStatus.OK, message: 'Account has been delete' };
+    }
+    async logout(id) {
+        const findOne = await user_entity_1.userEntity.findOne({ where: { id } });
+        if (!findOne) {
+            throw new common_1.HttpException({
+                status: common_1.HttpStatus.INTERNAL_SERVER_ERROR,
+                message: 'false',
+            }, common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        findOne.is_active = false;
+        findOne.save();
+        return { message: true, findOne };
     }
 };
 exports.UserService = UserService;

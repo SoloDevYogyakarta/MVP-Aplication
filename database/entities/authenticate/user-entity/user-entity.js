@@ -15,6 +15,7 @@ exports.userEntity = entity_1.sequelize.define('USER', {
     year_production: sequelize_1.DataTypes.INTEGER,
     address: sequelize_1.DataTypes.STRING,
     role: sequelize_1.DataTypes.STRING,
+    is_active: sequelize_1.DataTypes.BOOLEAN,
     password: sequelize_1.DataTypes.STRING,
 }, {
     tableName: 'USER',

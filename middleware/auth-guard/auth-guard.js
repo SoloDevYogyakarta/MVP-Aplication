@@ -27,6 +27,9 @@ let AuthGuard = class AuthGuard {
             secret: environment_1.environment['SECRET'],
         });
         request['user'] = payload;
+        if (!payload?.data?.is_active) {
+            throw new common_1.UnauthorizedException();
+        }
         return true;
     }
     extraTokenFromHeader(request) {

@@ -26,4 +26,8 @@ export declare class UserService {
         status: HttpStatus;
         message: string;
     }>;
+    logout(id: number): Promise<{
+        message: boolean;
+        findOne: import("../../database/entities/authenticate/user-entity/user-entity").UserInstance;
+    }>;
 }

@@ -12,9 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangePasswordField = exports.RegisterField = exports.LoginField = void 0;
 const class_validator_1 = require("class-validator");
 class LoginField {
-    constructor() {
-        this.secret = 'SECRET';
-    }
 }
 exports.LoginField = LoginField;
 __decorate([
@@ -25,11 +22,6 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], LoginField.prototype, "password", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
-], LoginField.prototype, "secret", void 0);
 class RegisterField {
 }
 exports.RegisterField = RegisterField;
