@@ -16,6 +16,7 @@ import { createpath } from '../../utils/system/system';
 import { getfield } from '../../utils/get-field/get-field';
 import { JwtStrategy } from '../../middleware/jwt-strategy/jwt-strategy';
 import { HistoryRepository } from '../../repository/history-repository/history-repository';
+import { UserRepository } from '../../repository/user-repository/user-repository';
 
 describe('UserController', () => {
   let app: INestApplication;
@@ -37,7 +38,7 @@ describe('UserController', () => {
         }),
       ],
       controllers: [UserController],
-      providers: [UserService, HistoryRepository, JwtStrategy],
+      providers: [UserService, UserRepository, HistoryRepository, JwtStrategy],
     }).compile();
 
     app = moduleRef.createNestApplication();

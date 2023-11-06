@@ -29,6 +29,7 @@ export class UserController {
   private readonly logger = new Logger(UserController.name);
 
   constructor(
+    private readonly userRepository: UserRepository,
     private readonly repository: HistoryRepository,
     private readonly service: UserService,
   ) {}
@@ -78,7 +79,7 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   async all(@Res() res: Response) {
     this.logger.log(UserController.name);
-    const result = await this.repository.findAll();
+    const result = await this.userRepository.findAll();
     return res.status(HttpStatus.OK).json(result);
   }
 

@@ -75,7 +75,7 @@ exports[`UserAssociate render correctly 1`] = `
   ],
   "userInclude": [
     {
-      "as": "activities",
+      "as": "history",
       "attributes": {
         "exclude": [],
         "include": [

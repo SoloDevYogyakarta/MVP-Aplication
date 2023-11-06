@@ -8,6 +8,7 @@ import { ServiceHistoryController } from './history-controller';
 import supertest from 'supertest';
 import { faker } from '@faker-js/faker';
 import { joinpath } from '../../utils/system/system';
+import { HistoryRepository } from '../../repository/history-repository/history-repository';
 
 describe('ServiceHistoryController', () => {
   let ids!: number[];
@@ -27,7 +28,7 @@ describe('ServiceHistoryController', () => {
         }),
       ],
       controllers: [ServiceHistoryController],
-      providers: [HistoryService],
+      providers: [HistoryService, HistoryRepository],
     }).compile();
 
     app = moduleRef.createNestApplication();
@@ -153,6 +154,15 @@ describe('ServiceHistoryController', () => {
             message: 'Account not found',
           }),
         );
+    });
+
+    it('http::history all', async () => {
+      await supertest(app.getHttpServer())
+        .get('/history')
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(HttpStatus.OK)
+        .then((res) => expect(res.body.length).not.toEqual(0));
     });
   }
 

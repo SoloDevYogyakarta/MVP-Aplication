@@ -1,6 +1,7 @@
 import {
   Controller,
   Delete,
+  Get,
   HttpCode,
   HttpStatus,
   Logger,
@@ -19,12 +20,16 @@ import { CustomRequest } from '../../types/custom-request.type';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { uploadOptions } from '../../utils/upload/upload';
 import { createpath } from '../../utils/system/system';
+import { HistoryRepository } from '../../repository/history-repository/history-repository';
 
 @Controller('history')
 export class ServiceHistoryController {
   private readonly logger = new Logger(ServiceHistoryController.name);
 
-  constructor(private readonly service: HistoryService) {}
+  constructor(
+    private readonly service: HistoryService,
+    private readonly repository: HistoryRepository,
+  ) {}
 
   @UseGuards(AuthGuard)
   @Post(':id')
@@ -68,6 +73,14 @@ export class ServiceHistoryController {
       files,
     );
     return res.status(result.status).json(omit(result, ['result']));
+  }
+
+  @UseGuards(AuthGuard)
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  async all(@Res() res: Response) {
+    const result = await this.repository.findAll();
+    return res.status(HttpStatus.OK).json(result);
   }
 
   @UseGuards(AuthGuard)
