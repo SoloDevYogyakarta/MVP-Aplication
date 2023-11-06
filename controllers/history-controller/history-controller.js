@@ -21,9 +21,11 @@ const auth_guard_1 = require("../../middleware/auth-guard/auth-guard");
 const platform_express_1 = require("@nestjs/platform-express");
 const upload_1 = require("../../utils/upload/upload");
 const system_1 = require("../../utils/system/system");
+const history_repository_1 = require("../../repository/history-repository/history-repository");
 let ServiceHistoryController = ServiceHistoryController_1 = class ServiceHistoryController {
-    constructor(service) {
+    constructor(service, repository) {
         this.service = service;
+        this.repository = repository;
         this.logger = new common_1.Logger(ServiceHistoryController_1.name);
     }
     async create(files, req, res) {
@@ -41,6 +43,10 @@ let ServiceHistoryController = ServiceHistoryController_1 = class ServiceHistory
         this.logger.log(ServiceHistoryController_1.name);
         const result = await this.service.update(req.params.id, req.body.desc, JSON.parse(req.body.data), files);
         return res.status(result.status).json((0, lodash_1.omit)(result, ['result']));
+    }
+    async all(res) {
+        const result = await this.repository.findAll();
+        return res.status(common_1.HttpStatus.OK).json(result);
     }
     async destroy(req, res) {
         const result = await this.service.destroy(req.params.id);
@@ -74,6 +80,15 @@ __decorate([
 ], ServiceHistoryController.prototype, "update", null);
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.Get)(),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ServiceHistoryController.prototype, "all", null);
+__decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Delete)(':id'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __param(0, (0, common_1.Req)()),
@@ -84,6 +99,7 @@ __decorate([
 ], ServiceHistoryController.prototype, "destroy", null);
 exports.ServiceHistoryController = ServiceHistoryController = ServiceHistoryController_1 = __decorate([
     (0, common_1.Controller)('history'),
-    __metadata("design:paramtypes", [history_service_1.HistoryService])
+    __metadata("design:paramtypes", [history_service_1.HistoryService,
+        history_repository_1.HistoryRepository])
 ], ServiceHistoryController);
 //# sourceMappingURL=history-controller.js.map

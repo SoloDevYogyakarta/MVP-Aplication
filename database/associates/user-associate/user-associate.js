@@ -19,7 +19,7 @@ const userInclude = [
             include: [['updatedAt', 'updated_at']],
             exclude: [],
         },
-        as: 'activities',
+        as: 'history',
     },
 ];
 exports.userInclude = userInclude;
@@ -35,7 +35,7 @@ exports.userHistoryInclude = userHistoryInclude;
 user_entity_1.userEntity.hasMany(history_entity_1.userHistoryEntity, {
     sourceKey: 'id',
     foreignKey: { name: 'user_id', allowNull: true },
-    as: 'activities',
+    as: 'history',
 });
 user_entity_1.userEntity.hasMany(order_associate_1.orderAssociate, {
     sourceKey: 'id',
