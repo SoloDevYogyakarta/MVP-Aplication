@@ -1,1 +1,1 @@
-{"id":1,"plat_number":"SS 10956 SHA","phone_number":"(829) 833-5809 x73163","name":"Dr. Santiago Paucek","motor":"Small Steel Tuna","address":"6934 West View","role":"admin","year_production":2123,"password":"$2b$15$zDB6iCRNYaFeW2hy6kQvVO4YwqT1X4LityXBHUndk2IQT7l4WqCLy"}
+{"id":1,"plat_number":"SS 8024 SHA","phone_number":"985-439-3297 x28667","name":"Suzanne Toy","motor":"Unbranded Soft Ball","address":"2394 Rempel Place","role":"admin","year_production":2357,"password":"$2b$15$3NlZiR51.Av3CzjgXh.As../IKTK0v6Xut2BmsRK6m2qL0YWx2kiq"}

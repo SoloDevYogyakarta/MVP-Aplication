@@ -440,7 +440,10 @@ describe('UserController', () => {
         .get('/users')
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
-        .query({ year_production: [1000, 2000], type: 'between' })
+        .query({
+          year_production: JSON.stringify([1000, 2000]),
+          type: 'between',
+        })
         .expect(HttpStatus.OK)
         .then((res) => {
           expect(res.body.length).not.toEqual(0);

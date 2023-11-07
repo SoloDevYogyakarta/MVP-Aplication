@@ -30,7 +30,12 @@ export function filter(query: object, type: string) {
   Object.keys(omit(query, ['type'])).filter((keyName) => {
     result = {
       [keyName]: {
-        [opType]: type === 'number' ? Number(query[keyName]) : query[keyName],
+        [opType]:
+          type === 'number'
+            ? Number(query[keyName])
+            : type === 'between'
+            ? JSON.parse(query[keyName])
+            : query[keyName],
       },
     };
   });
