@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SparepartRepository render correctly 1`] = `
+SparepartRepository {
+  "logger": Logger {
+    "context": "SparepartRepository",
+    "options": {},
+  },
+}
+`;

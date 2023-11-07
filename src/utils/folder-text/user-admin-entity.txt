@@ -1,1 +1,1 @@
-{"id":1,"plat_number":"SS 1059 SHA","phone_number":"487.322.5908 x2318","name":"Kara Wuckert","motor":"Incredible Bronze Pizza","address":"266 Mohr Track","role":"admin","year_production":2906,"password":"$2b$15$o1c45R6btxClEMU6beCKDOyzPA.id2zFL0ItvJypNhl5gn2xrXHX2"}
+{"id":1,"plat_number":"SS 6016 SHA","phone_number":"1-798-978-6354","name":"Dexter Armstrong","motor":"Tasty Rubber Chicken","address":"7645 Lindgren Dale","role":"admin","year_production":2900,"password":"$2b$15$jTraQjmANqyMKR0YAuiLoOVuhzbVH8yIaFxf4mXRa9c4BT1fm72cm"}

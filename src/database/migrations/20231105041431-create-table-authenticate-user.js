@@ -18,6 +18,7 @@ module.exports = {
         },
         plat_number: {
           type: Sequelize.DataTypes.STRING(22),
+          unique: true,
           allowNull: false,
         },
         phone_number: {

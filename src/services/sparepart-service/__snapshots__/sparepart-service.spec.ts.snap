@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SparepartService render correctly 1`] = `
+SparepartService {
+  "logger": Logger {
+    "context": "SparepartService",
+    "options": {},
+  },
+}
+`;
