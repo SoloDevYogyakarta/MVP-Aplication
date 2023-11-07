@@ -1,0 +1,1 @@
+{"version":3,"file":"sparepart-entity.js","sourceRoot":"","sources":["../../../../../src/database/entities/services/sparepart-entity/sparepart-entity.ts"],"names":[],"mappings":";;;AACA,+DAA2D;AAC3D,yCAAyC;AAEzC,MAAa,eAAgB,SAAQ,wBAAU;CAAG;AAAlD,0CAAkD;AAMrC,QAAA,eAAe,GAAG,kBAAS,CAAC,MAAM,CAC7C,WAAW,EACX,EAAwC,EACxC;IACE,SAAS,EAAE,WAAW;IACtB,MAAM,EAAE,UAAU;CACnB,CACF,CAAC"}
