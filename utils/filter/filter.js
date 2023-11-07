@@ -31,7 +31,11 @@ function filter(query, type) {
     Object.keys((0, lodash_1.omit)(query, ['type'])).filter((keyName) => {
         result = {
             [keyName]: {
-                [opType]: type === 'number' ? Number(query[keyName]) : query[keyName],
+                [opType]: type === 'number'
+                    ? Number(query[keyName])
+                    : type === 'between'
+                        ? JSON.parse(query[keyName])
+                        : query[keyName],
             },
         };
     });
