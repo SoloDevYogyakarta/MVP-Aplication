@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthGuard = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
+const user_entity_1 = require("../../database/entities/authenticate/user-entity/user-entity");
 const environment_1 = require("../../utils/environment/environment");
 let AuthGuard = class AuthGuard {
     constructor(jwtService) {
@@ -27,7 +28,10 @@ let AuthGuard = class AuthGuard {
             secret: environment_1.environment['SECRET'],
         });
         request['user'] = payload;
-        if (!payload?.data?.is_active) {
+        const findOne = await user_entity_1.userEntity.findOne({
+            where: { id: payload.data.id },
+        });
+        if (!findOne.is_active) {
             throw new common_1.UnauthorizedException();
         }
         return true;
