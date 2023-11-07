@@ -24,6 +24,9 @@ function filter(query, type) {
         case '>=':
             opType = sequelize_1.Op.gte;
             break;
+        case 'between':
+            opType = sequelize_1.Op.between;
+            break;
     }
     Object.keys((0, lodash_1.omit)(query, ['type'])).filter((keyName) => {
         result = {
