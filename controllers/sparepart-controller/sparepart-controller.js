@@ -27,28 +27,34 @@ let SparepartController = SparepartController_1 = class SparepartController {
         this.logger = new common_1.Logger(SparepartController_1.name);
     }
     async create(body, res) {
+        this.logger.log(SparepartController_1.name);
         const result = await this.service.create(body);
         (0, system_1.createpath)('../folder-text/sparepart-http-entity.txt', result.create);
         (0, system_1.createpath)(`../folder-text/free-text-http-entity.txt`, result.free);
         return res.status(result.status).json((0, lodash_1.omit)(result, ['create', 'free']));
     }
     async update(req, res, body) {
+        this.logger.log(SparepartController_1.name);
         const result = await this.service.update(req.params.id, body);
         return res.status(result.status).json(result);
     }
     async destroy(req, res) {
+        this.logger.log(SparepartController_1.name);
         const result = await this.service.destroy(req.params.id);
         return res.status(result.status).json(result);
     }
     async destroyFreeText(req, res) {
+        this.logger.log(SparepartController_1.name);
         const result = await this.service.freeDestroy(req.params.id);
         return res.status(result.status).json(result);
     }
     async list(res) {
+        this.logger.log(SparepartController_1.name);
         const result = await this.repository.findALl();
         return res.status(common_1.HttpStatus.OK).json(result);
     }
     async detail(req, res) {
+        this.logger.log(SparepartController_1.name);
         const result = await this.repository.findOne(req.params.id);
         return res.status(common_1.HttpStatus.OK).json(result);
     }
