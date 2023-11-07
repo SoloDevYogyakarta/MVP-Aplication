@@ -33,6 +33,7 @@ export class SparepartController {
   @Post()
   @HttpCode(HttpStatus.OK)
   async create(@Body() body: SparepartField[], @Res() res: Response) {
+    this.logger.log(SparepartController.name);
     const result = await this.service.create(body);
     createpath('../folder-text/sparepart-http-entity.txt', result.create);
     createpath(`../folder-text/free-text-http-entity.txt`, result.free);
@@ -47,6 +48,7 @@ export class SparepartController {
     @Res() res: Response,
     @Body() body: SparepartField[],
   ) {
+    this.logger.log(SparepartController.name);
     const result = await this.service.update(req.params.id, body);
     return res.status(result.status).json(result);
   }
@@ -55,6 +57,7 @@ export class SparepartController {
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async destroy(@Req() req: CustomRequest, @Res() res: Response) {
+    this.logger.log(SparepartController.name);
     const result = await this.service.destroy(req.params.id);
     return res.status(result.status).json(result);
   }
@@ -63,6 +66,7 @@ export class SparepartController {
   @Delete('free-text/:id')
   @HttpCode(HttpStatus.OK)
   async destroyFreeText(@Req() req: CustomRequest, @Res() res: Response) {
+    this.logger.log(SparepartController.name);
     const result = await this.service.freeDestroy(req.params.id);
     return res.status(result.status).json(result);
   }
@@ -70,6 +74,7 @@ export class SparepartController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async list(@Res() res: Response) {
+    this.logger.log(SparepartController.name);
     const result = await this.repository.findALl();
     return res.status(HttpStatus.OK).json(result);
   }
@@ -77,6 +82,7 @@ export class SparepartController {
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   async detail(@Req() req: CustomRequest, @Res() res: Response) {
+    this.logger.log(SparepartController.name);
     const result = await this.repository.findOne(req.params.id);
     return res.status(HttpStatus.OK).json(result);
   }

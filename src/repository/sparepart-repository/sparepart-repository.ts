@@ -1,5 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import {
+  sparepartAssociate,
+  sparepartAttribute,
+  sparepartInclude,
+} from '../../database/associates/sparepart-associate/sparepart-associate';
+import {
   sparepartEntity,
   SparepartInstance,
 } from '../../database/entities/services/sparepart-entity/sparepart-entity';
@@ -10,11 +15,18 @@ export class SparepartRepository {
 
   async findALl(): Promise<SparepartInstance[]> {
     this.logger.log(SparepartRepository.name);
-    return await sparepartEntity.findAll();
+    return await sparepartAssociate.findAll({
+      attributes: sparepartAttribute,
+      include: sparepartInclude,
+    });
   }
 
   async findOne(id: number): Promise<SparepartInstance> {
     this.logger.log(SparepartRepository.name);
-    return await sparepartEntity.findOne({ where: { id } });
+    return await sparepartEntity.findOne({
+      where: { id },
+      attributes: sparepartAttribute,
+      include: sparepartInclude,
+    });
   }
 }
