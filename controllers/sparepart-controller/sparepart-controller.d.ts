@@ -12,6 +12,6 @@ export declare class SparepartController {
     update(req: CustomRequest, res: Response, body: SparepartField[]): Promise<Response<any, Record<string, any>>>;
     destroy(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
     destroyFreeText(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
-    list(res: Response): Promise<Response<any, Record<string, any>>>;
+    list(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
     detail(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
 }

@@ -9,17 +9,22 @@ var SparepartRepository_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SparepartRepository = void 0;
 const common_1 = require("@nestjs/common");
+const filter_1 = require("../../utils/filter/filter");
 const sparepart_associate_1 = require("../../database/associates/sparepart-associate/sparepart-associate");
 const sparepart_entity_1 = require("../../database/entities/services/sparepart-entity/sparepart-entity");
 let SparepartRepository = SparepartRepository_1 = class SparepartRepository {
     constructor() {
         this.logger = new common_1.Logger(SparepartRepository_1.name);
     }
-    async findALl() {
+    async findALl(query, type) {
+        let where = {};
         this.logger.log(SparepartRepository_1.name);
+        where = (0, filter_1.filter)(query, type);
         return await sparepart_associate_1.sparepartAssociate.findAll({
+            where: where,
             attributes: sparepart_associate_1.sparepartAttribute,
             include: sparepart_associate_1.sparepartInclude,
+            order: [['id', 'ASC']],
         });
     }
     async findOne(id) {

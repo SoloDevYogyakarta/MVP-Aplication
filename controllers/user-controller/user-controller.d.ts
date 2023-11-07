@@ -14,7 +14,7 @@ export declare class UserController {
     create(body: RegisterField, res: Response): Promise<Response<any, Record<string, any>>>;
     update(req: CustomRequest, body: RegisterField, res: Response): Promise<Response<any, Record<string, any>>>;
     updatePassword(req: CustomRequest, body: ChangePasswordField, res: Response): Promise<Response<any, Record<string, any>>>;
-    all(res: Response): Promise<Response<any, Record<string, any>>>;
+    all(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
     detail(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
     me(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
     destroy(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;

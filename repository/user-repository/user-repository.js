@@ -9,16 +9,21 @@ var UserRepository_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserRepository = void 0;
 const common_1 = require("@nestjs/common");
+const filter_1 = require("../../utils/filter/filter");
 const user_associate_1 = require("../../database/associates/user-associate/user-associate");
 let UserRepository = UserRepository_1 = class UserRepository {
     constructor() {
         this.logger = new common_1.Logger(UserRepository_1.name);
     }
-    async findAll() {
+    async findAll(query, type) {
+        let where = {};
         this.logger.log(UserRepository_1.name);
+        where = (0, filter_1.filter)(query, type);
         return await user_associate_1.userAssociate.findAll({
+            where: where,
             attributes: user_associate_1.userAttribute,
             include: user_associate_1.userInclude,
+            order: [['id', 'ASC']],
         });
     }
     async findOne(id) {

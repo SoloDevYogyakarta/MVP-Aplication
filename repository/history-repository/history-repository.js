@@ -11,15 +11,20 @@ exports.HistoryRepository = void 0;
 const common_1 = require("@nestjs/common");
 const entity_1 = require("../../database/entities/entity");
 const user_associate_1 = require("../../database/associates/user-associate/user-associate");
+const filter_1 = require("../../utils/filter/filter");
 let HistoryRepository = HistoryRepository_1 = class HistoryRepository {
     constructor() {
         this.logger = new common_1.Logger(HistoryRepository_1.name);
     }
-    async findAll() {
+    async findAll(query, type) {
+        let where = {};
         this.logger.log(HistoryRepository_1.name);
+        where = (0, filter_1.filter)(query, type);
         let result = await user_associate_1.userAssociate.findAll({
+            where: where,
             attributes: user_associate_1.userAttribute,
             include: user_associate_1.userHistoryInclude,
+            order: [['id', 'ASC']],
         });
         for (const values of result) {
             const visit = await this.visit(values.id);

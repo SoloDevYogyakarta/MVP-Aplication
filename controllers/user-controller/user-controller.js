@@ -46,9 +46,9 @@ let UserController = UserController_1 = class UserController {
         const result = await this.service.changePassword(req.params.id, body);
         return res.status(result.status).json(result);
     }
-    async all(res) {
+    async all(req, res) {
         this.logger.log(UserController_1.name);
-        const result = await this.userRepository.findAll();
+        const result = await this.userRepository.findAll(req.query, req.query?.type);
         return res.status(common_1.HttpStatus.OK).json(result);
     }
     async detail(req, res) {
@@ -113,9 +113,10 @@ __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)(),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
-    __param(0, (0, common_1.Res)()),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "all", null);
 __decorate([

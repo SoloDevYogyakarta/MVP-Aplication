@@ -9,14 +9,20 @@ var BookingRepository_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BookingRepository = void 0;
 const common_1 = require("@nestjs/common");
+const filter_1 = require("../../utils/filter/filter");
 const booking_entity_1 = require("../../database/entities/services/booking-entity/booking-entity");
 let BookingRepository = BookingRepository_1 = class BookingRepository {
     constructor() {
         this.logger = new common_1.Logger(BookingRepository_1.name);
     }
-    async findAll() {
+    async findAll(query, type) {
+        let where = {};
         this.logger.log(BookingRepository_1.name);
-        return await booking_entity_1.bookingEntity.findAll();
+        where = (0, filter_1.filter)(query, type);
+        return await booking_entity_1.bookingEntity.findAll({
+            where: where,
+            order: [['id', 'ASC']],
+        });
     }
     async findOne(id) {
         this.logger.log(BookingRepository_1.name);

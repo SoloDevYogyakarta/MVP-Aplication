@@ -48,9 +48,9 @@ let SparepartController = SparepartController_1 = class SparepartController {
         const result = await this.service.freeDestroy(req.params.id);
         return res.status(result.status).json(result);
     }
-    async list(res) {
+    async list(req, res) {
         this.logger.log(SparepartController_1.name);
-        const result = await this.repository.findALl();
+        const result = await this.repository.findALl(req.query, req.query.type);
         return res.status(common_1.HttpStatus.OK).json(result);
     }
     async detail(req, res) {
@@ -104,9 +104,10 @@ __decorate([
 __decorate([
     (0, common_1.Get)(),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
-    __param(0, (0, common_1.Res)()),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], SparepartController.prototype, "list", null);
 __decorate([

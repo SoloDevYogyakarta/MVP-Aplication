@@ -10,6 +10,6 @@ export declare class ServiceHistoryController {
     constructor(service: HistoryService, repository: HistoryRepository);
     create(files: Express.Multer.File[], req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
     update(files: Express.Multer.File[], req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
-    all(res: Response): Promise<Response<any, Record<string, any>>>;
+    all(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
     destroy(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
 }

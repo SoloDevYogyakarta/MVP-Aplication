@@ -40,7 +40,7 @@ let BookingController = BookingController_1 = class BookingController {
     }
     async list(req, res) {
         this.logger.log(BookingController_1.name);
-        const result = await this.repository.findAll();
+        const result = await this.repository.findAll(req.query, req.query.type);
         return res.status(common_1.HttpStatus.OK).json(result);
     }
     async detail(req, res) {

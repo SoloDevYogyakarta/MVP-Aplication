@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
+const schedule_1 = require("@nestjs/schedule");
 const booking_controller_1 = require("./controllers/booking-controller/booking-controller");
 const history_controller_1 = require("./controllers/history-controller/history-controller");
 const order_controller_1 = require("./controllers/order-controller/order-controller");
@@ -34,6 +35,7 @@ exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            schedule_1.ScheduleModule.forRoot(),
             jwt_1.JwtModule.register({
                 secret: environment_1.environment['SECRET'],
                 signOptions: {
