@@ -5,6 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { userEntity } from '../../database/entities/authenticate/user-entity/user-entity';
 import { environment } from '../../utils/environment/environment';
 
 @Injectable()
@@ -23,7 +24,10 @@ export class AuthGuard implements CanActivate {
       secret: environment['SECRET'],
     });
     request['user'] = payload;
-    if (!payload?.data?.is_active) {
+    const findOne = await userEntity.findOne({
+      where: { id: payload.data.id },
+    });
+    if (!findOne.is_active) {
       throw new UnauthorizedException();
     }
     return true;

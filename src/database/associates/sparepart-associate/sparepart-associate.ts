@@ -3,13 +3,23 @@ import { freeTextEntity } from '../../../database/entities/public/free-text-enti
 import { sparepartEntity } from '../../../database/entities/services/sparepart-entity/sparepart-entity';
 
 const sparepartAttribute: FindAttributeOptions = {
-  exclude: [],
-  include: [],
+  include: [
+    ['createdAt', 'created_at'],
+    ['updatedAt', 'updated_at'],
+  ],
+  exclude: ['createdAt', 'updatedAt'],
 };
 
 const sparepartInclude: Includeable[] = [
   {
     model: freeTextEntity,
+    attributes: {
+      include: [
+        ['createdAt', 'created_at'],
+        ['updatedAt', 'updated_at'],
+      ],
+      exclude: ['createdAt', 'updatedAt'],
+    },
     as: 'free_text',
   },
 ];

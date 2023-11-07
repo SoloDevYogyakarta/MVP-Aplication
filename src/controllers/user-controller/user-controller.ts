@@ -77,9 +77,12 @@ export class UserController {
   @UseGuards(AuthGuard)
   @Get()
   @HttpCode(HttpStatus.OK)
-  async all(@Res() res: Response) {
+  async all(@Req() req: CustomRequest, @Res() res: Response) {
     this.logger.log(UserController.name);
-    const result = await this.userRepository.findAll();
+    const result = await this.userRepository.findAll(
+      req.query,
+      (req.query as { type: string })?.type,
+    );
     return res.status(HttpStatus.OK).json(result);
   }
 

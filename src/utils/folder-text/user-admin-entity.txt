@@ -1,1 +1,1 @@
-{"id":1,"plat_number":"SS 6016 SHA","phone_number":"1-798-978-6354","name":"Dexter Armstrong","motor":"Tasty Rubber Chicken","address":"7645 Lindgren Dale","role":"admin","year_production":2900,"password":"$2b$15$jTraQjmANqyMKR0YAuiLoOVuhzbVH8yIaFxf4mXRa9c4BT1fm72cm"}
+{"id":1,"plat_number":"SS 10956 SHA","phone_number":"(829) 833-5809 x73163","name":"Dr. Santiago Paucek","motor":"Small Steel Tuna","address":"6934 West View","role":"admin","year_production":2123,"password":"$2b$15$zDB6iCRNYaFeW2hy6kQvVO4YwqT1X4LityXBHUndk2IQT7l4WqCLy"}

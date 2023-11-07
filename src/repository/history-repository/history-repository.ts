@@ -7,16 +7,21 @@ import {
 } from '../../database/associates/user-associate/user-associate';
 import { UserInstance } from '../../database/entities/authenticate/user-entity/user-entity';
 import { OrderEntity } from '../../database/entities/services/order-entity/order-entity';
+import { filter } from '../../utils/filter/filter';
 
 @Injectable()
 export class HistoryRepository {
   private readonly logger = new Logger(HistoryRepository.name);
 
-  async findAll(): Promise<UserInstance[]> {
+  async findAll(query: object, type: string): Promise<UserInstance[]> {
+    let where = {};
     this.logger.log(HistoryRepository.name);
+    where = filter(query, type);
     let result = await userAssociate.findAll({
+      where: where,
       attributes: userAttribute,
       include: userHistoryInclude,
+      order: [['id', 'ASC']],
     });
     for (const values of result) {
       const visit = await this.visit(values.id);

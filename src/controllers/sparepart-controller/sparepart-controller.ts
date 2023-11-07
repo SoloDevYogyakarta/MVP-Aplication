@@ -73,9 +73,12 @@ export class SparepartController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async list(@Res() res: Response) {
+  async list(@Req() req: CustomRequest, @Res() res: Response) {
     this.logger.log(SparepartController.name);
-    const result = await this.repository.findALl();
+    const result = await this.repository.findALl(
+      req.query,
+      (req.query as { type: string }).type,
+    );
     return res.status(HttpStatus.OK).json(result);
   }
 

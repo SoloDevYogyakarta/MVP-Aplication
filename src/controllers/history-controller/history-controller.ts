@@ -78,8 +78,11 @@ export class ServiceHistoryController {
   @UseGuards(AuthGuard)
   @Get()
   @HttpCode(HttpStatus.OK)
-  async all(@Res() res: Response) {
-    const result = await this.repository.findAll();
+  async all(@Req() req: CustomRequest, @Res() res: Response) {
+    const result = await this.repository.findAll(
+      req.query,
+      (req.query as { type: string }).type,
+    );
     return res.status(HttpStatus.OK).json(result);
   }
 

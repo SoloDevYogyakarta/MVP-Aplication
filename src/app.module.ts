@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
+import { ScheduleModule } from '@nestjs/schedule';
 import { BookingController } from './controllers/booking-controller/booking-controller';
 import { ServiceHistoryController } from './controllers/history-controller/history-controller';
 import { ServicesOrderController } from './controllers/order-controller/order-controller';
@@ -22,6 +23,7 @@ import { environment } from './utils/environment/environment';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     JwtModule.register({
       secret: environment['SECRET'],
       signOptions: {

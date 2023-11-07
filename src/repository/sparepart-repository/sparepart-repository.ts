@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { filter } from '../../utils/filter/filter';
 import {
   sparepartAssociate,
   sparepartAttribute,
@@ -13,11 +14,15 @@ import {
 export class SparepartRepository {
   private readonly logger = new Logger(SparepartRepository.name);
 
-  async findALl(): Promise<SparepartInstance[]> {
+  async findALl(query: object, type: string): Promise<SparepartInstance[]> {
+    let where = {};
     this.logger.log(SparepartRepository.name);
+    where = filter(query, type);
     return await sparepartAssociate.findAll({
+      where: where,
       attributes: sparepartAttribute,
       include: sparepartInclude,
+      order: [['id', 'ASC']],
     });
   }
 

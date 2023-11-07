@@ -70,7 +70,10 @@ export class PromoController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async all(@Req() req: CustomRequest, @Res() res: Response) {
-    const result = await this.repository.findAll();
+    const result = await this.repository.findAll(
+      req.query,
+      (req.query as { type: string }).type,
+    );
     return res.status(HttpStatus.OK).json(result);
   }
 

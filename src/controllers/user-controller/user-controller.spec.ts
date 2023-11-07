@@ -380,6 +380,55 @@ describe('UserController', () => {
         .get('/users')
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
+        .query({ year_production: user.year_production, type: 'number' })
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          expect(res.body.length).not.toEqual(0);
+        });
+    });
+
+    it('http::history all', async () => {
+      await supertest(app.getHttpServer())
+        .get('/users')
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .query({ year_production: user.year_production, type: '>' })
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          expect(res.body.length).not.toEqual(0);
+        });
+    });
+
+    it('http::history all', async () => {
+      await supertest(app.getHttpServer())
+        .get('/users')
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .query({ year_production: user.year_production, type: '<=' })
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          expect(res.body.length).not.toEqual(0);
+        });
+    });
+
+    it('http::history all', async () => {
+      await supertest(app.getHttpServer())
+        .get('/users')
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .query({ year_production: user.year_production, type: '<' })
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          expect(res.body.length).not.toEqual(0);
+        });
+    });
+
+    it('http::history all', async () => {
+      await supertest(app.getHttpServer())
+        .get('/users')
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .query({ year_production: user.year_production, type: '>=' })
         .expect(HttpStatus.OK)
         .then((res) => {
           expect(res.body.length).not.toEqual(0);

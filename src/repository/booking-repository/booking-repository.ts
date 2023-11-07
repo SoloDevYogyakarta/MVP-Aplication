@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { filter } from '../../utils/filter/filter';
 import {
   bookingEntity,
   BookingInstance,
@@ -8,9 +9,14 @@ import {
 export class BookingRepository {
   private readonly logger = new Logger(BookingRepository.name);
 
-  async findAll(): Promise<BookingInstance[]> {
+  async findAll(query: object, type: string): Promise<BookingInstance[]> {
+    let where = {};
     this.logger.log(BookingRepository.name);
-    return await bookingEntity.findAll();
+    where = filter(query, type);
+    return await bookingEntity.findAll({
+      where: where,
+      order: [['id', 'ASC']],
+    });
   }
 
   async findOne(id: number): Promise<BookingInstance> {

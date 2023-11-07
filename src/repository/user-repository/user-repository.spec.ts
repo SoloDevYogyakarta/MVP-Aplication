@@ -26,7 +26,7 @@ describe('UserRepository', () => {
     });
 
     it('findAll', async () => {
-      const findAll = await repository.findAll();
+      const findAll = await repository.findAll({}, '');
       expect(findAll.length).not.toEqual(0);
     });
   }

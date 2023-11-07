@@ -5,7 +5,10 @@ import { omit } from 'lodash';
 import { createpath } from '../../utils/system/system';
 import { environment } from '../../utils/environment/environment';
 import { UserService } from './user-service';
-import { UserEntity } from '../../database/entities/authenticate/user-entity/user-entity';
+import {
+  userEntity,
+  UserEntity,
+} from '../../database/entities/authenticate/user-entity/user-entity';
 import { getfield } from '../../utils/get-field/get-field';
 
 describe('UserService', () => {
@@ -70,8 +73,9 @@ describe('UserService', () => {
     });
 
     it('invalid logout', async () => {
+      const user_ = await userEntity.findOne({ where: { is_active: false } });
       const result = await service.logout(user.id);
-      user = JSON.parse(JSON.stringify(result.findOne));
+      user = JSON.parse(JSON.stringify(user_));
       const token = jwtService.sign(
         { data: user },
         { secret: environment['SECRET'] },

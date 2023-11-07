@@ -10,10 +10,12 @@ import { environment } from '../../utils/environment/environment';
 import { getfield } from '../../utils/get-field/get-field';
 import supertest from 'supertest';
 import { BookingController } from './booking-controller';
+import { BookingEntity } from '../../database/entities/services/booking-entity/booking-entity';
 
 describe('BookingController', () => {
   let user_id!: number;
   let id!: number;
+  let booking!: BookingEntity;
   let destroy_id!: number;
   let token!: string;
   let app: INestApplication;
@@ -47,6 +49,11 @@ describe('BookingController', () => {
   }
   try {
     id = getfield('booking-http-entity').id;
+  } catch (err) {
+    // empty
+  }
+  try {
+    booking = getfield('booking-http-entity');
   } catch (err) {
     // empty
   }
@@ -109,6 +116,7 @@ describe('BookingController', () => {
         .get('/booking')
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
+        .query({ name: booking.name, type: 'string' })
         .expect(HttpStatus.OK)
         .then((res) => expect(res.body.length).not.toEqual(0));
     });
