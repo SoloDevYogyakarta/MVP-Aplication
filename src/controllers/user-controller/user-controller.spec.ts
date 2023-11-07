@@ -375,7 +375,7 @@ describe('UserController', () => {
         );
     });
 
-    it('http::history all', async () => {
+    it('http::history all with filter eq', async () => {
       await supertest(app.getHttpServer())
         .get('/users')
         .set('content-type', 'application/json')
@@ -387,7 +387,7 @@ describe('UserController', () => {
         });
     });
 
-    it('http::history all', async () => {
+    it('http::history all with filter gt', async () => {
       await supertest(app.getHttpServer())
         .get('/users')
         .set('content-type', 'application/json')
@@ -399,7 +399,7 @@ describe('UserController', () => {
         });
     });
 
-    it('http::history all', async () => {
+    it('http::history all with filter lte', async () => {
       await supertest(app.getHttpServer())
         .get('/users')
         .set('content-type', 'application/json')
@@ -411,7 +411,7 @@ describe('UserController', () => {
         });
     });
 
-    it('http::history all', async () => {
+    it('http::history all with filter lt', async () => {
       await supertest(app.getHttpServer())
         .get('/users')
         .set('content-type', 'application/json')
@@ -423,12 +423,24 @@ describe('UserController', () => {
         });
     });
 
-    it('http::history all', async () => {
+    it('http::history all with filter gte', async () => {
       await supertest(app.getHttpServer())
         .get('/users')
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .query({ year_production: user.year_production, type: '>=' })
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          expect(res.body.length).not.toEqual(0);
+        });
+    });
+
+    it('http::history all with filter between', async () => {
+      await supertest(app.getHttpServer())
+        .get('/users')
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .query({ year_production: [1000, 2000], type: 'between' })
         .expect(HttpStatus.OK)
         .then((res) => {
           expect(res.body.length).not.toEqual(0);

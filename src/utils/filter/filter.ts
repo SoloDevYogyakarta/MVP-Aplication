@@ -23,6 +23,9 @@ export function filter(query: object, type: string) {
     case '>=':
       opType = Op.gte;
       break;
+    case 'between':
+      opType = Op.between;
+      break;
   }
   Object.keys(omit(query, ['type'])).filter((keyName) => {
     result = {
