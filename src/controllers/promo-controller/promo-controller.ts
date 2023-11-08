@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Logger,
   Post,
+  Put,
   Req,
   Res,
   UploadedFile,
@@ -47,7 +48,7 @@ export class PromoController {
   }
 
   @UseGuards(AuthGuard)
-  @Post(':id')
+  @Put(':id')
   @UseInterceptors(FileInterceptor('file', { storage: uploadOptions }))
   @HttpCode(HttpStatus.OK)
   async update(

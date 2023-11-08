@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Logger,
   Post,
+  Put,
   Req,
   Res,
   UploadedFiles,
@@ -57,7 +58,7 @@ export class ServiceHistoryController {
   }
 
   @UseGuards(AuthGuard)
-  @Post('update/:id')
+  @Put('update/:id')
   @UseInterceptors(FilesInterceptor('file', 5, { storage: uploadOptions }))
   @HttpCode(HttpStatus.CREATED)
   async update(

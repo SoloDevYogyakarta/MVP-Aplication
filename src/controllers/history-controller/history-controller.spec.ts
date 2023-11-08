@@ -169,7 +169,7 @@ describe('ServiceHistoryController', () => {
   if (ids?.length) {
     it('http::history update', async () => {
       await supertest(app.getHttpServer())
-        .post(`/history/update/${ids[ids.length - 1]}`)
+        .put(`/history/update/${ids[ids.length - 1]}`)
         .set('Authorization', `Bearer ${token}`)
         .field('desc', faker.lorem.paragraph())
         .field(
@@ -217,7 +217,7 @@ describe('ServiceHistoryController', () => {
 
     it('http::history invalid update', async () => {
       await supertest(app.getHttpServer())
-        .post(`/history/update/000`)
+        .put(`/history/update/000`)
         .set('Authorization', `Bearer ${token}`)
         .field('desc', faker.lorem.paragraph())
         .field(
@@ -245,7 +245,7 @@ describe('ServiceHistoryController', () => {
 
     it('http::history update history not found', async () => {
       await supertest(app.getHttpServer())
-        .post(`/history/update/${ids[ids.length - 1]}`)
+        .put(`/history/update/${ids[ids.length - 1]}`)
         .set('Authorization', `Bearer ${token}`)
         .field('desc', faker.lorem.paragraph())
         .field(

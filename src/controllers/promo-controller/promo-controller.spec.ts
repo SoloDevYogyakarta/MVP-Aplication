@@ -115,7 +115,7 @@ describe('PromoController', () => {
     });
     it('http::promo update', async () => {
       await supertest(app.getHttpServer())
-        .post(`/promo/${promo.id}`)
+        .put(`/promo/${promo.id}`)
         .set('Authorization', `Bearer ${token}`)
         .field('name', faker.commerce.productName())
         .field('desc', faker.commerce.productDescription())
@@ -140,7 +140,7 @@ describe('PromoController', () => {
 
     it('http::promo invalid update', async () => {
       await supertest(app.getHttpServer())
-        .post(`/promo/000`)
+        .put(`/promo/000`)
         .set('Authorization', `Bearer ${token}`)
         .field('name', faker.commerce.productName())
         .field('desc', faker.commerce.productDescription())

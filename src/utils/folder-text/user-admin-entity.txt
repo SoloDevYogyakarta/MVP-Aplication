@@ -1,1 +1,1 @@
-{"id":1,"plat_number":"SS 8024 SHA","phone_number":"985-439-3297 x28667","name":"Suzanne Toy","motor":"Unbranded Soft Ball","address":"2394 Rempel Place","role":"admin","year_production":2357,"password":"$2b$15$3NlZiR51.Av3CzjgXh.As../IKTK0v6Xut2BmsRK6m2qL0YWx2kiq"}
+{"id":1,"plat_number":"SS 5063 SHA","phone_number":"(398) 514-9104 x96500","name":"Jane West","motor":"Fantastic Cotton Fish","address":"1834 Ashlee Way","role":"admin","year_production":1176,"password":"$2b$15$h3pzInvBGsMg6d3IYu4YgegH7mby0sFynfp3m7N.qhwAQHAlZO5iO"}
