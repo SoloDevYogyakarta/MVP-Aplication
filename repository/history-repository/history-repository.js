@@ -66,7 +66,7 @@ let HistoryRepository = HistoryRepository_1 = class HistoryRepository {
             const total = await this.totalOrder(values.id);
             result['order'] = result.order.map((item) => {
                 if (item.id === values.id) {
-                    item['total'] = total;
+                    item['total'] = total[0].total;
                 }
                 return item;
             });
