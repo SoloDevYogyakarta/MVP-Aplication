@@ -48,6 +48,11 @@ let ServiceHistoryController = ServiceHistoryController_1 = class ServiceHistory
         const result = await this.repository.findAll(req.query, req.query.type);
         return res.status(common_1.HttpStatus.OK).json(result);
     }
+    async detail(req, res) {
+        this.logger.log(ServiceHistoryController_1.name);
+        const result = await this.repository.findOne(req.params.id);
+        return res.status(common_1.HttpStatus.OK).json(result);
+    }
     async destroy(req, res) {
         const result = await this.service.destroy(req.params.id);
         return res.status(result.status).json(result);
@@ -88,6 +93,16 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], ServiceHistoryController.prototype, "all", null);
+__decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.Get)(':id/services'),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], ServiceHistoryController.prototype, "detail", null);
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Delete)(':id'),

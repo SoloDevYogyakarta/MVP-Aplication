@@ -3,13 +3,11 @@ import { ChangePasswordField, LoginField, RegisterField } from '../../dto/user-d
 import { UserRepository } from '../../repository/user-repository/user-repository';
 import { UserService } from '../../services/user-service/user-service';
 import { CustomRequest } from '../../types/custom-request.type';
-import { HistoryRepository } from '../../repository/history-repository/history-repository';
 export declare class UserController {
-    private readonly userRepository;
     private readonly repository;
     private readonly service;
     private readonly logger;
-    constructor(userRepository: UserRepository, repository: HistoryRepository, service: UserService);
+    constructor(repository: UserRepository, service: UserService);
     login(body: LoginField, res: Response): Promise<Response<any, Record<string, any>>>;
     create(body: RegisterField, res: Response): Promise<Response<any, Record<string, any>>>;
     update(req: CustomRequest, body: RegisterField, res: Response): Promise<Response<any, Record<string, any>>>;

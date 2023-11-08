@@ -20,10 +20,8 @@ const user_dto_1 = require("../../dto/user-dto/user-dto");
 const user_repository_1 = require("../../repository/user-repository/user-repository");
 const user_service_1 = require("../../services/user-service/user-service");
 const auth_guard_1 = require("../../middleware/auth-guard/auth-guard");
-const history_repository_1 = require("../../repository/history-repository/history-repository");
 let UserController = UserController_1 = class UserController {
-    constructor(userRepository, repository, service) {
-        this.userRepository = userRepository;
+    constructor(repository, service) {
         this.repository = repository;
         this.service = service;
         this.logger = new common_1.Logger(UserController_1.name);
@@ -48,7 +46,7 @@ let UserController = UserController_1 = class UserController {
     }
     async all(req, res) {
         this.logger.log(UserController_1.name);
-        const result = await this.userRepository.findAll(req.query, req.query?.type);
+        const result = await this.repository.findAll(req.query, req.query?.type);
         return res.status(common_1.HttpStatus.OK).json(result);
     }
     async detail(req, res) {
@@ -162,7 +160,6 @@ __decorate([
 exports.UserController = UserController = UserController_1 = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [user_repository_1.UserRepository,
-        history_repository_1.HistoryRepository,
         user_service_1.UserService])
 ], UserController);
 //# sourceMappingURL=user-controller.js.map

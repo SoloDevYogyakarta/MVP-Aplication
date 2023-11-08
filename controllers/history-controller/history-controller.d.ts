@@ -11,5 +11,6 @@ export declare class ServiceHistoryController {
     create(files: Express.Multer.File[], req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
     update(files: Express.Multer.File[], req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
     all(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
+    detail(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
     destroy(req: CustomRequest, res: Response): Promise<Response<any, Record<string, any>>>;
 }
