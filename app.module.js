@@ -19,6 +19,7 @@ const user_controller_1 = require("./controllers/user-controller/user-controller
 const jwt_strategy_1 = require("./middleware/jwt-strategy/jwt-strategy");
 const booking_repository_1 = require("./repository/booking-repository/booking-repository");
 const history_repository_1 = require("./repository/history-repository/history-repository");
+const order_repository_1 = require("./repository/order-repository/order-repository");
 const promo_repository_1 = require("./repository/promo-repository/promo-repository");
 const sparepart_repository_1 = require("./repository/sparepart-repository/sparepart-repository");
 const user_repository_1 = require("./repository/user-repository/user-repository");
@@ -58,6 +59,7 @@ exports.AppModule = AppModule = __decorate([
             history_service_1.HistoryService,
             history_repository_1.HistoryRepository,
             order_service_1.OrderService,
+            order_repository_1.OrderRepository,
             promo_service_1.PromoService,
             promo_repository_1.PromoRepository,
             booking_repository_1.BookingRepository,

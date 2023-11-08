@@ -61,12 +61,15 @@ let HistoryRepository = HistoryRepository_1 = class HistoryRepository {
             include: user_associate_1.userHistoryInclude,
         });
         result = JSON.parse(JSON.stringify(result));
+        if (!result) {
+            throw new common_1.HttpException({ status: common_1.HttpStatus.BAD_REQUEST, message: 'User not found' }, common_1.HttpStatus.BAD_REQUEST);
+        }
         for (const values of result
             .order) {
-            const total = await this.totalOrder(values.id);
+            const total = await this.totalOrder(values.user_id);
             result['order'] = result.order.map((item) => {
                 if (item.id === values.id) {
-                    item['total'] = total[0].total;
+                    item['total'] = Number(total[0].total);
                 }
                 return item;
             });
