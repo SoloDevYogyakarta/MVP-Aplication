@@ -66,7 +66,7 @@ __decorate([
 ], PromoController.prototype, "create", null);
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.Post)(':id'),
+    (0, common_1.Put)(':id'),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file', { storage: upload_1.uploadOptions })),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __param(0, (0, common_1.UploadedFile)()),

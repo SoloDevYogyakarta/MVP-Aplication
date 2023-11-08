@@ -68,7 +68,7 @@ __decorate([
 ], ServiceHistoryController.prototype, "create", null);
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.Post)('update/:id'),
+    (0, common_1.Put)('update/:id'),
     (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)('file', 5, { storage: upload_1.uploadOptions })),
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     __param(0, (0, common_1.UploadedFiles)()),
