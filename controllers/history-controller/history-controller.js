@@ -31,7 +31,7 @@ let ServiceHistoryController = ServiceHistoryController_1 = class ServiceHistory
     async create(files, req, res) {
         this.logger.log(ServiceHistoryController_1.name);
         let ids = [];
-        const result = await this.service.create(req.params.id, req.body.desc, JSON.parse(req.body.data), files);
+        const result = await this.service.create(req.params.id, (0, lodash_1.pick)(req.body, ['name', 'desc', 'date']), JSON.parse(req.body.data), files);
         ids = [...result.ids, result.result.id];
         (0, system_1.createpath)('../folder-text/order-ids.txt', ids);
         (0, system_1.createpath)('../folder-text/visit.txt', result.findOne.id);
@@ -46,11 +46,6 @@ let ServiceHistoryController = ServiceHistoryController_1 = class ServiceHistory
     }
     async all(req, res) {
         const result = await this.repository.findAll(req.query, req.query.type);
-        return res.status(common_1.HttpStatus.OK).json(result);
-    }
-    async detail(req, res) {
-        this.logger.log(ServiceHistoryController_1.name);
-        const result = await this.repository.findOne(req.params.id);
         return res.status(common_1.HttpStatus.OK).json(result);
     }
     async destroy(req, res) {
@@ -93,16 +88,6 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], ServiceHistoryController.prototype, "all", null);
-__decorate([
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.Get)(':id/services'),
-    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
-    __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", Promise)
-], ServiceHistoryController.prototype, "detail", null);
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Delete)(':id'),

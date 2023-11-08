@@ -1,6 +1,7 @@
 import { Model, Optional } from 'sequelize';
 import { BaseEntity } from '../../base-entity/base-entity';
 export declare class OrderEntity extends BaseEntity {
+    name: string;
     desc: string;
     user_id: number;
 }

@@ -19,7 +19,7 @@ let HistoryService = HistoryService_1 = class HistoryService {
     constructor() {
         this.logger = new common_1.Logger(HistoryService_1.name);
     }
-    async create(id, desc, body, files) {
+    async create(id, orderBody, body, files) {
         this.logger.log(HistoryService_1.name);
         let ids = [];
         const findOne = await user_entity_1.userEntity.findOne({ where: { id } });
@@ -29,7 +29,12 @@ let HistoryService = HistoryService_1 = class HistoryService {
                 message: 'Account not found',
             }, common_1.HttpStatus.BAD_REQUEST);
         }
-        const order = await order_entity_1.orderEntity.create({ desc, user_id: findOne.id });
+        const order = await order_entity_1.orderEntity.create({
+            name: orderBody.name,
+            desc: orderBody.desc,
+            createdAt: orderBody.date,
+            user_id: findOne.id,
+        });
         order.save();
         for (const values of body) {
             if ((0, lodash_1.some)((0, lodash_1.omit)(values, ['id', 'file_desc', 'browse']))) {

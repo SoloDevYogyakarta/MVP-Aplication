@@ -3,7 +3,11 @@ import { HttpStatus } from '@nestjs/common';
 import { CreateHistoryField } from '../../dto/history-dto/history-dto';
 export declare class HistoryService {
     private readonly logger;
-    create(id: number, desc: string, body: CreateHistoryField[], files: Express.Multer.File[]): Promise<{
+    create(id: number, orderBody: {
+        name: string;
+        desc: string;
+        date: Date;
+    }, body: CreateHistoryField[], files: Express.Multer.File[]): Promise<{
         status: HttpStatus;
         message: string;
         result: import("../../database/entities/services/order-entity/order-entity").OrderInstance;
